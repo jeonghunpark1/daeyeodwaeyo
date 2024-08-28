@@ -1,5 +1,12 @@
+/* 전역변수 선언 */
+:root {
+  --line-color: rgb(203, 98, 203);
+  --box-radius-value: 10px;
+
+}
+
 .header_box {
-  background-color: lightgray;
+  /* background-color: lightgray; */
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -8,7 +15,7 @@
 }
 
 .header_top {
-  background-color: lightblue;
+  /* background-color: lightblue; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -16,12 +23,14 @@
   height: 60%;
 }
 
+/* 헤더 로고 부분 */
 .header_logo {
-  background-color: lightgray;
+  /* background-color: lightgray; */
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150px;
+  width: 20%;
+  min-width: 200px;
   height: 100%;
 }
 
@@ -30,27 +39,92 @@
   display: inline;
 }
 
+/* 헤더 검색박스 부분 */
 .header_search {
-  background-color: lightcoral;
+  /* background-color: lightcoral; */
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 60%;
+  min-width: 300px;
+  padding: 0 10%;
 }
 
 .search_box {
-  background-color: lightseagreen;
+  /* background-color: lightseagreen; */
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
   display: flex;
   flex-direction: row;
+  height: 50px;
+  width: 100%;
 }
 
+.search_box:hover {
+  box-shadow: 3px 3px 10px 1px gray;
+}
+
+.search_input,
+.search_button {
+  background-color: white;
+  border-style: none;
+  height: 100%;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  
+}
+
+.search_input {
+  font-size: 15px;
+}
+
+.search_input_label {
+  /* border: 1px solid red; */
+  background-color: white;
+  border-start-start-radius: var(--box-radius-value);
+  border-end-start-radius: var(--box-radius-value);
+  flex-grow: 1;
+  padding: 5px 8px;
+}
+
+.search_input:focus {
+  outline: none;
+}
+
+.search_button,
+.search_button_label {
+  border-start-end-radius: var(--box-radius-value);
+  border-end-end-radius: var(--box-radius-value);
+  font-size: 20px;
+}
+
+.search_button_label {
+  /* border: 1px solid blue; */
+  border-left: 1px solid var(--line-color);
+  width: 20%;
+  max-width: 80px;
+}
+
+.search_button_label:hover {
+  border: 1px solid var(--line-color);
+  box-shadow: 3px 3px 10px 1px gray;
+}
+
+.search_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 헤더 유저 부분 */
 .header_user {
   background-color: lightgreen;
-  width: 120px;
+  width: 20%;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
 }
-
-
 
 .header_nav {
   background-color: lightpink;
