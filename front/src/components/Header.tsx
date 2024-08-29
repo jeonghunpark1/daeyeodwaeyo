@@ -1,7 +1,7 @@
 import React from 'react'
 import style from "../styles/header.module.css"
 import { FaSearch } from "react-icons/fa";
-
+import { Link } from 'react-router-dom';
 
 const Header:React.FC = () => {
   return (
@@ -39,9 +39,15 @@ const Header:React.FC = () => {
       </div>
       <div className={style.header_nav}>
         <ul>
-          <li>쇼츠</li>
-          <li>Q&A</li>
-          <li>마이페이지</li>
+          <li>
+            <Link className={style.nav_menu} to={'/shorts'}>쇼츠</Link>
+          </li>
+          <li>
+            <Link className={style.nav_menu} to={'/QnA'}>Q&A</Link>
+          </li>
+          <li>
+            <Link className={style.nav_menu} to={'/myPage'}>마이페이지</Link>
+          </li>
         </ul>
       </div>
     </div>

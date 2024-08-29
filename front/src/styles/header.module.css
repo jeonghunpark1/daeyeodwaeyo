@@ -159,18 +159,41 @@
 
 /* 헤더 네이게이션 부분 */
 .header_nav {
-  background-color: lightpink;
+  /* background-color: lightpink; */
   width: 100%;
-  height: 40%;
+
 }
 
 .header_nav ul {
-  background-color: lightgreen;
+  /* background-color: lightgreen; */
+  border-top: 1px solid var(--line-color);
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  list-style-type: none;
+  margin: 5px 0 0 0;
+  padding: 5px 0 0 0;
 }
 
 .header_nav ul li {
-  background-color: light;
+  width: 100px;
+  height: 30px;
+}
+
+.nav_menu {
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav_menu:visited {
+  text-decoration: none;
+  color: black;
+}
+
+.nav_menu:hover {
+  background-color: lightgray;
 }
