@@ -45,7 +45,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 60%;
+  /* width: 60%; */
+  flex-grow: 1;
   min-width: 300px;
   padding: 0 10%;
 }
@@ -119,13 +120,44 @@
 
 /* 헤더 유저 부분 */
 .header_user {
-  background-color: lightgreen;
-  width: 20%;
-  min-width: 200px;
+  /* background-color: lightgreen; */
+  width: 250px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
+.user_image_box {
+  width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user_image {
+  width: 90px;
+  height: 90px;
+}
+
+.user_image img {
+  border-radius: 50%;
+}
+
+.user_info_box {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: end;
+}
+
+.user_nickname {
+  text-align: start;
+}
+
+.login_button {
+  margin: 20px 50px 15px 0;
+}
+
+/* 헤더 네이게이션 부분 */
 .header_nav {
   background-color: lightpink;
   width: 100%;
