@@ -40,6 +40,15 @@
   display: inline;
 }
 
+.main_page_logo {
+  text-decoration: none;
+  color: black;
+}
+
+.main_page_logo:visited {
+  text-decoration: none;
+}
+
 /* 헤더 검색박스 부분 */
 .header_search {
   /* background-color: lightcoral; */

@@ -13,8 +13,8 @@ const App:React.FC = () => {
         <Header />
         <Routes>
           {/* <Route path="/" element={<Index />}></Route> */}
-          <Route path="/Login" element={<Login />}></Route>
-          <Route path="/Main" element={<Main />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/main" element={<Main />}></Route>
         </Routes>
       </div>
     </BrowserRouter>

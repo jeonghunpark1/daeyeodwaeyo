@@ -8,7 +8,9 @@ const Header:React.FC = () => {
     <div className={style.header_box}>
       <div className={style.header_top}>
         <div className={style.header_logo}>
-          <h1>대여돼요</h1>
+          <Link className={style.main_page_logo} to={'/main'}>
+            <h1>대여돼요</h1>
+          </Link>
         </div>
         <div className={style.header_search}>
           <div className={style.search_box}>
@@ -51,10 +53,7 @@ const Header:React.FC = () => {
           
           {/* route 확인 */}
           <li>
-            <Link className={style.nav_menu} to={'/Login'}>로그인</Link>
-          </li>
-          <li>
-            <Link className={style.nav_menu} to={'/Main'}>메인</Link>
+            <Link className={style.nav_menu} to={'/login'}>로그인</Link>
           </li>
         </ul>
       </div>
