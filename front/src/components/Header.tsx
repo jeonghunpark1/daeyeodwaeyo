@@ -48,6 +48,14 @@ const Header:React.FC = () => {
           <li>
             <Link className={style.nav_menu} to={'/myPage'}>마이페이지</Link>
           </li>
+          
+          {/* route 확인 */}
+          <li>
+            <Link className={style.nav_menu} to={'/Login'}>로그인</Link>
+          </li>
+          <li>
+            <Link className={style.nav_menu} to={'/Main'}>메인</Link>
+          </li>
         </ul>
       </div>
     </div>
