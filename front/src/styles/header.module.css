@@ -1,6 +1,7 @@
 /* 전역변수 선언 */
 :root {
   --line-color: rgb(203, 98, 203);
+  --hover-color: rgb(223, 162, 223);
   --box-radius-value: 10px;
 
 }
@@ -154,8 +155,21 @@
 }
 
 .login_button {
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
   margin: 20px 50px 15px 0;
-  
+  padding: 4px 10px;
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+}
+
+.login_button:visited {
+  text-decoration: none;
+}
+
+.login_button:hover {
+  background-color: var(--hover-color);
 }
 
 /* 헤더 네이게이션 부분 */
@@ -196,5 +210,5 @@
 }
 
 .nav_menu:hover {
-  background-color: lightgray;
+  background-color: var(--hover-color);
 }

@@ -33,7 +33,7 @@ const Header:React.FC = () => {
           </div>
           <div className={style.user_info_box}>
             <div className={style.user_nickname}>OOO 님</div>
-            <button className={style.login_button}>로그인</button>
+            <Link className={style.login_button} to={'/login'}>로그인</Link>
           </div>
         </div>
       </div>
