@@ -1,10 +1,8 @@
 import React from 'react'
 
 // 테스트용
-const Index:React.FC = () => {
+export default function Index() {
   return (
     <div>index</div>
   )
 }
-
-export default Index

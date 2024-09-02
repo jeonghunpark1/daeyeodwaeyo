@@ -1,10 +1,4 @@
-/* 전역변수 선언 */
-:root {
-  --line-color: rgb(203, 98, 203);
-  --hover-color: rgb(223, 162, 223);
-  --box-radius-value: 10px;
-
-}
+@import "globalVar.module.css";
 
 .header_box {
   /* background-color: lightgray; */
@@ -12,11 +6,12 @@
   flex-direction: column;
   width: 100%;
   height: 200px;
-  min-width: 960px;
+  min-width: var(--min-width-value);
 }
 
 .header_top {
   /* background-color: lightblue; */
+  border-bottom: 1px solid var(--line-color);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -58,7 +53,7 @@
   /* width: 60%; */
   flex-grow: 1;
   min-width: 300px;
-  padding: 0 10%;
+  padding: 0 60px;
 }
 
 .search_box {
@@ -186,7 +181,7 @@
 .header_nav {
   /* background-color: lightpink; */
   width: 100%;
-  min-width: 960px;
+  min-width: var(--min-width-value);
 }
 
 .header_nav ul {

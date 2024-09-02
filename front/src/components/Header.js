@@ -3,7 +3,7 @@ import style from "../styles/header.module.css"
 import { FaSearch } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
-const Header:React.FC = () => {
+export default function Header() {
   return (
     <div className={style.header_box}>
       <div className={style.header_top}>
@@ -60,5 +60,3 @@ const Header:React.FC = () => {
     </div>
   )
 }
-
-export default Header

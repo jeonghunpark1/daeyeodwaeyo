@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Main from './pages/Main';
 import Index from './pages/Index';
 
-const App:React.FC = () => {
+export default function App() {
   return (
     <BrowserRouter>
       <div className="App">
@@ -20,5 +20,3 @@ const App:React.FC = () => {
     </BrowserRouter>
   );
 }
-
-export default App;

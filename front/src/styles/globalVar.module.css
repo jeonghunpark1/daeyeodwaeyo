@@ -1,0 +1,7 @@
+/* 전역변수 선언 */
+:root {
+  --line-color: rgb(203, 98, 203);
+  --hover-color: rgb(223, 162, 223);
+  --box-radius-value: 10px;
+  --min-width-value: 960px;
+}
