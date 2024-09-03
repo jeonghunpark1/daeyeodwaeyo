@@ -1,0 +1,81 @@
+@import "globalVar.module.css";
+
+/* .id_input_wrap && .password_input_wrap */
+.input_wrap {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  box-sizing: border-box;
+  border: 1px solid var(--line-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.id_input_wrap {
+  border-radius: var(--box-radius-value) var(--box-radius-value) 0 0;
+}
+
+.password_input_wrap {
+  border-radius: 0 0 var(--box-radius-value) var(--box-radius-value);
+  border-top: 0;
+}
+
+/* .id_input && .password_input */
+.content_input {
+  position: relative;
+  display: block;
+  width: 90%;
+  height: 22px;
+  font-size: 16px;
+  font-weight: 400px;
+  line-height: 22px;
+  letter-spacing: -.2px;
+  color: #1e1e23;
+  z-index: 5;
+  
+  
+  margin: 10px 0 0 0;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  background: 0 0;
+  appearance: none;
+  outline: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* input 태그를 클릭해서 focus가 되면 label이 위로 올라감 */
+.content_input:focus ~ .content_input_label {
+  bottom: 35px;
+  font-size: 13px;
+}
+
+
+/* input 태그를 클릭 했을 때 label이 위로 올라가서 고정
+input 태그에 placeholder 값을 공백으로 주고 사용자가 값을 입력해서
+placeholder 값이 없지면 label이 위로 올라가서 고정 */
+.content_input:not(:placeholder-shown) ~ .content_input_label {
+  /* display: none; */
+  bottom: 35px;
+  font-size: 13px;
+  transition: none;
+}
+
+.content_input_label {
+  display: inline-block;
+  position: absolute;
+  bottom: 18px;
+  left: 15px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -.2px;
+  transition: all .3s cubic-bezier(.4, 0, .2, 1);
+  color: rgba(0, 0, 0, .38);
+  pointer-events: none;
+  box-sizing: border-box;
+  z-index: 3;
+}

@@ -4,7 +4,7 @@ import Header from './components/Header';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from './pages/Login';
 import Main from './pages/Main';
-import Index from './pages/Index';
+import SignUp from './pages/SignUp';
 
 export default function App() {
   return (
@@ -14,6 +14,7 @@ export default function App() {
         <Routes>
           {/* <Route path="/" element={<Index />}></Route> */}
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/main" element={<Main />}></Route>
         </Routes>
       </div>

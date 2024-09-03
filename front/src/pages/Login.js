@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'
 import style from "../styles/login.module.css"
+import input_style from "../styles/login_signup_input.module.css"
 
 export default function Login() {
   const [id, setId] = useState("");
@@ -49,14 +50,14 @@ export default function Login() {
           <h1>로그인</h1>
         </div>
         <div className={style.login_div}>
-          <div className={style.input_wrap}>
-            <div className={style.id_input_wrap}>
-              <input className={style.id_input} id="id" type='text' value={id} onChange={handleIdChange} placeholder=''></input>
-              <label className={style.id_input_label} for="id" aria-hidden="true">아이디</label>
+          <div className={style.input_wrap_div }>
+            <div className={`${style.id_input_wrap} ${input_style.input_wrap}`}>
+              <input className={`${style.id_input} ${input_style.content_input}`} id="id" type='text' value={id} onChange={handleIdChange} placeholder=''></input>
+              <label className={`${style.id_input_label} ${input_style.content_input_label}`} for="id" aria-hidden="true">아이디</label>
             </div>
-            <div className={style.password_input_wrap}>
-              <input className={style.password_input} id="password" type='password' value={password} onChange={handlePasswordChange} placeholder=''></input>
-              <label className={style.password_input_label} for="password" aria-hidden="true">비밀번호</label>
+            <div className={`${style.password_input_wrap} ${input_style.input_wrap}`}>
+              <input className={`${style.password_input} ${input_style.content_input}`} id="password" type='password' value={password} onChange={handlePasswordChange} placeholder=''></input>
+              <label className={`${style.password_input_label} ${input_style.content_input_label}`} for="password" aria-hidden="true">비밀번호</label>
             </div>
             
           </div>
@@ -66,7 +67,7 @@ export default function Login() {
           <div className={style.link_wrap}>
             <Link className={style.find_id} to={'/'}>아이디 찾기</Link>
             <Link className={style.find_password} to={'/'}>비밀번호 찾기</Link>
-            <Link className={style.signup} to={'/singup'}>회원가입</Link>
+            <Link className={style.signup} to={'/signup'}>회원가입</Link>
           </div>
         </div>
       </div>
