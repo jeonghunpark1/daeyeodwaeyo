@@ -50,8 +50,15 @@ export default function Login() {
         </div>
         <div className={style.login_div}>
           <div className={style.input_wrap}>
-            <input type='text' value={id} onChange={handleIdChange}></input>
-            <input type='password' value={password} onChange={handlePasswordChange}></input>
+            <div className={style.id_input_wrap}>
+              <input className={style.id_input} id="id" type='text' value={id} onChange={handleIdChange} placeholder=''></input>
+              <label className={style.id_input_label} for="id" aria-hidden="true">아이디</label>
+            </div>
+            <div className={style.password_input_wrap}>
+              <input className={style.password_input} id="password" type='password' value={password} onChange={handlePasswordChange} placeholder=''></input>
+              <label className={style.password_input_label} for="password" aria-hidden="true">비밀번호</label>
+            </div>
+            
           </div>
           <button className={style.login_button}>
             로그인
