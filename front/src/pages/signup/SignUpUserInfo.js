@@ -26,31 +26,25 @@ export default function SignUpUserInfo({ changeState, stateValue }) {
           <label className={`${style.name_input_label} ${input_style.content_input_label}`} for="name" aria-hidden="true">이름</label>
         </div>
         <div className={`${style.phone_input_wrap} ${input_style.input_wrap}`}>
-          <div className={style.phoneNumber1_wrap}>
-            <input className={`${style.phoneNumber1_input} ${input_style.content_input}`} id="phoneNumber1" type="number" onChange={(e) => changeState("phoneNumber1", e.target.value)} value={stateValue("phoneNumber1")} placeholder=''></input>
-            <label className={`${style.phoneNumber1_input_label} ${input_style.content_input_label}`} for="phoneNumber1" aria-hidden="true">ph1</label>
-          </div>
-          <div className={style.phoneNumber2_wrap}>
-            <input className={`${style.phoneNumber2_input} ${input_style.content_input}`} id="phoneNumber2" type="number" onChange={(e) => changeState("phoneNumber2", e.target.value)} value={stateValue("phoneNumber2")} placeholder=''></input>
-            <label className={`${style.phoneNumber2_input_label} ${input_style.content_input_label}`} for="phoneNumber2" aria-hidden="true">ph2</label>
-          </div>
-          <div className={style.phoneNumber3_wrap}>
-            <input className={`${style.phoneNumber3_input} ${input_style.content_input}`} id="phoneNumber3" type="number" onChange={(e) => changeState("phoneNumber1", e.target.value)} value={stateValue("phoneNumber3")} placeholder=''></input>
-            <label className={`${style.phoneNumber3_input_label} ${input_style.content_input_label}`} for="phoneNumber3" aria-hidden="true">ph3</label>
-          </div>
+          <input className={`${style.phoneNumber_input} ${input_style.content_input}`} id="phoneNumber" type="text" onChange={(e) => changeState("phoneNumber", e.target.value)} value={stateValue("phoneNumber")} placeholder=''></input>
+          <label className={`${style.phoneNumber_input_label} ${input_style.content_input_label}`} for="phoneNumber" aria-hidden="true">전화번호</label>
         </div>
         <div className={`${style.address_input_wrap} ${input_style.input_wrap}`}>
-          <div className={style.address_wrap}>
-            <input className={`${style.address_input} ${input_style.content_input}`} id="address" type="text" onChange={(e) => changeState("address", e.target.value)} value={stateValue("address")} placeholder=''></input>
-            <label className={`${style.address_input_label} ${input_style.content_input_label}`} for="address" aria-hidden="true">주소</label>
+          <div className={style.address_top_wrap}>
+            <div className={style.address_wrap}>
+              <input className={`${style.address_input} ${input_style.content_input}`} id="address" type="text" onChange={(e) => changeState("address", e.target.value)} value={stateValue("address")} placeholder=''></input>
+              <label className={`${style.address_input_label} ${input_style.content_input_label}`} for="address" aria-hidden="true">주소</label>
+            </div>
+            <div className={style.zipCode_wrap}>
+              <input className={`${style.zipCode_input} ${input_style.content_input}`} id="zipCode" type="text" onChange={(e) => changeState("zipCode", e.target.value)} value={stateValue("zipCode")} placeholder=''></input>
+              <label className={`${style.zipCode_input_label} ${input_style.content_input_label}`} for="zipCode" aria-hidden="true">우편번호</label>
+            </div>
           </div>
-          <div className={style.zipCode_wrap}>
-            <input className={`${style.zipCode_input} ${input_style.content_input}`} id="zipCode" type="text" onChange={(e) => changeState("zipCode", e.target.value)} value={stateValue("zipCode")} placeholder=''></input>
-            <label className={`${style.zipCode_input_label} ${input_style.content_input_label}`} for="zipCode" aria-hidden="true">우편번호</label>
-          </div>
-          <div className={style.detailAddress_wrap}>
-            <input className={`${style.detailAddress_input} ${input_style.content_input}`} id="detailAddress" type="text" onChange={(e) => changeState("detailAddress", e.target.value)} value={stateValue("detailAddress")} placeholder=''></input>
-            <label className={`${style.detailAddress_input_label} ${input_style.content_input_label}`} for="detailAddress" aria-hidden="true">상세주소</label>
+          <div className={style.address_bottom_wrap}>
+            <div className={style.detailAddress_wrap}>
+              <input className={`${style.detailAddress_input} ${input_style.content_input}`} id="detailAddress" type="text" onChange={(e) => changeState("detailAddress", e.target.value)} value={stateValue("detailAddress")} placeholder=''></input>
+              <label className={`${style.detailAddress_input_label} ${input_style.content_input_label}`} for="detailAddress" aria-hidden="true">상세주소</label>
+            </div>
           </div>
         </div>
       </div>

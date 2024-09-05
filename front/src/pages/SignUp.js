@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import {React, useEffect, useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import style from "../styles/signup/signup.module.css"
@@ -15,9 +15,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [name, setName] = useState("");
-  const [phoneNumber1, setPhoneNumber1] = useState("");
-  const [phoneNumber2, setPhoneNumber2] = useState("");
-  const [phoneNumber3, setPhoneNumber3] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [detailAddress, setDetailAddress] = useState("");
   const [zipCode, setZipCode] = useState("");
@@ -39,14 +37,12 @@ export default function SignUp() {
     else if (type === "name") {
       setName(value);
     }
-    else if (type === "phoneNumber1") {
-      setPhoneNumber1(value);
-    }
-    else if (type === "phoneNumber2") {
-      setPhoneNumber2(value);
-    }
-    else if (type === "phoneNumber3") {
-      setPhoneNumber3(value);
+    else if (type === "phoneNumber") {
+      // 전화번호 정규식
+      const regex = /^[0-9\b -]{0,13}$/;
+      if (regex.test(value)) {
+        setPhoneNumber(value);
+      }
     }
     else if (type === "address") {
       setAddress(value);
@@ -81,14 +77,8 @@ export default function SignUp() {
     else if (type === "name") {
       return name;
     }
-    else if (type === "phoneNumber1") {
-      return phoneNumber1;
-    }
-    else if (type === "phoneNumber2") {
-      return phoneNumber2
-    }
-    else if (type === "phoneNumber3") {
-      return phoneNumber3
+    else if (type === "phoneNumber") {
+      return phoneNumber;
     }
     else if (type === "address") {
       return address;
@@ -147,7 +137,14 @@ export default function SignUp() {
     }
   };
 
-  
+  useEffect(() => {
+    if (phoneNumber.length === 10) {
+      setPhoneNumber(phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
+    }
+    if (phoneNumber.length === 13) {
+      setPhoneNumber(phoneNumber.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+    } 
+  }, [phoneNumber]);
 
   return (
     <div className={style.signup_page}>

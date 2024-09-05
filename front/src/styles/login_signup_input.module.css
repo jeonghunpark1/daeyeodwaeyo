@@ -71,7 +71,7 @@ placeholder 값이 없지면 label이 위로 올라가서 고정 */
   display: inline-block;
   position: absolute;
   bottom: 18px;
-  left: 15px;
+  left: 5%;
   font-size: 16px;
   font-weight: 400;
   line-height: 22px;
