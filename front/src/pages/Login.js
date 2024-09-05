@@ -50,7 +50,7 @@ export default function Login() {
           <h1>로그인</h1>
         </div>
         <div className={style.login_div}>
-          <div className={style.input_wrap_div }>
+          <div className={`${style.input_wrap_div} ${input_style.input_wrap_div}`}>
             <div className={`${style.id_input_wrap} ${input_style.input_wrap}`}>
               <input className={`${style.id_input} ${input_style.content_input}`} id="id" type='text' value={id} onChange={handleIdChange} placeholder=''></input>
               <label className={`${style.id_input_label} ${input_style.content_input_label}`} for="id" aria-hidden="true">아이디</label>
