@@ -31,13 +31,18 @@ export default function SignUpUserInfo({ changeState, stateValue }) {
         </div>
         <div className={`${style.address_input_wrap} ${input_style.input_wrap}`}>
           <div className={style.address_top_wrap}>
-            <div className={style.address_wrap}>
-              <input className={`${style.address_input} ${input_style.content_input}`} id="address" type="text" onChange={(e) => changeState("address", e.target.value)} value={stateValue("address")} placeholder=''></input>
-              <label className={`${style.address_input_label} ${input_style.content_input_label}`} for="address" aria-hidden="true">주소</label>
-            </div>
-            <div className={style.zipCode_wrap}>
-              <input className={`${style.zipCode_input} ${input_style.content_input}`} id="zipCode" type="text" onChange={(e) => changeState("zipCode", e.target.value)} value={stateValue("zipCode")} placeholder=''></input>
-              <label className={`${style.zipCode_input_label} ${input_style.content_input_label}`} for="zipCode" aria-hidden="true">우편번호</label>
+            <div className={style.address_top_input_wrap}>
+              <div className={style.address_wrap}>
+                <input className={`${style.address_input} ${input_style.content_input}`} id="address" type="text" onChange={(e) => changeState("address", e.target.value)} value={stateValue("address")} placeholder=''></input>
+                <label className={`${style.address_input_label} ${input_style.content_input_label}`} for="address" aria-hidden="true">주소</label>
+              </div>
+              <div className={style.zipCode_wrap}>
+                <input className={`${style.zipCode_input} ${input_style.content_input}`} id="zipCode" type="text" onChange={(e) => changeState("zipCode", e.target.value)} value={stateValue("zipCode")} placeholder=''></input>
+                <label className={`${style.zipCode_input_label} ${input_style.content_input_label}`} for="zipCode" aria-hidden="true">우편번호</label>
+              </div>
+              <div className={style.address_search_button_wrap}>
+                <button className={style.address_search_button}>주소찾기</button>
+              </div>
             </div>
           </div>
           <div className={style.address_bottom_wrap}>

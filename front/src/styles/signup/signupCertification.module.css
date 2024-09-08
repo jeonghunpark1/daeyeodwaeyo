@@ -1,0 +1,153 @@
+@import "../globalVar.module.css";
+
+.signup_div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input_wrap_div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.email_input_wrap {
+  /* background-color: lightcoral; */
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.email_top_input_wrap {
+  /* background-color: lightslategray; */
+  display: flex;
+  flex-direction: row;
+  
+  width: 90%;
+  height: 100%;
+}
+
+.emailId_input_wrap {
+  /* background-color: lightpink; */
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.emailId_input {
+  /* background-color: lightblue; */
+  width: 100%;
+}
+
+.emailId_input_label {
+  left: 0;
+}
+
+.atSign_wrap {
+  /* background-color: lightseagreen; */
+  padding-top: 24px;
+  margin: 0 10px 0 0;
+}
+
+.emailDomain_input_wrap {
+  /* background-color: lightgreen; */
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.emailDomain_input {
+  /* background-color: lightgrey; */
+  width: 100%;
+}
+
+.emailDomain_input_label {
+  left: 0;
+}
+
+.sendEmail_button_wrap {
+  /* background-color: lightcyan; */
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+}
+
+.sendEmail_button {
+  width: 90%;
+  height: 70%;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -.2px;
+  background-color: white;
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+}
+
+.sendEmail_button:hover {
+  background-color: var(--hover-color);
+}
+
+.certification_input_wrap {
+  /* background-color: lightgreen; */
+  display: flex;
+  flex-direction: row;
+}
+
+.certification_bottom_input_wrap {
+  /* background-color: lightskyblue; */
+  display: flex;
+  flex-direction: row;
+  
+  width: 90%;
+  height: 100%;
+}
+
+.certificationNumber_input_wrap {
+  /* background-color: lightcoral; */
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.certificationNumber_input {
+  /* background-color: lightgoldenrodyellow; */
+  width: 100%;
+}
+
+.certificationNumber_input_label {
+  left: 0;
+}
+
+.certificationNumberCheck_button_div {
+  /* background-color: lightseagreen; */
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+}
+
+.certificationNumberCheck_button {
+  width: 90%;
+  height: 70%;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -.2px;
+  background-color: white;
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+}
+
+.certificationNumberCheck_button:hover {
+  background-color: var(--hover-color);
+}
