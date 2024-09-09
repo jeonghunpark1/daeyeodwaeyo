@@ -22,8 +22,8 @@ export default function SignUp() {
   const [emailId, setEmailId] = useState("");
   const [emailDomain, setEmailDomain] = useState("");
   const [certificationNumber, setCertificationNumber] = useState();
-  // 프로필 사진, 닉네임 추가
-
+  // 프로필 사진 추가
+  const [nickName, setNickName] = useState("");
   const changeState = (type, value) => {
     if(type === "id") {
       setId(value);
@@ -62,6 +62,10 @@ export default function SignUp() {
     else if (type === "certificationNumber") {
       setCertificationNumber(value);
     }
+    // 프로필 사진 추가
+    else if (type === "nickName") {
+      setNickName(value);
+    }
   }
 
   const stateValue = (type) => {
@@ -97,6 +101,10 @@ export default function SignUp() {
     }
     else if (type === "certificationNumber") {
       return certificationNumber;
+    }
+    // 프로필 사진 추가
+    else if (type === "nickName") {
+      return nickName;
     }
   }
 
