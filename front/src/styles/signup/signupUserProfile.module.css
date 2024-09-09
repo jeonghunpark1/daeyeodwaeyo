@@ -29,9 +29,7 @@
   border-radius: 50%;
 }
 
-.previewImage,
-.previewImage_upload_button,
-.previewImage_upload_label {
+.previewImage {
   width: 200px;
   height: 200px;
   position: absolute;
@@ -41,27 +39,28 @@
   transform:translate(-50%, -50%);
 }
 
-.previewImage_upload_button {
-  background-color: transparent;
-  border: 0;
-}
-
-.previewImage_upload_label {
-  background-color: transparent;
-}
-
-.previewImage_upload_label:hover .previewImage
- {
-  border: 2px solid var(--line-color);
-}
-
 .previewImage_select_label_wrap {
   /* background-color: lightgreen; */
   margin: 10px 0 20px 0;
 }
 
-.previewImage_select_label {
+.previewImage_select_label:hover{
   /* background-color: lightgrey */
+  background-color: var(--hover-color);
+  
+}
+
+.previewImage_select_label {
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+  background-color: white;
+  height: 35px;
+  width: 100px;
+
+  font-size: 16px;
+  font-weight: 400px;
+  line-height: 22px;
+  letter-spacing: -.2px;
 }
 
 .nickName_input_wrap {

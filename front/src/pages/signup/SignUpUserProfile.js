@@ -11,12 +11,10 @@ export default function SignUpUserProfile({ changeState, stateValue }) {
       <div className={style.input_wrap_div}>
         <div className={`${style.profileImage_wrap}`}>
           <div className={style.profileImage_input_wrap}>
-            <img className={style.previewImage} src="https://placehold.co/90x90" />
-            <button className={style.previewImage_upload_button} id="previewImage_upload_button" onClick={() => {alert('이미지 선택')}}></button>
-            <label className={style.previewImage_upload_label} for="previewImage_upload_button" aria-hidden="true"></label>
+            <img className={style.previewImage} src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" />
           </div>
           <div className={style.previewImage_select_label_wrap}>
-            <label className={style.previewImage_select_label} for="previewImage_upload_button">프로필 선택</label>
+            <button className={style.previewImage_select_label} for="previewImage_upload_button" onClick={() => {alert('이미지 선택')}} >프로필 선택</button>
           </div>
         </div>
         <div className={`${style.nickName_input_wrap}`}>
