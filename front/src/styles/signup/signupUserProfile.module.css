@@ -39,12 +39,16 @@
   transform:translate(-50%, -50%);
 }
 
-.profileImage_select_label_wrap {
+.profileImage_input {
+  display: none;
+}
+
+.profileImage_select_button_wrap {
   /* background-color: lightgreen; */
   margin: 10px 0 20px 0;
 }
 
-.profileImage_select_label:hover{
+.profileImage_select_button:hover{
   /* background-color: lightgrey */
   background-color: var(--hover-color);
   

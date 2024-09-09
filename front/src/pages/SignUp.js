@@ -1,4 +1,4 @@
-import {React, useEffect, useState} from 'react'
+import {React, useEffect, useRef, useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import style from "../styles/signup/signup.module.css"
@@ -22,9 +22,9 @@ export default function SignUp() {
   const [emailId, setEmailId] = useState("");
   const [emailDomain, setEmailDomain] = useState("");
   const [certificationNumber, setCertificationNumber] = useState();
-  const [profileImage, setProfileImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+  const [profileImage, setProfileImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
   const [nickName, setNickName] = useState("");
-  const changeState = (type, value) => {
+  const setStateValue = (type, value) => {
     if(type === "id") {
       setId(value);
     }
@@ -70,7 +70,7 @@ export default function SignUp() {
     }
   }
 
-  const stateValue = (type) => {
+  const getStateValue = (type) => {
     if(type === "id") {
       return id;
     }
@@ -115,11 +115,11 @@ export default function SignUp() {
   const showSignupPage = (currentPage) => {
     switch(currentPage) {
       case 1:
-        return <SignUpUserInfo  changeState={changeState} stateValue={stateValue}/>
+        return <SignUpUserInfo  setStateValue={setStateValue} getStateValue={getStateValue}/>
       case 2:
-        return <SignUpCertification changeState={changeState} stateValue={stateValue}/>
+        return <SignUpCertification setStateValue={setStateValue} getStateValue={getStateValue}/>
       case 3:
-        return <SignUpUserProfile changeState={changeState} stateValue={stateValue}/>
+        return <SignUpUserProfile setStateValue={setStateValue} getStateValue={getStateValue}/>
     }
   };
 
