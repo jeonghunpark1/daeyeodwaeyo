@@ -22,7 +22,7 @@ export default function SignUp() {
   const [emailId, setEmailId] = useState("");
   const [emailDomain, setEmailDomain] = useState("");
   const [certificationNumber, setCertificationNumber] = useState();
-  // 프로필 사진 추가
+  const [profileImage, setProfileImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
   const [nickName, setNickName] = useState("");
   const changeState = (type, value) => {
     if(type === "id") {
@@ -62,7 +62,9 @@ export default function SignUp() {
     else if (type === "certificationNumber") {
       setCertificationNumber(value);
     }
-    // 프로필 사진 추가
+    else if (type === "profileImage") {
+      setProfileImage(value);
+    }
     else if (type === "nickName") {
       setNickName(value);
     }
@@ -102,7 +104,9 @@ export default function SignUp() {
     else if (type === "certificationNumber") {
       return certificationNumber;
     }
-    // 프로필 사진 추가
+    else if (type === "profileImage") {
+      return profileImage;
+    }
     else if (type === "nickName") {
       return nickName;
     }

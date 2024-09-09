@@ -29,7 +29,7 @@
   border-radius: 50%;
 }
 
-.previewImage {
+.profileImage {
   width: 200px;
   height: 200px;
   position: absolute;
@@ -39,18 +39,18 @@
   transform:translate(-50%, -50%);
 }
 
-.previewImage_select_label_wrap {
+.profileImage_select_label_wrap {
   /* background-color: lightgreen; */
   margin: 10px 0 20px 0;
 }
 
-.previewImage_select_label:hover{
+.profileImage_select_label:hover{
   /* background-color: lightgrey */
   background-color: var(--hover-color);
   
 }
 
-.previewImage_select_label {
+.profileImage_select_button {
   border: 1px solid var(--line-color);
   border-radius: var(--box-radius-value);
   background-color: white;
