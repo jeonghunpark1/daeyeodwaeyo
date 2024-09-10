@@ -127,27 +127,42 @@ export default function SignUp() {
     switch(currentPage) {
       case 1:
         return (
-          <div className={style.page_button_div}>
-            <button className='next_button'>취소</button>
+          <div className={style.page_button_wrap}>
+            <button className='cancel_button'>취소</button>
             <button className='next_button' onClick={() => {setCurrentPage(currentPage+1)}}>다음</button>
           </div>
         )
       case 2:
         return (
-          <div className={style.page_button_div}>
+          <div className={style.page_button_wrap}>
             <button className='next_button' onClick={() => {setCurrentPage(currentPage-1)}}>이전</button>
             <button className='next_button' onClick={() => {setCurrentPage(currentPage+1)}}>다음</button>
           </div>
         )
       case 3:
         return (
-          <div className={style.page_button_div}>
+          <div className={style.page_button_wrap}>
             <button className='next_button' onClick={() => {setCurrentPage(currentPage-1)}}>이전</button>
             <button className='next_button'>회원가입</button>
           </div>
         )
     }
   };
+
+  const progressBox = (currentPage) => {
+    let arr = [];
+    for(let i=0; i<currentPage; i++) {
+      arr.push(
+        <div className={`${style.progressBox_activated} ${style.progressBox}`}></div>
+      )
+    }
+    for(let k=0; k<3-currentPage; k++) {
+      arr.push(
+        <div className={`${style.progressBox_disabled} ${style.progressBox}`}></div>
+      )
+    }
+    return arr;
+  }
 
   useEffect(() => {
     if (phoneNumber.length === 10) {
@@ -160,13 +175,19 @@ export default function SignUp() {
 
   return (
     <div className={style.signup_page}>
-      <div className={style.signup_content}>
-        <div className={style.signup_title}>
-          <h1>회원가입</h1>
+      <div className={style.signup_content_wrap}>
+        <div className={style.progressBox_wrap}>
+          {progressBox(currentPage)}
         </div>
-        { showSignupPage(currentPage) }
-        { buttonByPage(currentPage) }
+        <div className={style.signup_content}>
+          <div className={style.signup_title}>
+            <h1>회원가입</h1>
+          </div>
+          { showSignupPage(currentPage) }
+          { buttonByPage(currentPage) }
+        </div>
       </div>
+      
     </div>
   )
 }

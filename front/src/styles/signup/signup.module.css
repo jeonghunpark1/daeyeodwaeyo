@@ -10,17 +10,58 @@
   align-items: center;
 }
 
-.signup_content {
-  border: 1px solid var(--line-color);
-  border-radius: var(--box-radius-value);
-  width: 600px;
-  height: 100%;
+.signup_content_wrap {
   margin: 80px 0 0 0;
+  width: 600px;
+}
+
+.signup_content {
+  box-sizing: border-box;
+  border: 1px solid var(--line-color);
+  border-radius: 0 0 var(--box-radius-value) var(--box-radius-value);
+  width: 100%;
+  height: 100%;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.progressBox_wrap {
+  background-color: lightgray;
+  width: 600px;
+  height: 20px;
+  border-radius: var(--box-radius-value) var(--box-radius-value) 0 0;
+  display: flex;
+}
+
+.progressBox {
+  border-top: 1px solid var(--line-color);
+}
+
+.progressBox:nth-child(n+1) {
+  border-left: 1px solid var(--line-color);
+}
+
+.progressBox:first-child {
+  border-left: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value) 0 0 0;
+}
+
+.progressBox:last-child {
+  border-right: 1px solid var(--line-color);
+  border-radius: 0 var(--box-radius-value) 0 0;
+}
+
+.progressBox_activated {
+  background-color: var(--hover-color);
+  flex: 1;
+}
+
+.progressBox_disabled {
+  background-color: lightgrey;
+  flex: 1;
 }
 
 .signup_title {
@@ -30,4 +71,31 @@
 
 .signup_title h1 {
   margin: 0;
+}
+
+.page_button_wrap {
+  /* background-color: lightblue; */
+  margin-top: 30px;
+  width: 70%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page_button_wrap button {
+
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+  padding: 5px 40px;
+  background-color: white;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -.2px;
+}
+
+.page_button_wrap button:hover {
+  background-color: var(--hover-color);
 }
