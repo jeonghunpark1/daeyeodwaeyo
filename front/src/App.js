@@ -5,6 +5,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from './pages/Login';
 import Main from './pages/Main';
 import SignUp from './pages/SignUp';
+import Footer from './components/Footer';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/main" element={<Main />}></Route>
         </Routes>
+        <Footer />
       </div>
     </BrowserRouter>
   );

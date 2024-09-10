@@ -1,0 +1,8 @@
+.footer_box {
+  /* background-color: lightgray; */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100px;
+  min-width: var(--min-width-value);
+}
