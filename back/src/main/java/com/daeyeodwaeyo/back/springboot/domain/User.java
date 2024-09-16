@@ -4,101 +4,53 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.Setter;
 
-import java.util.Collection;
-import java.util.List;
+import java.io.Serializable;
 
-@Table(name = "users")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
-@Entity
-public class User implements UserDetails { // UserDetails를 상속받아 인증 객체로 사용
+//User 엔티티는 users 테이블과 매핑된다.
+//이 클래스는 회원가입 시 사용자의 데이터를 저장하고 관리하는 역할을 한다.
+@Entity // 이 클래스가 JPA 엔티티임을 선언
+@Table(name = "users") // 데이터베이스의 users 테이블과 매핑
+@Getter // Lombok: 모든 필드에 대한 Getter 생성
+@Setter // Lombok: 모든 필드에 대한 Setter 생성
+@NoArgsConstructor // Lombok: 기본 생성자 생성
+@AllArgsConstructor // Lombok: 모든 필드를 이용한 생성자 생성
+public class User implements Serializable {
 
+  // 사용자의 아이디(Primary Key 설정)
   @Id
-  @Column(name = "id", nullable = false, unique = true)
+  @Column(name = "id", length = 255, nullable = false, unique = true)
   private String id;
 
-  @Column(name = "password")
+  // 사용자의 비밀번호(해싱되어 저장)
+  @Column(name = "password", length = 255, nullable = false)
   private String password;
 
-  @Column(name = "name")
+  // 사용자의 이름
+  @Column(name = "name", length = 255, nullable = false)
   private String name;
 
-  @Column(name = "phoneNumber")
+  // 사용자의 전화번호
+  @Column(name = "phoneNumber", length = 255, nullable = false)
   private String phoneNumber;
 
-  @Column(name = "address")
+  // 사용자의 주소
+  @Column(name = "address", length = 255, nullable = false)
   private String address;
 
-  @Column(name = "email")
+  // 사용자의 이메일
+  @Column(name = "email", length = 255, nullable = false)
   private String email;
 
-  @Column(name = "profileImage")
+  // 사용자의 프로필 이미지
+  @Column(name = "profileImage", length = 255)
   private String profileImage;
 
-  @Column(name = "nickName")
+  // 사용자의 닉네임
+  @Column(name = "nickName", length = 255, nullable = false, unique = true)
   private String nickName;
-
-  @Builder
-  public User(String id, String password, String name, String phoneNumber, String address, String email, String profileImage, String nickName) {
-    this.id = id;
-    this.password = password;
-    this.name = name;
-    this.phoneNumber = phoneNumber;
-    this.address = address;
-    this.email = email;
-    this.profileImage = profileImage;
-    this.nickName = nickName;
-  }
-
-  @Override // 권한 반환
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of(new SimpleGrantedAuthority("user"));
-  }
-
-  // 사용자의 id 반환(고유한 값)
-  @Override
-  public String getUsername() {
-    return id;
-  }
-
-  @Override
-  public String getPassword() {
-    return password;
-  }
-
-  // 계정 만료 여부 반환
-  @Override
-  public boolean isAccountNonExpired() {
-    // 만료되었는지 확인하는 로직
-    return true; // true -> 만료되지 않았음
-  }
-
-  // 계정 잠금 여부 반환
-  @Override
-  public boolean isAccountNonLocked() {
-    // 계정 잠금되었는지 확인하는 로직
-    return true; // true -> 잠금되지 않았음
-  }
-
-  // 패스워드의 만료 여부 반환
-  @Override
-  public boolean isCredentialsNonExpired() {
-    // 패스워드가 만료되었는지 확인하는 로직
-    return true; // true -> 만료되지 않음
-  }
-
-  // 계정 사용 가능 여부 반환
-  @Override
-  public boolean isEnabled() {
-    // 계정이 사용 가능한지 확인하는 로직
-    return true; // true -> 사용 가능
-  }
 }

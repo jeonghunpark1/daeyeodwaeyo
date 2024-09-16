@@ -53,11 +53,11 @@ export default function Login() {
           <div className={`${style.input_wrap_div} ${input_style.input_wrap_div}`}>
             <div className={`${style.id_input_wrap} ${input_style.input_wrap}`}>
               <input className={`${style.id_input} ${input_style.content_input}`} id="id" type='text' value={id} onChange={handleIdChange} placeholder=''></input>
-              <label className={`${style.id_input_label} ${input_style.content_input_label}`} for="id" aria-hidden="true">아이디</label>
+              <label className={`${style.id_input_label} ${input_style.content_input_label}`} htmlFor="id" aria-hidden="true">아이디</label>
             </div>
             <div className={`${style.password_input_wrap} ${input_style.input_wrap}`}>
               <input className={`${style.password_input} ${input_style.content_input}`} id="password" type='password' value={password} onChange={handlePasswordChange} placeholder=''></input>
-              <label className={`${style.password_input_label} ${input_style.content_input_label}`} for="password" aria-hidden="true">비밀번호</label>
+              <label className={`${style.password_input_label} ${input_style.content_input_label}`} htmlFor="password" aria-hidden="true">비밀번호</label>
             </div>
             
           </div>
