@@ -1,20 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import Header from './components/Header';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import axios from 'axios';
+import Header from './components/Header';
 import Login from './pages/Login';
 import Main from './pages/Main';
 import SignUp from './pages/SignUp';
 import Footer from './components/Footer';
 
+
 export default function App() {
+  const [isLogin, setIsLogin] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+
+  const setterIsLogin = (value) => {
+    setIsLogin(value);
+  };
+
+  const getterIsLogin = () => {
+    return isLogin;
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    
+    console.log("토큰:", token);
+
+    if (token) {
+      //백엔드에 토큰을 보내 사용자 정보를 가져옴
+      axios.get('http://localhost:8080/api/users/headerUserInfo', {
+        headers: {
+          'Authorization': `Bearer ${token}` // Bearer 토큰 형태로 전송
+        }
+      })
+      .then(response => {
+        console.log("response.data: ", response.data);
+        setIsLogin(true);
+        console.log("isLogin:", isLogin);
+        setUserInfo(response.data);
+        console.log("userInfo: ", userInfo);
+      })
+      .catch(err => {
+        console.error('유저 정보 불러오기 실패:', err);
+        setIsLogin(false);
+        setUserInfo(null);
+      });
+    }
+  }, [isLogin]);
+
   return (
     <BrowserRouter>
       <div className="App">
-        <Header />
+        <Header getterIsLogin={getterIsLogin} userInfo={userInfo} />
         <Routes>
           {/* <Route path="/" element={<Index />}></Route> */}
-          <Route path="/login" element={<Login />}></Route>
+          <Route path="/login" element={<Login setterIsLogin={setterIsLogin}/>}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/main" element={<Main />}></Route>
         </Routes>

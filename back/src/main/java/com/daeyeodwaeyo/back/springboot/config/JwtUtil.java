@@ -7,6 +7,8 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -18,17 +20,30 @@ public class JwtUtil {
 //  @param userId 사용자 ID
 //  @return 생성된 JWT 토큰
   public String generateToken(String userId) {
+//    return Jwts.builder()
+//            .setSubject(userId) // 사용자 ID를 서브젝트로 설정
+//            .setIssuedAt(new Date()) // 토큰 생성 시간
+//            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10시간 유효
+//            .signWith(SignatureAlgorithm.HS256, SECRET_KEY) // HMAC SHA256 알고리즘으로 서명
+//            .compact();
+    Map<String, Object> claims = new HashMap<>();
+    return createToken(claims, userId);
+  }
+
+  // 토큰 생성 로직
+  private String createToken(Map<String, Object> claims, String subject) {
     return Jwts.builder()
-            .setSubject(userId) // 사용자 ID를 서브젝트로 설정
-            .setIssuedAt(new Date()) // 토큰 생성 시간
+            .setClaims(claims)
+            .setSubject(subject)
+            .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10시간 유효
-            .signWith(SignatureAlgorithm.HS256, SECRET_KEY) // HMAC SHA256 알고리즘으로 서명
+            .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
             .compact();
   }
 
   // JWT 토큰에서 사용자 이름(아이디)을 추출하는 메서드
   public String extractUsername(String token) {
-    return extractClaim(token, Claims::getSubject); // 토큰의 'sub' 필드에서 사용자 이름(아이디) 추출
+    return extractAllClaims(token).getSubject();
   }
 
   // JWT 토큰에서 만료 시간을 추출하는 메서드
@@ -44,12 +59,12 @@ public class JwtUtil {
 
   // JWT 토큰에서 모든 클레임을 추출하는 메서드
   public Claims extractAllClaims(String token) {
-    try {
-      return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-    } catch (Exception e) {
-      throw new MalformedJwtException("Invalid JWT Token", e); // 에러 핸들링 추가
-    }
-
+//    try {
+//      return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+//    } catch (Exception e) {
+//      throw new MalformedJwtException("Invalid JWT Token", e); // 에러 핸들링 추가
+//    }
+    return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
   }
 
   // JWT 토큰이 만료되었는지 확인하는 메서드

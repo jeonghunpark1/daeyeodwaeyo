@@ -6,6 +6,7 @@ import com.daeyeodwaeyo.back.springboot.dto.UserLoginDTO;
 import com.daeyeodwaeyo.back.springboot.dto.UserRegisterDTO;
 import com.daeyeodwaeyo.back.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,15 +29,11 @@ public class UserService {
   @Autowired
   private JwtUtil jwtUtil; // Jwt 유틸리티 클래스
 
-  private final PasswordEncoder passwordEncoder; // 비밀번호 암호화
-
   @Autowired
-  public UserService(PasswordEncoder passwordEncoder) {
-    this.passwordEncoder = passwordEncoder;
-  }
+  private PasswordEncoder passwordEncoder; // 비밀번호 암호화
 
-  private static final String TEMP_IMAGE_PATH = "/Users/giho/Desktop/학교/졸업작품/daeyeodwaeyo/back/src/main/resources/static/images/tempImage"; // 임시 이미지 경로
-  private static final String PROFILE_IMAGE_PATH = "/Users/giho/Desktop/학교/졸업작품/daeyeodwaeyo/back/src/main/resources/static/images/profileImage"; // 최종 이미지 경로
+  private static final String TEMP_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/tempImage"; // 임시 이미지 경로
+  private static final String PROFILE_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage"; // 최종 이미지 경로
 
 
   // 임시 이미지 저장
@@ -45,9 +42,10 @@ public class UserService {
     String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
     File tempFile = new File(TEMP_IMAGE_PATH, fileName);
     file.transferTo(tempFile);
-    return "/Users/giho/Desktop/학교/졸업작품/daeyeodwaeyo/back/src/main/resources/static/images/tempImage/" + fileName;
+    return PROFILE_IMAGE_PATH + fileName;
   }
 
+  // 임시 이미지 폴더에서 프로필 사진 폴더로 이동
   private void moveTempImageToProfile(String tempImageUrl) {
     String fileName = tempImageUrl.substring(tempImageUrl.lastIndexOf("/") + 1);
     File tempFile = new File(TEMP_IMAGE_PATH, fileName);
@@ -57,6 +55,7 @@ public class UserService {
     }
   }
 
+  // 임시 이미지 폴더에 있는 사진 삭제
   public void cleanUpTempImages() {
     File tempDir = new File(TEMP_IMAGE_PATH);
     File[] files = tempDir.listFiles();
@@ -74,7 +73,7 @@ public class UserService {
   //  회원가입 처리 메서드
   //  @param userRegisterDTO 클라이언트에서 전달된 회원가입 정보
   //  @return 회원가입 성공 메시지
-  public String registerUser(UserRegisterDTO userRegisterDTO) {
+  public String registerUser(UserRegisterDTO userRegisterDTO) throws Exception{
     // DTO를 엔티티로 변환
     User user = new User();
     user.setId(userRegisterDTO.getId());
@@ -108,18 +107,30 @@ public class UserService {
 //  로그인 처리 메서드
 //  @param userLoginDTO 클라이언트에서 전달된 로그인 정보
 //  @return 로그인 성공 시 JWT 토큰 변환, 실패 시 예외 발생
-  public String loginUser(UserLoginDTO userLoginDTO) {
-    // 아이디로 사용자 조회
-    User user = userRepository.findById(userLoginDTO.getId())
-            .orElseThrow(() -> new IllegalArgumentException("아이디를 찾을 수 없습니다."));
-
-    // 비밀번호가 일치하는지 확인
-    if (passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
-      // 비밀번호가 일치하면 JWT 토큰 생성
-      return jwtUtil.generateToken(user.getId());
+  public User loginUser(UserLoginDTO userLoginDTO) throws Exception {
+//    // 아이디로 사용자 조회
+//    User user = userRepository.findById(userLoginDTO.getId())
+//            .orElseThrow(() -> new IllegalArgumentException("아이디를 찾을 수 없습니다."));
+//
+//    // 비밀번호가 일치하는지 확인
+//    if (passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
+//      // 비밀번호가 일치하면 JWT 토큰 생성
+//      return jwtUtil.generateToken(user.getId());
+//    } else {
+//      // 비밀번호가 일치하지 않으면 예외 발생
+//      throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+//    }
+    User user = userRepository.findById(userLoginDTO.getId()).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+    System.out.println("userLoginDTO" + userLoginDTO.getPassword());
+    System.out.println("user" + user.getPassword());
+    boolean matches = passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword());
+    System.out.println(matches);
+    if(passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
+      System.out.println("로그인 성공");
+      return user; // 인증 성공
     } else {
-      // 비밀번호가 일치하지 않으면 예외 발생
-      throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+
+      throw new Exception("아이디 또는 비밀번호가 일치하지 않습니다.");
     }
   }
 }

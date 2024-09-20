@@ -1,9 +1,17 @@
 import React from 'react'
 import style from "../styles/header.module.css"
 import { FaSearch } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function Header() {
+export default function Header({ getterIsLogin, userInfo }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+
+    window.location.reload();
+  };
+
   return (
     <div className={style.header_box}>
       <div className={style.header_top}>
@@ -28,15 +36,32 @@ export default function Header() {
           </div>
         </div>
         <div className={style.header_user}>
-          <div className={style.user_image_box}>
-            <div className={style.user_image}>
-              <img src="https://placehold.co/90x90" />
+          {{getterIsLogin} && userInfo ? (
+            <>
+            <div className={style.user_image_box}>
+              <div className={style.user_image}>
+                <img src="http://localhost:8080/imagePath/332cf909-05b2-4889-ae3c-13595b8f4c81_2e3a2f8b554a5.jpeg" alt='프로필 사진' />
+              </div>
             </div>
-          </div>
-          <div className={style.user_info_box}>
-            <div className={style.user_nickname}>OOO 님</div>
-            <Link className={style.login_button} to={'/login'}>로그인</Link>
-          </div>
+            <div className={style.user_info_box}>
+              <div className={style.user_nickname}>{userInfo.nickName}님</div>
+              <button className={style.logout_button} onClick={handleLogout}>로그아웃</button>
+            </div>
+            </>
+          ) : (
+            <>
+              <div className={style.user_image_box}>
+                <div className={style.user_image}>
+                  <img src="https://placehold.co/90x90" alt='프로필 사진' />
+                </div>
+              </div>
+              <div className={style.user_info_box}>
+                <div className={style.user_nickname}>게스트</div>
+                <Link className={style.login_button} to={'/login'}>로그인</Link>
+              </div>
+            </>
+
+          )}
         </div>
       </div>
       <div className={style.header_nav}>

@@ -46,7 +46,7 @@ public class SecurityConfig {
             .cors(withDefaults()) // CORS 설정 활성화
             .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화 (JWT는 CSRF 보호가 필요하지 않음)
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/users/signup", "/api/users/login", "/api/users/tempProfileImage").permitAll() // 회원가입과 로그인은 인증 없이 접근 가능
+                    .requestMatchers("/api/users/signup", "/api/users/login", "/api/users/tempProfileImage", "/imagePath/**").permitAll() // 회원가입과 로그인은 인증 없이 접근 가능
                     .anyRequest().authenticated()) // 그 외 모든 요청은 인증 필요
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션을 사용하지 않음 (JWT 방식)
             .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // JWT 필터를 UsernamePasswordAuthenticationFilter 전에 실행하도록 설정
