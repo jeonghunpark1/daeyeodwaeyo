@@ -21,7 +21,7 @@ export default function SignUpUserProfile({ setStateValue, getStateValue }) {
     const formData = new FormData();
     formData.append("file", file);
 
-    axios.post("http://localhost:8080/api/users/tempProfileImage", formData, {
+    axios.post("http://localhost:8080/api/content/tempContent", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
 

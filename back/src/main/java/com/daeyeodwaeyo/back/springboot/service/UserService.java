@@ -17,8 +17,8 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-//UserService는 회원가입, 로그인 등의 비즈니스 로직을 처리하는 클래스
-//DTO를 엔티티로 변환하고 리포지토리와 상호작용한다.
+// UserService는 회원가입, 로그인 등의 비즈니스 로직을 처리하는 클래스
+// DTO를 엔티티로 변환하고 리포지토리와 상호작용한다.
 @Service
 @Transactional
 public class UserService {
@@ -27,48 +27,50 @@ public class UserService {
   private UserRepository userRepository; // 리포지토리와 상호작용
 
   @Autowired
-  private JwtUtil jwtUtil; // Jwt 유틸리티 클래스
+  private ContentService contentService;
 
   @Autowired
   private PasswordEncoder passwordEncoder; // 비밀번호 암호화
 
-  private static final String TEMP_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/tempImage"; // 임시 이미지 경로
-  private static final String PROFILE_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage"; // 최종 이미지 경로
-
-
-  // 임시 이미지 저장
-  public String saveTempImage(MultipartFile file) throws IOException {
-    // 파일을 임시 경로에 저장하고 URL 반환
-    String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-    File tempFile = new File(TEMP_IMAGE_PATH, fileName);
-    file.transferTo(tempFile);
-    return PROFILE_IMAGE_PATH + fileName;
-  }
-
-  // 임시 이미지 폴더에서 프로필 사진 폴더로 이동
-  private void moveTempImageToProfile(String tempImageUrl) {
-    String fileName = tempImageUrl.substring(tempImageUrl.lastIndexOf("/") + 1);
-    File tempFile = new File(TEMP_IMAGE_PATH, fileName);
-    File profileFile = new File(PROFILE_IMAGE_PATH, fileName);
-    if (tempFile.exists()) {
-      tempFile.renameTo(profileFile); // 파일 이동
-    }
-  }
-
-  // 임시 이미지 폴더에 있는 사진 삭제
-  public void cleanUpTempImages() {
-    File tempDir = new File(TEMP_IMAGE_PATH);
-    File[] files = tempDir.listFiles();
-
-    if (files != null) {
-      for (File file : files) {
-        long diff = System.currentTimeMillis() - file.lastModified();
-        if (diff > TimeUnit.HOURS.toMillis(24)) { // 24시간이 지난 파일 삭제
-          file.delete();
-        }
-      }
-    }
-  }
+//
+//  private static final String TEMP_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/tempImage"; // 임시 이미지 경로
+//  private static final String PROFILE_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage"; // 최종 이미지 경로
+//
+//
+//  // 임시 이미지 저장
+//  public String saveTempImage(MultipartFile file) throws IOException {
+//    // 파일을 임시 경로에 저장하고 URL 반환
+//    String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+//    File tempFile = new File(TEMP_IMAGE_PATH, fileName);
+//    file.transferTo(tempFile);
+//    return PROFILE_IMAGE_PATH + fileName;
+//  }
+//
+//  // 임시 이미지 폴더에서 프로필 사진 폴더로 이동
+//  private void moveTempImageToProfile(String tempImageUrl) {
+//    String fileName = tempImageUrl.substring(tempImageUrl.lastIndexOf("/") + 1);
+//    File tempFile = new File(TEMP_IMAGE_PATH, fileName);
+//    File profileFile = new File(PROFILE_IMAGE_PATH, fileName);
+//    if (tempFile.exists()) {
+//      tempFile.renameTo(profileFile); // 파일 이동
+//    }
+//  }
+//
+//  // 임시 이미지 폴더에 있는 사진 삭제
+//  public void cleanUpTempImages() {
+//    File tempDir = new File(TEMP_IMAGE_PATH);
+//    File[] files = tempDir.listFiles();
+//
+//    if (files != null) {
+//      for (File file : files) {
+//        long diff = System.currentTimeMillis() - file.lastModified();
+//        if (diff > TimeUnit.HOURS.toMillis(24)) { // 24시간이 지난 파일 삭제
+//          file.delete();
+//        }
+//      }
+//    }
+//  }
+//
 
   //  회원가입 처리 메서드
   //  @param userRegisterDTO 클라이언트에서 전달된 회원가입 정보
@@ -86,8 +88,12 @@ public class UserService {
     user.setProfileImage(userRegisterDTO.getProfileImage());
     user.setNickName(userRegisterDTO.getNickName());
 
-    // 임시 이미지를 최종 폴더로 이동
-    moveTempImageToProfile(userRegisterDTO.getProfileImage());
+//
+//    // 임시 이미지를 최종 폴더로 이동
+//    moveTempImageToProfile(userRegisterDTO.getProfileImage());
+//
+
+    contentService.moveTempFileToFinal(userRegisterDTO.getProfileImage(), "profileImage");
 
 //    확인용 코드
 //    System.out.println(userRegisterDTO.getId());

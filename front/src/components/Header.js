@@ -40,7 +40,7 @@ export default function Header({ getterIsLogin, userInfo }) {
             <>
             <div className={style.user_image_box}>
               <div className={style.user_image}>
-                <img src="http://localhost:8080/imagePath/332cf909-05b2-4889-ae3c-13595b8f4c81_2e3a2f8b554a5.jpeg" alt='프로필 사진' />
+                <img src="http://localhost:8080/imagePath/ca224281-2bc3-42bd-b6c0-91d9a66599f2_image_2e3a2f8b554a5.jpeg" alt='프로필 사진' />
               </div>
             </div>
             <div className={style.user_info_box}>

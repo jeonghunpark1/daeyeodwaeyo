@@ -8,8 +8,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-  private String connectPath = "/imagePath/**";
-  private String resourcePath = "file:///Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage/";
+  // 프로필 사진
+  private String imageConnectPath = "/imagePath/**";
+  private String profileImageResourcePath = "file:///Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage/";
+
+  // 상품 동영상
+  private String videoConnectPath = "/videoPath/**";
+  private String productVideoResourcePath = "file:///Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/videos/productVideo/";
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
@@ -22,7 +27,14 @@ public class WebConfig implements WebMvcConfigurer {
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler(connectPath)
-            .addResourceLocations(resourcePath);
+    // 프로필 사진에 대한 리소스 핸들러
+    // 요청 URL : http://localhost:8080/imagePath/{filename}
+    registry.addResourceHandler(imageConnectPath)
+            .addResourceLocations(profileImageResourcePath);
+
+    // 상품 동영상에 대한 리소스 핸들러
+    // 요청 URL : http://localhost:8080/videoPath/{filename}
+    registry.addResourceHandler(videoConnectPath)
+            .addResourceLocations(productVideoResourcePath);
   }
 }

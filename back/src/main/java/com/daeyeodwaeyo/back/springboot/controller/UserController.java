@@ -44,16 +44,18 @@ public class UserController {
   @Autowired
   private UserRepository userRepository;
 
-  // 이미지 임시 업로드
-  @PostMapping("/tempProfileImage")
-  public ResponseEntity<String> uploadTempProfileImage(@RequestParam("file")MultipartFile file) throws IOException {
-    String imageUrl = userService.saveTempImage(file); // 임시 이미지 저장 서비스 호출
-
-//    확인용 코드
-//    System.out.println(imageUrl);
-
-    return ResponseEntity.ok(imageUrl);
-  }
+//
+//  // 이미지 임시 업로드
+//  @PostMapping("/tempProfileImage")
+//  public ResponseEntity<String> uploadTempProfileImage(@RequestParam("file")MultipartFile file) throws IOException {
+//    String imageUrl = userService.saveTempImage(file); // 임시 이미지 저장 서비스 호출
+//
+////    확인용 코드
+////    System.out.println(imageUrl);
+//
+//    return ResponseEntity.ok(imageUrl);
+//  }
+//
 
 //  회원가입 엔드포인트
 //  @param userRegisterDTO 클라이언트가 전달한 회원가입 정보
