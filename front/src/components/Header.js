@@ -75,6 +75,9 @@ export default function Header({ getterIsLogin, userInfo }) {
           <li>
             <Link className={style.nav_menu} to={'/myPage'}>마이페이지</Link>
           </li>
+          <li>
+            <Link className={style.nav_menu} to={'/productAdd'}>상품등록</Link>
+          </li>
           
           {/* route 확인 */}
           <li>

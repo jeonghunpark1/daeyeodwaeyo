@@ -7,6 +7,8 @@ import Login from './pages/Login';
 import Main from './pages/Main';
 import SignUp from './pages/SignUp';
 import Footer from './components/Footer';
+import ProductAdd from './pages/ProductAdd';
+import MyPage from './pages/MyPage';
 
 
 export default function App() {
@@ -57,6 +59,8 @@ export default function App() {
           <Route path="/login" element={<Login setterIsLogin={setterIsLogin}/>}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/main" element={<Main />}></Route>
+          <Route path="/productAdd" element={<ProductAdd />}></Route>
+          <Route path="/myPage" element={<MyPage />}></Route>
         </Routes>
         <Footer />
       </div>

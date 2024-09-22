@@ -88,7 +88,7 @@
   border: 1px solid var(--line-color);
   border-radius: var(--box-radius-value);
   padding: 5px 40px;
-  background-color: white;
+  background-color: rgb(255, 185, 255);
 
   font-size: 16px;
   font-weight: 400;

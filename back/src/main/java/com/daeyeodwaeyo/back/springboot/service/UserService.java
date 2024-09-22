@@ -75,6 +75,7 @@ public class UserService {
   //  회원가입 처리 메서드
   //  @param userRegisterDTO 클라이언트에서 전달된 회원가입 정보
   //  @return 회원가입 성공 메시지
+
   public String registerUser(UserRegisterDTO userRegisterDTO) throws Exception{
     // DTO를 엔티티로 변환
     User user = new User();
