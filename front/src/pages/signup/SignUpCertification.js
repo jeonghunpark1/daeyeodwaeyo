@@ -1,8 +1,53 @@
 import React from 'react'
+import axios from 'axios';
+
 import style from "../../styles/signup/signupCertification.module.css"
 import input_style from "../../styles/login_signup_input.module.css"
 
 export default function SignUpCertification({ setStateValue, getStateValue }) {
+
+  const email = getStateValue("emailId") + "@" + getStateValue("emailDomain");
+
+  // 입력한 이메일로 인증 코드를 정송하는 함수
+  const sendEmail = async () => {
+    console.log("email", {email});
+    try {
+      const response = await axios.post('http://localhost:8080/api/email/sendCode', {email}, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true // 클라이언트와 서버가 통신할 때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+      });
+      if(response && response.data) {
+        alert(response.data) // 성공 메시지 출력
+      } else {
+        throw new Error("서버로부터 유효한 응답을 받지 못했습니다.");
+      }
+    } catch (err) {
+      alert("인증코드 전송 실패: ")
+    }
+  }
+
+  // 인증번호 확인하는 함수
+  const checkVerificationCode = async () => {
+    const code = getStateValue("certificationNumber");
+    try {
+      const response = await axios.post('http://localhost:8080/api/email/checkCode', {code}, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true
+      });
+      if(response && response.data) {
+        alert(response.data)
+      } else {
+        throw new Error("서버로부터 유효한 응답을 받지 못했습니다.");
+      }
+    } catch (err) {
+      alert("인증코드 불일치");
+    }
+  }
+
   return (
     <div className={style.signup_div}>
       <h1>
@@ -30,7 +75,7 @@ export default function SignUpCertification({ setStateValue, getStateValue }) {
               <label className={`${style.emailDomain_input_label} ${input_style.content_input_label}`} htmlFor="emailDomain" aria-hidden="true">이메일 도메인</label>
             </div>
             <div className={style.sendEmail_button_wrap}>
-              <button className={style.sendEmail_button}>이메일 전송</button>
+              <button className={style.sendEmail_button} onClick={sendEmail}>이메일 전송</button>
             </div>
           </div>
         </div>
@@ -41,7 +86,7 @@ export default function SignUpCertification({ setStateValue, getStateValue }) {
               <label className={`${style.certificationNumber_input_label} ${input_style.content_input_label}`} htmlFor="certificationNumber" aria-hidden="true">인증번호</label>
             </div>
             <div className={style.certificationNumberCheck_button_div}>
-              <button className={style.certificationNumberCheck_button}>인증하기</button>
+              <button className={style.certificationNumberCheck_button} onClick={checkVerificationCode}>인증하기</button>
             </div>
           </div>
         </div>

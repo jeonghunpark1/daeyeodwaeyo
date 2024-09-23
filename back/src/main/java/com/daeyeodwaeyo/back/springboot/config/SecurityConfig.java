@@ -43,10 +43,10 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws  Exception {
     http
-            .cors(withDefaults()) // CORS 설정 활성화
+            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 명시적으로 CORS 설정 적용
             .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화 (JWT는 CSRF 보호가 필요하지 않음)
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/users/signup", "/api/users/login", "/api/content/tempContent", "/imagePath/**", "/videoPath/**").permitAll() // 회원가입과 로그인은 인증 없이 접근 가능
+                    .requestMatchers("/api/users/signup", "/api/email/**", "/api/users/login", "/api/content/tempContent", "/imagePath/**", "/videoPath/**").permitAll() // 회원가입과 로그인은 인증 없이 접근 가능
                     .anyRequest().authenticated()) // 그 외 모든 요청은 인증 필요
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션을 사용하지 않음 (JWT 방식)
             .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // JWT 필터를 UsernamePasswordAuthenticationFilter 전에 실행하도록 설정
@@ -61,6 +61,8 @@ public class SecurityConfig {
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
     configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
     configuration.setAllowCredentials(true);
+    configuration.setExposedHeaders(List.of("Authorization")); // 필요한 경우 노출할 헤더 설정
+
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);

@@ -53,4 +53,6 @@ public class User implements Serializable {
   // 사용자의 닉네임
   @Column(name = "nickName", length = 255, nullable = false, unique = true)
   private String nickName;
+
+
 }
