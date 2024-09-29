@@ -29,7 +29,8 @@ public class EmailController {
       emailService.sendVerificationEmail(email, verificationCode);
       // 생성된 인증 코드를 세션에 저장
       session.setAttribute("verificationCode", verificationCode);
-
+      // 세션 유효시간 설정(3분)
+      session.setMaxInactiveInterval(3*60);
       // 세션에 저장된 인증번호 확인
       System.out.println("session/ verificationCode: " + session.getAttribute("verificationCode"));
 

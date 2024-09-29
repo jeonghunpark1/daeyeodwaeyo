@@ -23,6 +23,6 @@ public class UserInfoDTO {
   public UserInfoDTO(String id, String nickName, String profileImage) {
     this.id = id;
     this.nickName = nickName;
-    this.profileImage = "http://localhost:8080/profileImage/" + profileImage;
+    this.profileImage = profileImage;
   }
 }

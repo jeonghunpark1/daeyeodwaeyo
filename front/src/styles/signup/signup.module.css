@@ -95,7 +95,13 @@
   line-height: 22px;
   letter-spacing: -.2px;
 }
-
+/* 
 .page_button_wrap button:hover {
   background-color: var(--hover-color);
+} */
+
+.actived_button:hover,
+.cancel_button:hover {
+  background-color: var(--hover-color);
+  cursor: pointer;
 }

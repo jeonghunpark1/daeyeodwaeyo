@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
@@ -61,14 +62,27 @@ public class UserController {
 //  @param userRegisterDTO 클라이언트가 전달한 회원가입 정보
 //  @return 성공 메시지 또는 에러 메시지
   @PostMapping("/signup")
-  public ResponseEntity<String> registerUser(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
+  public ResponseEntity<String> registerUser(@ModelAttribute UserRegisterDTO userRegisterDTO) {
     try {
       String message = userService.registerUser(userRegisterDTO);
       return ResponseEntity.ok(message); // 회원가입 성공 시 성공 메시지 반환
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
+  }
 
+  // 아이디 중복확인 엔드포인트
+  @GetMapping("/idDuplicate")
+  public ResponseEntity<Boolean> checkIdDuplicate(@RequestParam String id) {
+    boolean isIdDuplicate = userService.isIdDuplicate(id);
+    return ResponseEntity.ok(isIdDuplicate);
+  }
+
+  // 아이디 중복확인 엔드포인트
+  @GetMapping("/nickNameDuplicate")
+  public ResponseEntity<Boolean> checkNickNameDuplicate(@RequestParam String nickName) {
+    boolean isNickNameDuplicate = userService.isNickNameDuplicate(nickName);
+    return ResponseEntity.ok(isNickNameDuplicate);
   }
 
 //  로그인 엔드포인트
@@ -121,11 +135,36 @@ public class UserController {
 //    return new ResponseEntity<>(resource, HttpStatus.OK);
 //  }
 
-  @GetMapping("/profileImage")
-  public ResponseEntity<Resource> display(@Param("fileName") String fileName) {
+//  @GetMapping("/profileImage")
+//  public ResponseEntity<Resource> display(@Param("fileName") String fileName) {
+//    String path = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage";
+//
+//    Resource resource = new FileSystemResource(path + fileName);
+//
+//    if(!resource.exists())
+//      return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+//
+//    HttpHeaders header = new HttpHeaders();
+//    Path filePath = null;
+//
+//    try {
+//      filePath = Paths.get(path + fileName);
+//      header.add("Content-Type", Files.probeContentType((filePath)));
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
+//    return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+//  }
+
+  @GetMapping("/profileImage/{filename}")
+  public ResponseEntity<Resource> display(@PathVariable("filename") String fileName) {
     String path = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage";
 
+    System.out.println("filename: " + fileName);
+
     Resource resource = new FileSystemResource(path + fileName);
+
+    System.out.println(("resource url: " + resource));
 
     if(!resource.exists())
       return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
@@ -141,7 +180,6 @@ public class UserController {
     }
     return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
   }
-
 
 //  인증된 사용자만 접근 가능한 엔드포인트 (선택사항)
 //  @return 인증된 사용자에게만 반환하는 메시지

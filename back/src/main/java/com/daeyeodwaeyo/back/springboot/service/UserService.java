@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -75,7 +76,6 @@ public class UserService {
   //  회원가입 처리 메서드
   //  @param userRegisterDTO 클라이언트에서 전달된 회원가입 정보
   //  @return 회원가입 성공 메시지
-
   public String registerUser(UserRegisterDTO userRegisterDTO) throws Exception{
     // DTO를 엔티티로 변환
     User user = new User();
@@ -86,15 +86,14 @@ public class UserService {
     user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
     user.setAddress(userRegisterDTO.getAddress());
     user.setEmail(userRegisterDTO.getEmail());
-    user.setProfileImage(userRegisterDTO.getProfileImage());
     user.setNickName(userRegisterDTO.getNickName());
 
-//
-//    // 임시 이미지를 최종 폴더로 이동
-//    moveTempImageToProfile(userRegisterDTO.getProfileImage());
-//
-
-    contentService.moveTempFileToFinal(userRegisterDTO.getProfileImage(), "profileImage");
+    // 프로필 이미지 처리 로직
+    if (!userRegisterDTO.getProfileImage().isEmpty()) {
+      // 프로필 이미지 저장
+      String profileImageURL = contentService.saveProfileImage(userRegisterDTO.getProfileImage());
+      user.setProfileImage(profileImageURL);
+    }
 
 //    확인용 코드
 //    System.out.println(userRegisterDTO.getId());
@@ -109,6 +108,16 @@ public class UserService {
     // 사용자 정보 저장
     userRepository.save(user);
     return "회원가입이 완료되었습니다.";
+  }
+
+  // 아이디 중복확인 처리 메서드
+  public boolean isIdDuplicate(String id) {
+    return userRepository.existsById(id);
+  }
+
+  // 아이디 중복확인 처리 메서드
+  public boolean isNickNameDuplicate(String nickName) {
+    return userRepository.existsByNickName(nickName);
   }
 
 //  로그인 처리 메서드

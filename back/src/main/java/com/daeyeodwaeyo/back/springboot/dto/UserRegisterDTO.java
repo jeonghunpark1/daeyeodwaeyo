@@ -5,6 +5,10 @@ import lombok.Setter;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //회원가입 요청에서 사용되는 데이터 전송 객체 (DTO)
 //사용자가 입력한 데이터를 서버로 전달하는 데 사용된다.
@@ -40,7 +44,7 @@ public class UserRegisterDTO {
   private String email;
 
   // 프로필 이미지는 선택 사항이므로 필수 검사 없음
-  private String profileImage;
+  private MultipartFile profileImage;
 
   // 닉네임은 필수 항목이며 고유해야 함
   @NotBlank(message = "닉네임은 필수 항목입니다.")

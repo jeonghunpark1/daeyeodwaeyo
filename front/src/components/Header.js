@@ -12,6 +12,13 @@ export default function Header({ getterIsLogin, userInfo }) {
     window.location.reload();
   };
 
+  const requestProfileImageURL = (profileImage) => {
+    console.log("프로필 사진: ", profileImage);
+    console.log("프로필 사진: ", userInfo.profileImage);
+    const profileImageURL = "http://localhost:8080/imagePath/" + profileImage;
+    return profileImageURL;
+  };
+
   return (
     <div className={style.header_box}>
       <div className={style.header_top}>
@@ -40,7 +47,7 @@ export default function Header({ getterIsLogin, userInfo }) {
             <>
             <div className={style.user_image_box}>
               <div className={style.user_image}>
-                <img src="http://localhost:8080/imagePath/ca224281-2bc3-42bd-b6c0-91d9a66599f2_image_2e3a2f8b554a5.jpeg" alt='프로필 사진' />
+                <img src={requestProfileImageURL(userInfo.profileImage)} alt='프로필 사진' />
               </div>
             </div>
             <div className={style.user_info_box}>

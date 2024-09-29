@@ -20,4 +20,10 @@ public interface UserRepository extends JpaRepository<User, String> {
 //  @Param nickName 찾고자 하는 사용자의 닉네임
 //  @return 해당 닉네임을 가진 사용자 (없으면 null 반환)
   User findByNickName(String nickName);
+
+  // id가 존재하는지 확인하는 메서드
+  boolean existsById(String id);
+
+  // nickName이 존재하는지 확인하는 메서드
+  boolean existsByNickName(String nickName);
 }

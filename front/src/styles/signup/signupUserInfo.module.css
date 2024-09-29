@@ -8,6 +8,25 @@
   align-items: center;
 }
 
+.default_message_wrap,
+.correct_message_wrap,
+.wrong_message_wrap {
+  margin-left: 14px;
+  font-size: 13px;
+}
+
+.default_message_wrap {
+  color: black;
+}
+
+.correct_message_wrap {
+  color: green;
+}
+
+.wrong_message_wrap {
+  color: red;
+}
+
 .input_wrap_div {
   display: flex;
   flex-direction: column;
@@ -15,6 +34,103 @@
   align-items: center;
   width: 100%;
   padding: 10px 0;
+}
+
+.id_box {
+  /* background-color: lightblue; */
+  padding: 0 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.id_input_wrap {
+  /* background-color: lightcoral; */
+  width: 45%;
+}
+
+.id_input {
+  /* background-color: lightcyan; */
+}
+
+.id_input_label {
+  /* background-color: lightgoldenrodyellow; */
+}
+
+.id_check_wrap {
+  /* background-color: lightslategray; */
+  width: 55%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.id_check_button {
+  width: 90px;
+  height: 70%;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -.2px;
+  background-color: white;
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+}
+
+.actived_button:hover {
+  background-color: var(--hover-color);
+}
+
+.disabled_button {
+  background-color: lightgray;
+  border: 1px solid gray;
+}
+
+.password_box,
+.re_password_box,
+.name_box,
+.phone_box {
+  /* background-color: lightblue; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.password_input_wrap,
+.re_password_input_wrap,
+.name_input_wrap,
+.phone_input_wrap {
+  /* background-color: lightcoral; */
+  width: 40%;
+}
+
+.password_input,
+.re_password_input,
+.name_input,
+.phoneNumber_input {
+  /* background-color: lightcyan; */
+}
+
+.password_input_label,
+.re_password_input_label,
+.name_input_label,
+.phoneNumber_input_label {
+  /* background-color: lightgoldenrodyellow; */
+}
+
+.password_check_wrap,
+.re_password_check_wrap,
+.name_check_wrap,
+.phone_check_wrap {
+  /* background-color: lightgray; */
+  width: 50%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
 
 .address_input_wrap {
@@ -43,11 +159,12 @@
   /* background-color: lightblue; */
   display: flex;
   align-items: center;
-  width: 50%;
+  width: 60%;
 }
 
 .address_input {
   /* background-color: pink; */
+  width: 100%;
 }
 
 .address_input_label {
@@ -62,22 +179,23 @@
   position: relative;
   display: flex;
   align-items: center;
-  width: 20%;
-  margin: 0 0 0 5% ;
-  padding: 0 0 0 5%;
+  width: 15%;
+
+
 }
 
 .zipCode_input {
   /* background-color: pink; */
+  margin-left: 12%;
 }
 
 .zipCode_input_label {
-  left: 20%;
+  margin-left: 6%;
 }
 
 .address_search_button_wrap {
   /* background-color: lightslategray; */
-  width: 100px;
+  width: 90px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,4 +235,60 @@
 
 .detailAddress_input {
   /* background-color: pink; */
+}
+
+.daumpostcode_background {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  background-color: black;
+  opacity: 0.3;
+  width: 100vw;
+  height: 100vh;
+  z-index: 90;
+}
+
+.daumpostcode_window {
+  background-color: white;
+  width: 400px;
+  border: 1px solid black;
+  position: absolute;
+  top: 45vh;
+  left: 36vw;
+  z-index: 100;
+}
+
+.daumpostcode_top {
+  /* background-color: lightpink; */
+  border-bottom: 1px solid gray;
+  width: 400px;
+  height: 40px;
+}
+
+.close_window_button {
+  background-color: white;
+  height: 100%;
+  width: 12%;
+  border: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+
+  cursor: pointer;
+}
+
+.close_icon {
+  font-size: 100px;
+}
+
+.close_window_button:hover {
+  background-color: rgb(255, 134, 134);
+}
+
+.daumpostcode {
+  width: 400px;
+  height: 450px;
+
+  background-color: white;
 }
