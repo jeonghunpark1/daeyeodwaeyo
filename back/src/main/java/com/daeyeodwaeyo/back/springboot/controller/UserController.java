@@ -3,10 +3,7 @@ package com.daeyeodwaeyo.back.springboot.controller;
 import com.daeyeodwaeyo.back.springboot.config.JwtRequestFilter;
 import com.daeyeodwaeyo.back.springboot.config.JwtUtil;
 import com.daeyeodwaeyo.back.springboot.domain.User;
-import com.daeyeodwaeyo.back.springboot.dto.FindIdRequestDTO;
-import com.daeyeodwaeyo.back.springboot.dto.UserInfoDTO;
-import com.daeyeodwaeyo.back.springboot.dto.UserLoginDTO;
-import com.daeyeodwaeyo.back.springboot.dto.UserRegisterDTO;
+import com.daeyeodwaeyo.back.springboot.dto.*;
 import com.daeyeodwaeyo.back.springboot.repository.UserRepository;
 import com.daeyeodwaeyo.back.springboot.service.UserService;
 import jakarta.validation.Valid;
@@ -131,12 +128,24 @@ public class UserController {
   // 아이디 찾기
   @PostMapping("/findId")
   public ResponseEntity<String> findIdByNameAndEmail(@RequestBody FindIdRequestDTO findIdRequestDTO) {
-    String userId = userService.findIdByNameAndEmail(findIdRequestDTO.getName(), findIdRequestDTO.getEmail());
+    String userId = userService.findId(findIdRequestDTO.getName(), findIdRequestDTO.getEmail());
     if (userId != null) {
       System.out.println("찾은 아이디" + userId);
       return ResponseEntity.ok(userId); // 성공 시 유저 아이디 반환
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 정보로 일치하는 아이디가 없습니다."); // 찾지 못했을 경우
+    }
+  }
+
+  // 비밀번호 찾기
+  @PostMapping("/findPassword")
+  public ResponseEntity<String> findPassword(@RequestBody FindPasswordRequestDTO findPasswordRequestDTO) {
+    String tempPassword = userService.generateTempPassword(findPasswordRequestDTO.getName(), findPasswordRequestDTO.getId(), findPasswordRequestDTO.getEmail());
+    if (tempPassword != null) {
+      System.out.println("임시 비밀번호: " + tempPassword);
+      return ResponseEntity.ok(tempPassword); // 성공 시 임시 비밀번호 반환
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 정보로 일치하는 사용자를 찾을 수 없습니다."); // 찾지 못했을 경우
     }
   }
 

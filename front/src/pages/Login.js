@@ -54,6 +54,10 @@ export default function Login({ setterIsLogin }) {
     const popup = window.open("http://localhost:3000/findId", "아이디 찾기", "width=500px, height=350px, scrollbars=no, left=500px, top=200px");
   }
 
+  const handleFindPassword = () => {
+    const popup = window.open("http://localhost:3000/findPassword", "비밀번호 찾기", "width=500px, height=415px, scrollbars=no, left=500px, top=200px");
+  }
+
   return (
     <div className={style.login_page}>
       <div className={style.login_content}>
@@ -78,7 +82,7 @@ export default function Login({ setterIsLogin }) {
           
           <div className={style.link_wrap}>
             <Link className={style.find_id} onClick={() => {handleFindId()}}>아이디 찾기</Link>
-            <Link className={style.find_password} to={'/'}>비밀번호 찾기</Link>
+            <Link className={style.find_password} onClick={() => {handleFindPassword()}}>비밀번호 찾기</Link>
             <Link className={style.signup} to={'/signup'}>회원가입</Link>
           </div>
         </div>

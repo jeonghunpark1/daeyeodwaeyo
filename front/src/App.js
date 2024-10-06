@@ -12,6 +12,8 @@ import MyPage from './pages/MyPage';
 import Product from './pages/Product';
 import FindId from './pages/FindId';
 import FindIdResult from './pages/FindIdResult';
+import FindPassword from './pages/FindPassword';
+import FindPasswordResult from './pages/FindPasswordResult';
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -58,7 +60,7 @@ export default function App() {
   return (
 
       <div className="App">
-        {(location.pathname !== '/findId' && location.pathname != '/findIdResult') && (
+        {(location.pathname !== '/findId' && location.pathname != '/findIdResult' && location.pathname != '/findPassword' && location.pathname != '/findPasswordResult') && (
           <Header getterIsLogin={getterIsLogin} userInfo={userInfo} />
         )}
         <Routes>
@@ -71,8 +73,10 @@ export default function App() {
           <Route path="/myPage" element={<MyPage />}></Route>
           <Route path="/findId" element={<FindId />}></Route>
           <Route path="/findIdResult" element={<FindIdResult />}></Route>
+          <Route path="/findPassword" element={<FindPassword />}></Route>
+          <Route path="/findPasswordResult" element={<FindPasswordResult />}></Route>
         </Routes>
-        {(location.pathname !== '/findId' && location.pathname != '/findIdResult') && (
+        {(location.pathname !== '/findId' && location.pathname != '/findIdResult' && location.pathname != '/findPassword' && location.pathname != '/findPasswordResult') && (
           <Footer />
         )}
       </div>

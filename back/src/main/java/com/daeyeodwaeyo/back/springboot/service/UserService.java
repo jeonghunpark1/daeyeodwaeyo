@@ -122,12 +122,32 @@ public class UserService {
   }
 
   // 아이디 찾기 메서드
-  public String findIdByNameAndEmail(String name, String email) {
+  public String findId(String name, String email) {
     Optional<User> userOptional = userRepository.findByNameAndEmail(name, email);
     if (userOptional.isPresent()) {
       return userOptional.get().getId(); // 사용자의 ID 반환
     } else {
-      return null; // 사용자가 없는 경우
+      throw new RuntimeException("사용자를 찾을 수 없습니다.");
+    }
+  }
+
+  // 비밀번호 찾기 메서드 / 임시 비밀번호 생성
+  public String generateTempPassword(String name, String id, String email) {
+    Optional<User> userOptional = userRepository.findByNameAndIdAndEmail(name, id, email);
+    if (userOptional.isPresent()) {
+      // 임시 비밀번호 생성
+      String tempPassword = UUID.randomUUID().toString().substring(0, 8); // 8자리 임시 비밀번호
+      String encodedPassword = passwordEncoder.encode(tempPassword);
+
+      // 사용자 비밀번호 업데이트
+      User user = userOptional.get();
+      user.setPassword(encodedPassword);
+      userRepository.save(user);
+
+      // 임시 비밀번호 반환
+      return tempPassword;
+    } else {
+      throw new RuntimeException("사용자를 찾을 수 없습니다.");
     }
   }
 
