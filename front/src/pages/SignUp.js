@@ -10,6 +10,8 @@ import SignUpUserProfile from './signup/SignUpUserProfile';
 
 export default function SignUp() {
 
+  const navigate = useNavigate();
+
   const [currentPage, setCurrentPage] = useState(1);  
 
   const [id, setId] = useState("");
@@ -29,7 +31,6 @@ export default function SignUp() {
   const [nickName, setNickName] = useState("");
   const [availableNickName, setAvailableNickName] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const [idValid, setIdValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
@@ -313,8 +314,8 @@ export default function SignUp() {
   const handleSignUp = async (event) => {
 
     const formData = new FormData();
-    const fullAddress = `${address} ${detailAddress} (${zipCode})`
-    const fullEmail = `${emailId}@${emailDomain}`
+    const fullAddress = `${address} ${detailAddress} (${zipCode})`;
+    const fullEmail = `${emailId}@${emailDomain}`;
 
     formData.append("id", id);
     formData.append("password", password);
@@ -322,7 +323,7 @@ export default function SignUp() {
     formData.append("phoneNumber", phoneNumber);
     formData.append("address", fullAddress);
     formData.append("email", fullEmail);
-    formData.append("profileImage", profileImage)
+    formData.append("profileImage", profileImage);
     formData.append("nickName", nickName);
 
     // 확인용 코드
@@ -375,7 +376,7 @@ export default function SignUp() {
       case 1:
         return (
           <div className={style.page_button_wrap}>
-            <button className={style.cancel_button}>취소</button>
+            <button className={style.cancel_button} onClick={() => {navigate("/login")}}>취소</button>
             {/* <button className={`${style.next_button} `} onClick={() => {setCurrentPage(currentPage+1)}}>다음</button> */}
             <button className={`${style.next_button} ${inputValidByPage(currentPage) ? style.actived_button : style.disabled_button}`} disabled={inputValidByPage(currentPage) ? false : true} onClick={() => {setCurrentPage(currentPage+1)}}>다음</button>
           </div>

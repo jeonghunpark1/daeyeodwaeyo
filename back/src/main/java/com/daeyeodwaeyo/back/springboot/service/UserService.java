@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -118,6 +119,16 @@ public class UserService {
   // 아이디 중복확인 처리 메서드
   public boolean isNickNameDuplicate(String nickName) {
     return userRepository.existsByNickName(nickName);
+  }
+
+  // 아이디 찾기 메서드
+  public String findIdByNameAndEmail(String name, String email) {
+    Optional<User> userOptional = userRepository.findByNameAndEmail(name, email);
+    if (userOptional.isPresent()) {
+      return userOptional.get().getId(); // 사용자의 ID 반환
+    } else {
+      return null; // 사용자가 없는 경우
+    }
   }
 
 //  로그인 처리 메서드

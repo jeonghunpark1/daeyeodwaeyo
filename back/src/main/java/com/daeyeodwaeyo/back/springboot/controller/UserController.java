@@ -3,6 +3,7 @@ package com.daeyeodwaeyo.back.springboot.controller;
 import com.daeyeodwaeyo.back.springboot.config.JwtRequestFilter;
 import com.daeyeodwaeyo.back.springboot.config.JwtUtil;
 import com.daeyeodwaeyo.back.springboot.domain.User;
+import com.daeyeodwaeyo.back.springboot.dto.FindIdRequestDTO;
 import com.daeyeodwaeyo.back.springboot.dto.UserInfoDTO;
 import com.daeyeodwaeyo.back.springboot.dto.UserLoginDTO;
 import com.daeyeodwaeyo.back.springboot.dto.UserRegisterDTO;
@@ -124,6 +125,18 @@ public class UserController {
       return ResponseEntity.ok(userInfoDTO);
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류 발생");
+    }
+  }
+
+  // 아이디 찾기
+  @PostMapping("/findId")
+  public ResponseEntity<String> findIdByNameAndEmail(@RequestBody FindIdRequestDTO findIdRequestDTO) {
+    String userId = userService.findIdByNameAndEmail(findIdRequestDTO.getName(), findIdRequestDTO.getEmail());
+    if (userId != null) {
+      System.out.println("찾은 아이디" + userId);
+      return ResponseEntity.ok(userId); // 성공 시 유저 아이디 반환
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 정보로 일치하는 아이디가 없습니다."); // 찾지 못했을 경우
     }
   }
 

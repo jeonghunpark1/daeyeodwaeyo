@@ -1,7 +1,7 @@
-/* 
+@import "globalVar.module.css";
 
-.product-add-container {
-    width: 700px; 
+.productAdd_container {
+    width: 700px;
     margin: 0 auto;
     background-color: #f9f9f9;
     padding: 20px;
@@ -9,28 +9,28 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+.productAdd_title {
     text-align: center;
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-.form-group {
+.productAdd_formGroup {
     margin-bottom: 20px;
 }
 
-label {
+.productAdd_label {
     display: block;
     font-weight: bold;
     margin-bottom: 8px;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select,
-textarea {
+.productAdd_inputText,
+.productAdd_inputNumber,
+.productAdd_inputDate,
+.productAdd_select,
+.productAdd_textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -38,11 +38,13 @@ textarea {
     font-size: 14px;
 }
 
-textarea {
+.productAdd_textarea {
     height: 100px;
+    resize: none;
+    overflow-y: auto;
 }
 
-button {
+.productAdd_button {
     width: 100%;
     padding: 12px;
     background-color: #333;
@@ -53,23 +55,22 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.productAdd_button:hover {
     background-color: #555;
 }
 
-
-.media-section {
+.productAdd_mediaSection {
     display: flex;
     justify-content: space-between;
 }
 
-.image-section,
-.video-section {
+.productAdd_imageSection,
+.productAdd_videoSection {
     width: 48%;
 }
 
-.image-preview,
-.video-preview {
+.productAdd_imagePreview,
+.productAdd_videoPreview {
     border: 1px solid #ccc;
     height: 200px;
     display: flex;
@@ -79,7 +80,7 @@ button:hover {
     overflow-x: auto;
 }
 
-.image-preview img {
+.productAdd_imagePreview img {
     width: 150px;
     height: 150px;
     object-fit: contain;
@@ -87,25 +88,24 @@ button:hover {
     margin-right: 5px;
 }
 
-video {
+.productAdd_videoPreview video {
     width: 100%;
     height: 100%;
 }
 
-
-.category-price-section {
+.productAdd_categoryPriceSection {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; 
+    align-items: flex-start;
 }
 
-.graph-placeholder {
-    width: 40%; 
+.productAdd_graphPlaceholder {
+    width: 40%;
 }
 
-.graph-box {
+.productAdd_graphBox {
     border: 1px solid #ccc;
-    height: 120px; 
+    height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,15 +114,16 @@ video {
     text-align: center;
 }
 
-.form-group input[name="price"] {
+.productAdd_priceInput {
     width: 60%;
 }
 
-.date-picker {
+.productAdd_datePicker {
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
 }
 
-.date-picker input {
-    width: 48%;
-} */
+.productAdd_datePicker input {
+    width: 30%;
+}

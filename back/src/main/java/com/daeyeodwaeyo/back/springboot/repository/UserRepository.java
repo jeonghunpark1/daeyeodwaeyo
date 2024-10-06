@@ -4,6 +4,8 @@ import com.daeyeodwaeyo.back.springboot.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 //UserRepository는 User 엔티티와 데이터베이스 간의 상호작용을 처리한다.
 //JpaRepository를 상속하여 기본적인 CRUD 작업을 자동으로 처리할 수 있다.
 @Repository // 스프링 컴포넌트 스캔을 통해 리포지토리를 인식하도록 설정
@@ -26,4 +28,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 
   // nickName이 존재하는지 확인하는 메서드
   boolean existsByNickName(String nickName);
+
+  Optional<User> findByNameAndEmail(String name, String email);
 }

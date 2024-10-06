@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
 import axios from 'axios';
 import Header from './components/Header';
 import Login from './pages/Login';
@@ -9,11 +9,16 @@ import SignUp from './pages/SignUp';
 import Footer from './components/Footer';
 import ProductAdd from './pages/ProductAdd';
 import MyPage from './pages/MyPage';
-
+import Product from './pages/Product';
+import FindId from './pages/FindId';
+import FindIdResult from './pages/FindIdResult';
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+
+  // 현재 경로 확인
+  const location = useLocation()
 
   const setterIsLogin = (value) => {
     setIsLogin(value);
@@ -51,19 +56,26 @@ export default function App() {
   }, [isLogin]);
 
   return (
-    <BrowserRouter>
+
       <div className="App">
-        <Header getterIsLogin={getterIsLogin} userInfo={userInfo} />
+        {(location.pathname !== '/findId' && location.pathname != '/findIdResult') && (
+          <Header getterIsLogin={getterIsLogin} userInfo={userInfo} />
+        )}
         <Routes>
           {/* <Route path="/" element={<Index />}></Route> */}
           <Route path="/login" element={<Login setterIsLogin={setterIsLogin}/>}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/main" element={<Main />}></Route>
           <Route path="/productAdd" element={<ProductAdd />}></Route>
+          <Route path="/product" element={<Product />}></Route>
           <Route path="/myPage" element={<MyPage />}></Route>
+          <Route path="/findId" element={<FindId />}></Route>
+          <Route path="/findIdResult" element={<FindIdResult />}></Route>
         </Routes>
-        <Footer />
+        {(location.pathname !== '/findId' && location.pathname != '/findIdResult') && (
+          <Footer />
+        )}
       </div>
-    </BrowserRouter>
+
   );
 }
