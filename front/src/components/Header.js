@@ -3,18 +3,22 @@ import style from "../styles/header.module.css"
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function Header({ getterIsLogin, userInfo }) {
+export default function Header({ getterIsLogin, headerUserInfo }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    // 토큰 삭제    
     localStorage.removeItem('token');
+    localStorage.removeItem('isLogin');
 
     window.location.reload();
+    // 로그아웃 후 메인 페이지로 이동
+    navigate("/main");
   };
 
   const requestProfileImageURL = (profileImage) => {
     console.log("프로필 사진: ", profileImage);
-    console.log("프로필 사진: ", userInfo.profileImage);
+    console.log("프로필 사진: ", headerUserInfo.profileImage);
     const profileImageURL = "http://localhost:8080/imagePath/" + profileImage;
     return profileImageURL;
   };
@@ -43,15 +47,15 @@ export default function Header({ getterIsLogin, userInfo }) {
           </div>
         </div>
         <div className={style.header_user}>
-          {{getterIsLogin} && userInfo ? (
+          {{getterIsLogin} && headerUserInfo ? (
             <>
             <div className={style.user_image_box}>
               <div className={style.user_image}>
-                <img src={requestProfileImageURL(userInfo.profileImage)} alt='프로필 사진' />
+                <img src={requestProfileImageURL(headerUserInfo.profileImage)} alt='프로필 사진' />
               </div>
             </div>
             <div className={style.user_info_box}>
-              <div className={style.user_nickname}>{userInfo.nickName}님</div>
+              <div className={style.user_nickname}>{headerUserInfo.nickName}님</div>
               <button className={style.logout_button} onClick={handleLogout}>로그아웃</button>
             </div>
             </>
@@ -80,7 +84,8 @@ export default function Header({ getterIsLogin, userInfo }) {
             <Link className={style.nav_menu} to={'/QnA'}>Q&A</Link>
           </li>
           <li>
-            <Link className={style.nav_menu} to={'/myPage'}>마이페이지</Link>
+            {/* <Link className={style.nav_menu} to={'/myPage'}>마이페이지</Link> */}
+            <button className={style.nav_menu} onClick={() => {getterIsLogin ? navigate('/myPage'):navigate('/login')}}>마이페이지</button>
           </li>
           <li>
             <Link className={style.nav_menu} to={'/productAdd'}>상품등록</Link>

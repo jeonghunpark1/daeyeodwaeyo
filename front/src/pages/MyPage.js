@@ -5,6 +5,21 @@ import style from "../styles/myPage.module.css";
 
 export default function MyPage() {
 
+  const [isOpenMenu, setIsOpenMenu] = useState({
+    menu1: false,
+    menu2: false,
+    menu3: false,
+    menu4: false,
+    menu5: false
+  });
+
+  const toggleMenu = (menu) => {
+    setIsOpenMenu(prevState => ({
+      ...prevState,
+      [menu]: !prevState[menu] // 해당 메뉴 상태를 토글
+    }));
+  };
+
   const myProducts = () => {
     const result = [];
     for (let i = 0; i < 10; i++) {
@@ -39,8 +54,72 @@ export default function MyPage() {
     return result;
   };
 
+  const handleChangeInfo = () => {
+    const popup = window.open("http://localhost:3000/changeInfo", "내정보 변경", "width=800px, height=361px, scrollbars=no, left=350px, top=200px");
+  }
+
   return (
     <div className={style.mypage_page}>
+      {/* <div className={style.mypage_nav_wrap}>
+        <div className={`${style.home_menu_wrap} ${style.menu_wrap}`}>
+          <button className={`${style.home_menu} ${style.menu}`} onClick={() => {}}>홈</button>
+        </div>
+        <div className={`${style.menu1_wrap} ${style.menu_wrap}`}>
+          <button className={`${style.menu1} ${style.menu}`} onClick={() => {toggleMenu("menu1")}}>
+            {isOpenMenu.menu1 ? "내정보 변경 닫기" : "내정보 변경 열기"}
+          </button>
+          {isOpenMenu.menu1 && (
+            <ul>
+              <li>개인정보 수정</li>
+              <li>프로필 수정</li>
+            </ul>
+          )}
+        </div>
+        <div className={`${style.menu2_wrap} ${style.menu_wrap}`}>
+          <button className={`${style.menu2} ${style.menu}`} onClick={() => {toggleMenu("menu2")}}>
+            {isOpenMenu.menu2 ? "매너등급 닫기" : "매너등급 열기"}
+          </button>
+          {isOpenMenu.menu2 && (
+            <ul>
+              <li>하위 메뉴1</li>
+              <li>하위 메뉴2</li>
+            </ul>
+          )}
+        </div>
+        <div className={`${style.menu3_wrap} ${style.menu_wrap}`}>
+          <button className={`${style.menu3} ${style.menu}`} onClick={() => {toggleMenu("menu3")}}>
+            {isOpenMenu.menu3 ? "신고 닫기" : "신고 열기"}
+          </button>
+          {isOpenMenu.menu3 && (
+            <ul>
+              <li>하위 메뉴1</li>
+              <li>하위 메뉴2</li>
+            </ul>
+          )}
+        </div>
+        <div className={`${style.menu4_wrap} ${style.menu_wrap}`}>
+          <button className={`${style.menu4} ${style.menu}`} onClick={() => {toggleMenu("menu4")}}>
+            {isOpenMenu.menu4 ? "후기 닫기" : "후기 열기"}
+          </button>
+          {isOpenMenu.menu4 && (
+            <ul>
+              <li>하위 메뉴1</li>
+              <li>하위 메뉴2</li>
+            </ul>
+          )}
+        </div>
+        <div className={`${style.menu5_wrap} ${style.menu_wrap}`}>
+          <button className={`${style.menu5} ${style.menu}`} onClick={() => {toggleMenu("menu5")}}>
+            {isOpenMenu.menu5 ? "거래내역 닫기" : "거래내역 열기"}
+          </button>
+          {isOpenMenu.menu5 && (
+            <ul>
+              <li>하위 메뉴1</li>
+              <li>하위 메뉴2</li>
+            </ul>
+          )}
+        </div>
+      </div> */}
       <div className={style.mypage_content_wrap}>
         <div className={style.mypage_title_wrap}>
           <h1>마이페이지</h1>
@@ -49,7 +128,7 @@ export default function MyPage() {
           {/* 마이페이지 메뉴 */}
           <div className={style.mypage_menu_box}>
             <div className={`${style.update_myInfo_menu_wrap} ${style.mypage_menu_wrap}`}>
-              <button className={`${style.update_myInfo_menu} ${style.mypage_menu}`}>
+              <button className={`${style.update_myInfo_menu} ${style.mypage_menu}`} onClick={() => {handleChangeInfo()}}>
                 내정보 <br/> 변경
               </button>
             </div>

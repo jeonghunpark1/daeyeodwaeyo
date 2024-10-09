@@ -4,7 +4,7 @@ import style from "../styles/login.module.css"
 import input_style from "../styles/login_signup_input.module.css"
 import axios from 'axios';
 
-export default function Login({ setterIsLogin }) {
+export default function Login({ setterIsLogin, fetchUserInfo }) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -37,6 +37,10 @@ export default function Login({ setterIsLogin }) {
         // alert("token:", response.data);
         localStorage.setItem('token', response.data);
         setterIsLogin(true);
+        
+        // 로그인 성공 후 사용자 정보를 다시 가져옴
+        fetchUserInfo(response.data);
+
         // 로그인 성공 시 메인 페이지로 이동
         navigate('/main');
       } else {
