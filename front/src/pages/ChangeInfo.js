@@ -1,7 +1,9 @@
-import {React, useState} from 'react'
+import {React, useEffect, useState} from 'react'
 import style from "../styles/changeInfo.module.css"
+import axios from 'axios';
 
 export default function ChangeInfo() {
+
 
   const [isOpenMenu, setIsOpenMenu] = useState({
     menu1: false,
