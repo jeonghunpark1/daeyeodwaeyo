@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 //UserController는 회원가입 및 로그인 요청은 처리하는 컨트롤러이다.
 //클라이언트로부터 요청을 받아 서비스를 호출한다.
@@ -118,7 +119,24 @@ public class UserController {
 
       // 사용자 정보 반환
       UserInfoDTO userInfoDTO = new UserInfoDTO(user.getId(), user.getNickName(), user.getProfileImage());
-      System.out.println("userinfoDTO.getProfileImage(): " + userInfoDTO.getProfileImage());
+      System.out.println("headerUserInfo / userinfoDTO.getProfileImage(): " + userInfoDTO.getProfileImage());
+      return ResponseEntity.ok(userInfoDTO);
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류 발생");
+    }
+  }
+
+  // JWT 토큰을 통해 사용자 정보 제공
+  @GetMapping("/userInfo")
+  public ResponseEntity<?> getUserInfo(@RequestHeader("Authorization") String token) {
+    try {
+      // 토큰에서 사용자 정보 추출
+      String userId = jwtUtil.extractUsername(token.substring(7)); // "Bearer " 부분 제거
+      User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+
+      // 사용자 정보 반환
+      UserInfoDTO userInfoDTO = new UserInfoDTO(user.getId(), user.getName(), user.getPhoneNumber(), user.getAddress(), user.getEmail(), user.getProfileImage(), user.getNickName());
+      System.out.println("userInfo / userinfoDTO.getProfileImage(): " + userInfoDTO.getProfileImage());
       return ResponseEntity.ok(userInfoDTO);
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류 발생");
@@ -137,7 +155,7 @@ public class UserController {
     }
   }
 
-  // 비밀번호 찾기
+  // 비밀번호 찾기 (임시 비밀번호 발급)
   @PostMapping("/findPassword")
   public ResponseEntity<String> findPassword(@RequestBody FindPasswordRequestDTO findPasswordRequestDTO) {
     String tempPassword = userService.generateTempPassword(findPasswordRequestDTO.getName(), findPasswordRequestDTO.getId(), findPasswordRequestDTO.getEmail());
@@ -148,6 +166,39 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 정보로 일치하는 사용자를 찾을 수 없습니다."); // 찾지 못했을 경우
     }
   }
+
+  // 마이페이지에서 현재 비밀번호 인증
+  @PostMapping("/checkPassword")
+  public ResponseEntity<Boolean> checkPassword(@RequestBody Map<String, String> inputPassword,
+                                              @RequestHeader("Authorization") String token) {
+    try {
+      // 토큰에서 사용자 정보 추출
+
+      String userId = jwtUtil.extractUsername(token.substring(7)); // "Bearer " 부분 제거
+      User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+      System.out.println("userId: " + user.getId());
+
+      // 사용자 정보 반환
+      UserInfoDTO userInfoDTO = new UserInfoDTO(user.getPassword());
+
+      // 테스트 출력
+      System.out.println("checkPassword / userinfoDTO.getPassword(): " + userInfoDTO.getPassword());
+
+      boolean matches = userService.checkPassword(userInfoDTO, inputPassword.get("password")); // json 형식으로 inputPassword를 받기 때문에 .get() 사용
+
+      // 테스트 출력
+      System.out.println("비밀번호 일치 여부: " + matches);
+
+      return ResponseEntity.ok(matches);
+    } catch (UsernameNotFoundException e) {
+      // 사용자 아이디가 존재하지 않는 경우 404 반환
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+    } catch (Exception e) {
+      // 일반적인 서버 오류가 발생한 경우 500 반환
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+    }
+  }
+
 
 //  @GetMapping("/profileImage")
 //  public ResponseEntity<?> returnImage(@RequestParam String imageName) {

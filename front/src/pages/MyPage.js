@@ -55,7 +55,7 @@ export default function MyPage() {
   };
 
   const handleChangeInfo = () => {
-    const popup = window.open("http://localhost:3000/changeInfo", "내정보 변경", "width=800px, height=361px, scrollbars=no, left=350px, top=200px");
+    const popup = window.open("http://localhost:3000/changeInfo", "내정보 변경", "width=815px, height=451px, scrollbars=no, left=350px, top=200px");
   }
 
   return (

@@ -2,6 +2,7 @@ package com.daeyeodwaeyo.back.springboot.service;
 
 import com.daeyeodwaeyo.back.springboot.config.JwtUtil;
 import com.daeyeodwaeyo.back.springboot.domain.User;
+import com.daeyeodwaeyo.back.springboot.dto.UserInfoDTO;
 import com.daeyeodwaeyo.back.springboot.dto.UserLoginDTO;
 import com.daeyeodwaeyo.back.springboot.dto.UserRegisterDTO;
 import com.daeyeodwaeyo.back.springboot.repository.UserRepository;
@@ -33,6 +34,9 @@ public class UserService {
 
   @Autowired
   private PasswordEncoder passwordEncoder; // 비밀번호 암호화
+
+  @Autowired
+  private JwtUtil jwtUtil;
 
 //
 //  private static final String TEMP_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/tempImage"; // 임시 이미지 경로
@@ -178,6 +182,28 @@ public class UserService {
     } else {
 
       throw new Exception("아이디 또는 비밀번호가 일치하지 않습니다.");
+    }
+  }
+
+  public Boolean checkPassword(UserInfoDTO userInfoDTO, String inputPassword) throws Exception {
+    String userPassword = userInfoDTO.getPassword();
+
+    boolean matches = passwordEncoder.matches(inputPassword, userPassword);
+
+    // 테스트 출력
+    System.out.println("inputPassword: " + inputPassword);
+    System.out.println("matches: " + matches);
+
+    if(passwordEncoder.matches(inputPassword, userPassword)) {
+      // 테스트 출력
+      System.out.println("비밀번호 일치");
+
+      return matches;
+    } else {
+      // 테스트 출력
+      System.out.println("비밀번호 불일치");
+
+      return matches;
     }
   }
 }
