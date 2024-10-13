@@ -206,4 +206,31 @@ public class UserService {
       return matches;
     }
   }
+
+  public String changePassword(UserInfoDTO userInfoDTO) throws Exception {
+
+    String userId = userInfoDTO.getId();
+    String changePassword = userInfoDTO.getPassword();
+    User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+    String userPassword = user.getPassword();
+
+    Boolean matches = passwordEncoder.matches(changePassword, userPassword);
+
+    // 테스트 출력
+    System.out.println("matches: " + matches);
+    System.out.println("changePassword: " + changePassword);
+
+    if (passwordEncoder.matches(changePassword, userPassword)) {
+      System.out.println("이전과 동일한 비밀번호입니다.");
+      return "Not change";
+    } else {
+      String encodedPassword = passwordEncoder.encode(changePassword);
+      // 사용자 비밀번호 업데이트
+      user.setPassword(encodedPassword);
+      userRepository.save(user);
+
+      System.out.println("비밀번호가 변경되었습니다.");
+      return "success";
+    }
+  }
 }

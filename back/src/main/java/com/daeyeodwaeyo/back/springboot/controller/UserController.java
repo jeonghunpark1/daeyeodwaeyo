@@ -176,6 +176,7 @@ public class UserController {
 
       String userId = jwtUtil.extractUsername(token.substring(7)); // "Bearer " 부분 제거
       User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+      // 테스트 출력
       System.out.println("userId: " + user.getId());
 
       // 사용자 정보 반환
@@ -199,6 +200,48 @@ public class UserController {
     }
   }
 
+  // 마이페이지의 내정보 변경에서 비밀번호 변경
+  @PostMapping("/changePassword")
+  public ResponseEntity<?> changePassword(@RequestBody Map<String, String> changePassword,
+                                          @RequestHeader("Authorization") String token) {
+    try {
+      // 토큰에서 사용자 정보 추출
+
+      String userId = jwtUtil.extractUsername(token.substring(7)); // "Bearer " 부분 제거
+      User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+
+      // 테스트 출력
+      System.out.println("userId: " + user.getId());
+
+      // 사용자 정보 반환
+      UserInfoDTO userInfoDTO = new UserInfoDTO(user.getId(), changePassword.get("password"));
+
+      // 테스트 출력
+      System.out.println("changePassword / userinfoDTO.getPassword(): " + userInfoDTO.getPassword());
+
+      String result = userService.changePassword(userInfoDTO);
+
+      // 테스트 출력
+      System.out.println("result: " + result);
+
+      if (result.equals("success")) {
+        // 태스트 출력
+        System.out.println("비밀번호 변경에 성공했습니다.");
+
+        return ResponseEntity.ok(true);
+      } else {
+        // 태스트 출력
+        System.out.println("비밀번호 변경에 실패했습니다.");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+      }
+    } catch (Exception e) {
+      // 태스트 출력
+      System.out.println("서버 오류");
+      
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+    }
+  }
 
 //  @GetMapping("/profileImage")
 //  public ResponseEntity<?> returnImage(@RequestParam String imageName) {

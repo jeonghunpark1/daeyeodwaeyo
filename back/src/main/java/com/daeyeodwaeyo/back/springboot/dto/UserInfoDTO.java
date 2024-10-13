@@ -41,4 +41,10 @@ public class UserInfoDTO {
   public UserInfoDTO(String password) {
     this.password = password;
   }
+
+  // 내정보 변경에서 현재 비밀번호 확인할 때 유저의 비밀번호를 제공하는 생성자
+  public UserInfoDTO(String id, String password) {
+    this.id = id;
+    this.password = password;
+  }
 }
