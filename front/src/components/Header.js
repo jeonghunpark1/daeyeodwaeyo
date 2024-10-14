@@ -81,7 +81,7 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
             <Link className={style.nav_menu} to={'/shorts'}>쇼츠</Link>
           </li>
           <li>
-            <Link className={style.nav_menu} to={'/QnA'}>Q&A</Link>
+            <Link className={style.nav_menu} to={'/product'}>Q&A</Link>
           </li>
           <li>
             {/* <Link className={style.nav_menu} to={'/myPage'}>마이페이지</Link> */}

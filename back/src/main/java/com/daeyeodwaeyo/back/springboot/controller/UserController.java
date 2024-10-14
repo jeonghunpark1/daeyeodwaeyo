@@ -238,7 +238,7 @@ public class UserController {
     } catch (Exception e) {
       // 태스트 출력
       System.out.println("서버 오류");
-      
+
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
     }
   }

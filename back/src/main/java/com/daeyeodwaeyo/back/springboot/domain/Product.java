@@ -32,8 +32,8 @@ public class Product {
     @Column(name = "category", nullable = false, length = 100)
     private String category;
 
-    @Column(name = "price", nullable = false, precision = 10, scale = 2)
-    private BigDecimal price;
+    @Column(name = "price", nullable = false, length = 30)
+    private String price;
 
     @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;

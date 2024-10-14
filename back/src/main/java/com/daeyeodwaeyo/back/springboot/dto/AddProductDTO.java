@@ -14,7 +14,7 @@ public class AddProductDTO {
   private String title;
   private String name;
   private String category;
-  private BigDecimal price;
+  private String price;
   private LocalDateTime startDate;
   private LocalDateTime endDate;
   private String description;

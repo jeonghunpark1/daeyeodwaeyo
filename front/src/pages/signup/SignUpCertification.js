@@ -110,11 +110,11 @@ export default function SignUpCertification({ setStateValue, getStateValue, setS
             <div className={style.emailDomain_input_wrap}>
               <input className={`${style.emailDomain_input} ${input_style.content_input}`} id="emailDomain" list='domainList' onChange={(e) => setStateValue("emailDomain", e.target.value)} value={getStateValue("emailDomain")} placeholder=''></input>
               <datalist id="domainList">
-                  <option value="naver.com">naver.com</option>
-                  <option value="daum.net">daum.net</option>
-                  <option value="gmail.com">gmail.com</option>
-                  <option value="kakao.com">kakao.com</option>
-                </datalist>
+                <option value="naver.com">naver.com</option>
+                <option value="daum.net">daum.net</option>
+                <option value="gmail.com">gmail.com</option>
+                <option value="kakao.com">kakao.com</option>
+              </datalist>
               {/* <input className={`${style.emailDomain_input} ${input_style.content_input}`} id="emailDomain" type="text" onChange={(e) => changeState("emailDomain", e.target.value)} value={stateValue("emailDomain")} placeholder=''></input> */}
               <label className={`${style.emailDomain_input_label} ${input_style.content_input_label}`} htmlFor="emailDomain" aria-hidden="true">이메일 도메인</label>
             </div>
