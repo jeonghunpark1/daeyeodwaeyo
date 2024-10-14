@@ -4,7 +4,7 @@ import com.daeyeodwaeyo.back.springboot.domain.Product;
 import com.daeyeodwaeyo.back.springboot.domain.ProductImage;
 import com.daeyeodwaeyo.back.springboot.domain.ProductVideo;
 import com.daeyeodwaeyo.back.springboot.domain.User;
-import com.daeyeodwaeyo.back.springboot.dto.AddProductDTO;
+import com.daeyeodwaeyo.back.springboot.dto.ProductDTO;
 import com.daeyeodwaeyo.back.springboot.repository.ProductImageRepository;
 import com.daeyeodwaeyo.back.springboot.repository.ProductRepository;
 import com.daeyeodwaeyo.back.springboot.repository.ProductVideoRepsitory;
@@ -38,17 +38,17 @@ public class ProductService {
   private ProductVideoRepsitory productVideoRepsitory;
 
   @Transactional
-  public void createProduct(String userId, String productId, AddProductDTO addProductDTO, List<MultipartFile> images, MultipartFile video) {
+  public void createProduct(String userId, String productId, ProductDTO productDTO, List<MultipartFile> images, MultipartFile video) {
     // Product 엔티티 생성
     Product product = new Product();
     product.setId(productId);
-    product.setTitle(addProductDTO.getTitle());
-    product.setName(addProductDTO.getName());
-    product.setCategory(addProductDTO.getCategory());
-    product.setPrice(addProductDTO.getPrice());
-    product.setStartDate(addProductDTO.getStartDate());
-    product.setEndDate(addProductDTO.getEndDate());
-    product.setDescription(addProductDTO.getDescription());
+    product.setTitle(productDTO.getTitle());
+    product.setName(productDTO.getName());
+    product.setCategory(productDTO.getCategory());
+    product.setPrice(productDTO.getPrice());
+    product.setStartDate(productDTO.getStartDate());
+    product.setEndDate(productDTO.getEndDate());
+    product.setDescription(productDTO.getDescription());
 
     // 사용자 ID 설정
     User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));

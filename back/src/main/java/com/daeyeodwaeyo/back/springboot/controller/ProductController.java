@@ -1,6 +1,6 @@
 package com.daeyeodwaeyo.back.springboot.controller;
 
-import com.daeyeodwaeyo.back.springboot.dto.AddProductDTO;
+import com.daeyeodwaeyo.back.springboot.dto.ProductDTO;
 import com.daeyeodwaeyo.back.springboot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +20,7 @@ public class ProductController {
   private ProductService productService;
 
   @PostMapping
-  public ResponseEntity<String> addProduct( @ModelAttribute AddProductDTO addProductDTO,
+  public ResponseEntity<String> addProduct( @ModelAttribute ProductDTO productDTO,
                                             @RequestPart("images") List<MultipartFile> images,
                                             @RequestPart(value = "video", required = false) MultipartFile video,
                                             Authentication authentication) throws IOException {
@@ -51,7 +49,7 @@ public class ProductController {
     System.out.println("userId: " + userId);
 
     String productId = UUID.randomUUID().toString();
-    productService.createProduct(userId, productId, addProductDTO, images, video);
+    productService.createProduct(userId, productId, productDTO, images, video);
     return ResponseEntity.ok("Product created successfully.");
   }
 }
