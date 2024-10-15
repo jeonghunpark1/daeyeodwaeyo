@@ -1,5 +1,6 @@
 package com.daeyeodwaeyo.back.springboot.controller;
 
+import com.daeyeodwaeyo.back.springboot.domain.Product;
 import com.daeyeodwaeyo.back.springboot.dto.ProductDTO;
 import com.daeyeodwaeyo.back.springboot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,11 @@ public class ProductController {
     String productId = UUID.randomUUID().toString();
     productService.createProduct(userId, productId, productDTO, images, video);
     return ResponseEntity.ok("Product created successfully.");
+  }
+
+  @GetMapping("/searchByQuery")
+  public ResponseEntity<List<ProductDTO>> searchByQueryProducts(@RequestParam("query") String query) {
+    List <ProductDTO> products = productService.searchByQueryProducts(query);
+    return ResponseEntity.ok(products);
   }
 }

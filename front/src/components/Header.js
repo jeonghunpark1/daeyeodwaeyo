@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from "../styles/header.module.css"
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Header({ getterIsLogin, headerUserInfo }) {
   const navigate = useNavigate();
+
+  const [query, setQuery] = useState("");
+
 
   const handleLogout = () => {
     // 토큰 삭제    
@@ -23,6 +27,18 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
     return profileImageURL;
   };
 
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/products/searchByQuery", {
+        params: { query }
+      });
+
+      console.log("productList: ", response.data)
+    } catch (err) {
+      console.log("error: ", err);
+    }
+  }
+
   return (
     <div className={style.header_box}>
       <div className={style.header_top}>
@@ -37,10 +53,10 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
               <input type="text" />
             </div> */}
             <label className={style.search_input_label}>
-              <input type="text" className={style.search_input} placeholder='검색어를 입력하세요.' />
+              <input type="text" className={style.search_input} onChange={(e) => {setQuery(e.target.value)}} value={query} placeholder='검색어를 입력하세요.' />
             </label>
             <label className={style.search_button_label}>
-              <button className={style.search_button}>
+              <button className={style.search_button} onClick={() => {handleSearch()}}>
                 <FaSearch />
               </button>
             </label>

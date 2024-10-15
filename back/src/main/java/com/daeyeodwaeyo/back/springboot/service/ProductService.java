@@ -16,8 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -96,5 +98,27 @@ public class ProductService {
     }
 
     System.out.println("상품 저장 완료");
+  }
+
+  private ProductDTO convertToDTO(Product product) {
+    return new ProductDTO(
+            product.getId(),
+            product.getTitle(),
+            product.getName(),
+            product.getCategory(),
+            product.getPrice(),
+            product.getStartDate(),
+            product.getEndDate(),
+            product.getDescription()
+    );
+  }
+
+  public List<ProductDTO> searchByQueryProducts(String query) {
+    // 제목, 카테고리, 설명에 검색어가 포함된 상품들 조회
+    List<Product> products = productRepository.findByTitleContainingOrCategoryContainingOrDescriptionContaining(query, query, query);
+    // Product를 ProductDTO로 변환
+    return products.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
   }
 }
