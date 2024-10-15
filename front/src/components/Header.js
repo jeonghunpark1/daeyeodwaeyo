@@ -32,8 +32,8 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
       const response = await axios.get("http://localhost:8080/api/products/searchByQuery", {
         params: { query }
       });
-
-      console.log("productList: ", response.data)
+      console.log("productList: ", response.data);
+      navigate("/searchResult", { state: response.data });
     } catch (err) {
       console.log("error: ", err);
     }

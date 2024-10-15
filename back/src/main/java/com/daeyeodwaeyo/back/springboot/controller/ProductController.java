@@ -2,6 +2,7 @@ package com.daeyeodwaeyo.back.springboot.controller;
 
 import com.daeyeodwaeyo.back.springboot.domain.Product;
 import com.daeyeodwaeyo.back.springboot.dto.ProductDTO;
+import com.daeyeodwaeyo.back.springboot.dto.SearchProductDTO;
 import com.daeyeodwaeyo.back.springboot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -55,8 +56,8 @@ public class ProductController {
   }
 
   @GetMapping("/searchByQuery")
-  public ResponseEntity<List<ProductDTO>> searchByQueryProducts(@RequestParam("query") String query) {
-    List <ProductDTO> products = productService.searchByQueryProducts(query);
+  public ResponseEntity<List<SearchProductDTO>> searchByQueryProducts(@RequestParam("query") String query) {
+    List <SearchProductDTO> products = productService.searchByQueryProducts(query);
     return ResponseEntity.ok(products);
   }
 }

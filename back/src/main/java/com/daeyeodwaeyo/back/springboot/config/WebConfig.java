@@ -12,6 +12,10 @@ public class WebConfig implements WebMvcConfigurer {
   private String imageConnectPath = "/imagePath/**";
   private String profileImageResourcePath = "file:///Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage/";
 
+  // 상품 이미지
+  private String productImageConnectPath = "/productImagePath/**";
+  private String productImageResourcePath = "file:///Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/productImage/";
+
   // 상품 동영상
   private String videoConnectPath = "/videoPath/**";
   private String productVideoResourcePath = "file:///Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/videos/productVideo/";
@@ -31,6 +35,11 @@ public class WebConfig implements WebMvcConfigurer {
     // 요청 URL : http://localhost:8080/imagePath/{filename}
     registry.addResourceHandler(imageConnectPath)
             .addResourceLocations(profileImageResourcePath);
+
+    // 상품 사진에 대한 리소스 핸들러
+    // 요청 URL : http://localhost:8080/productImagePath/{filename}
+    registry.addResourceHandler(productImageConnectPath)
+            .addResourceLocations(productImageResourcePath);
 
     // 상품 동영상에 대한 리소스 핸들러
     // 요청 URL : http://localhost:8080/videoPath/{filename}

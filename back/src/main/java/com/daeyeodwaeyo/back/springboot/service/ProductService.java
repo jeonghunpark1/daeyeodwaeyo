@@ -5,6 +5,7 @@ import com.daeyeodwaeyo.back.springboot.domain.ProductImage;
 import com.daeyeodwaeyo.back.springboot.domain.ProductVideo;
 import com.daeyeodwaeyo.back.springboot.domain.User;
 import com.daeyeodwaeyo.back.springboot.dto.ProductDTO;
+import com.daeyeodwaeyo.back.springboot.dto.SearchProductDTO;
 import com.daeyeodwaeyo.back.springboot.repository.ProductImageRepository;
 import com.daeyeodwaeyo.back.springboot.repository.ProductRepository;
 import com.daeyeodwaeyo.back.springboot.repository.ProductVideoRepsitory;
@@ -100,8 +101,14 @@ public class ProductService {
     System.out.println("상품 저장 완료");
   }
 
-  private ProductDTO convertToDTO(Product product) {
-    return new ProductDTO(
+  private SearchProductDTO convertToDTO(Product product) {
+    // 해당 상품과 연관된 이미지 조회
+    List<ProductImage> images = productImageRepository.findByProduct(product);
+    List<String> imageUrls = images.stream()
+                                   .map(ProductImage::getImageUrl) // 이미지 URL만 추출
+                                   .collect(Collectors.toList());
+
+    return new SearchProductDTO(
             product.getId(),
             product.getTitle(),
             product.getName(),
@@ -109,13 +116,13 @@ public class ProductService {
             product.getPrice(),
             product.getStartDate(),
             product.getEndDate(),
-            product.getDescription()
+            imageUrls
     );
   }
 
-  public List<ProductDTO> searchByQueryProducts(String query) {
+  public List<SearchProductDTO> searchByQueryProducts(String query) {
     // 제목, 카테고리, 설명에 검색어가 포함된 상품들 조회
-    List<Product> products = productRepository.findByTitleContainingOrCategoryContainingOrDescriptionContaining(query, query, query);
+    List<Product> products = productRepository.findByTitleContainingOrNameContainingOrCategoryContainingOrDescriptionContaining(query, query, query, query);
     // Product를 ProductDTO로 변환
     return products.stream()
             .map(this::convertToDTO)
