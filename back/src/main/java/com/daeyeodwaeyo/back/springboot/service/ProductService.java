@@ -122,7 +122,7 @@ public class ProductService {
 
   public List<SearchProductDTO> searchByQueryProducts(String query) {
     // 제목, 카테고리, 설명에 검색어가 포함된 상품들 조회
-    List<Product> products = productRepository.findByTitleContainingOrNameContainingOrCategoryContainingOrDescriptionContaining(query, query, query, query);
+    List<Product> products = productRepository.findByTitleContainingOrNameContainingOrCategoryContainingOrDescriptionContainingOrderByCreatedAtDesc(query, query, query, query);
     // Product를 ProductDTO로 변환
     return products.stream()
             .map(this::convertToDTO)

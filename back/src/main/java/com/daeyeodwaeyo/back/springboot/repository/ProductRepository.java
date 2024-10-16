@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, String> {
 
-  List<Product> findByTitleContainingOrNameContainingOrCategoryContainingOrDescriptionContaining(String title, String name, String category, String description);
+  List<Product> findByTitleContainingOrNameContainingOrCategoryContainingOrDescriptionContainingOrderByCreatedAtDesc(String title, String name, String category, String description);
 }

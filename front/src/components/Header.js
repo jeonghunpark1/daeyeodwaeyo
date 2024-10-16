@@ -33,7 +33,7 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
         params: { query }
       });
       console.log("productList: ", response.data);
-      navigate("/searchResult", { state: response.data });
+      navigate("/searchResult", { state: {productList: response.data, query: query} });
     } catch (err) {
       console.log("error: ", err);
     }
