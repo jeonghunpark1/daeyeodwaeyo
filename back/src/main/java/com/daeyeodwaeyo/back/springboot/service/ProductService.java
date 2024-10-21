@@ -5,12 +5,16 @@ import com.daeyeodwaeyo.back.springboot.domain.ProductImage;
 import com.daeyeodwaeyo.back.springboot.domain.ProductVideo;
 import com.daeyeodwaeyo.back.springboot.domain.User;
 import com.daeyeodwaeyo.back.springboot.dto.ProductDTO;
+import com.daeyeodwaeyo.back.springboot.dto.ProductDetailDTO;
 import com.daeyeodwaeyo.back.springboot.dto.SearchProductDTO;
 import com.daeyeodwaeyo.back.springboot.repository.ProductImageRepository;
 import com.daeyeodwaeyo.back.springboot.repository.ProductRepository;
 import com.daeyeodwaeyo.back.springboot.repository.ProductVideoRepsitory;
 import com.daeyeodwaeyo.back.springboot.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -148,5 +152,22 @@ public class ProductService {
     return products.stream()
             .map(this::convertToDTO)
             .collect(Collectors.toList());
+  }
+
+  public ProductDetailDTO getProductDetailById(String productId) {
+    Product product = productRepository.findById(productId).orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + productId));
+    ProductDetailDTO productDetailDTO = new ProductDetailDTO();
+    productDetailDTO.setId(product.getId());
+    productDetailDTO.setTitle(product.getTitle());
+    productDetailDTO.setName(product.getName());
+    productDetailDTO.setCategory(product.getCategory());
+    productDetailDTO.setPrice(product.getPrice());
+    productDetailDTO.setStartDate(product.getStartDate());
+    productDetailDTO.setEndDate(product.getEndDate());
+    productDetailDTO.setDescription(product.getDescription());
+    productDetailDTO.setCreatedAt(product.getCreatedAt());
+    productDetailDTO.setWriterId(product.getUser().getId()); // User 객체의 ID만 설정
+
+    return productDetailDTO;
   }
 }

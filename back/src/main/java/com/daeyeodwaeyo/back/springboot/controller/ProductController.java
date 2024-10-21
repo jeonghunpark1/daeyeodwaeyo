@@ -2,7 +2,9 @@ package com.daeyeodwaeyo.back.springboot.controller;
 
 import com.daeyeodwaeyo.back.springboot.domain.Product;
 import com.daeyeodwaeyo.back.springboot.dto.ProductDTO;
+import com.daeyeodwaeyo.back.springboot.dto.ProductDetailDTO;
 import com.daeyeodwaeyo.back.springboot.dto.SearchProductDTO;
+import com.daeyeodwaeyo.back.springboot.repository.ProductRepository;
 import com.daeyeodwaeyo.back.springboot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,9 @@ public class ProductController {
 
   @Autowired
   private ProductService productService;
+
+  @Autowired
+  private ProductRepository productRepository;
 
   @PostMapping
   public ResponseEntity<String> addProduct( @ModelAttribute ProductDTO productDTO,
@@ -55,9 +60,17 @@ public class ProductController {
     return ResponseEntity.ok("Product created successfully.");
   }
 
+  // query로 검색을 요청하면 그에 맞는 물건 리스트 반환
   @GetMapping("/searchByQuery")
   public ResponseEntity<List<SearchProductDTO>> searchByQueryProducts(@RequestParam("query") String query, @RequestParam("type") String type) {
     List <SearchProductDTO> products = productService.searchByQueryProducts(query, type);
     return ResponseEntity.ok(products);
+  }
+
+  // 물건 검색 후 원하는 물건 클릭 시 물건 상세 정보 반환
+  @GetMapping("/detailInfo")
+  public ResponseEntity<ProductDetailDTO> productDetailInfo(@RequestParam("productId") String productId) {
+    ProductDetailDTO productDetail = productService.getProductDetailById(productId);
+    return ResponseEntity.ok(productDetail);
   }
 }

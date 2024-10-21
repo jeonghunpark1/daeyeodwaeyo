@@ -55,6 +55,7 @@ public class SecurityConfig {
                                      "/api/users/login",
                                      "/api/content/tempContent",
                                      "/api/products/searchByQuery",
+                                     "/api/products/detailInfo",
                                      "/imagePath/**",
                                      "/productImagePath/**",
                                      "/videoPath/**").permitAll() // 회원가입과 로그인은 인증 없이 접근 가능

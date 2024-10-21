@@ -17,6 +17,7 @@ import FindPasswordResult from './pages/FindPasswordResult';
 import ChangeInfo from './pages/ChangeInfo';
 import PrivateRoute from './components/PrivateRoute';
 import SearchResult from './pages/SearchResult';
+import ProductDetail from './pages/ProductDetail';
 
 export default function App() {
 
@@ -89,7 +90,7 @@ export default function App() {
           <Route path="/findPasswordResult" element={<FindPasswordResult />}></Route>
           <Route path="/changeInfo" element={<ChangeInfo />}></Route>
           <Route path="/searchResult" element={<SearchResult />}></Route>
-
+          <Route path="/productDetail" element={<ProductDetail />}></Route>
           {/* PrivateRoute를 통한 Route */}
           <Route
             path="myPage"

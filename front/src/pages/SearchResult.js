@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
 import style from "../styles/searchResult.module.css"
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 export default function SearchResult() {
+
+  const navigate = useNavigate();
 
   const [orderBy, setorderBy] = useState("orderByLatest");
   const [productList, setProductList] = useState([]);
@@ -69,6 +71,10 @@ export default function SearchResult() {
     } catch (err) {
       console.log("error: ", err);
     }
+  };
+
+  const handleProductClick = (product_id) => {
+    navigate("/productDetail", { state: {productId: product_id} })
   }
 
   useEffect(() => {
@@ -108,7 +114,7 @@ export default function SearchResult() {
         {currentItems.length > 0 ? (
           <>
             {currentItems.map((product) => (
-              <div className={style.product_box} key={product.id}>
+              <div className={style.product_box} key={product.id} onClick={() => {handleProductClick(product.id)}}>
                 <div className={style.product_id}></div>
                 <div className={style.product_image_wrap}>
                   <img className={style.product_image} src={requestProductImageURL(product.imageUrl[0])} alt='상품 사진' />
