@@ -110,7 +110,7 @@ export default function Product() {
     formData.append('title', productTitle);
     formData.append('name', name);
     formData.append('category', category);
-    formData.append('price', price);
+    formData.append('price', priceRemoveComma(price));
     formData.append('startDate', startDate);
     formData.append('endDate', endDate);
 

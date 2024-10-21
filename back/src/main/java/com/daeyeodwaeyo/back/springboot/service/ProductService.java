@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -120,9 +121,29 @@ public class ProductService {
     );
   }
 
-  public List<SearchProductDTO> searchByQueryProducts(String query) {
+  public List<SearchProductDTO> searchByQueryProducts(String query, String type) {
+    List<Product> products = new ArrayList<>();
     // 제목, 카테고리, 설명에 검색어가 포함된 상품들 조회
-    List<Product> products = productRepository.findByTitleContainingOrNameContainingOrCategoryContainingOrDescriptionContainingOrderByCreatedAtDesc(query, query, query, query);
+    if (type.equals("orderByLatest")) {
+      products = productRepository.findByTitleContainingOrNameContainingOrCategoryContainingOrDescriptionContainingOrderByCreatedAtDesc(query, query, query, query);
+      System.out.println("최신순");
+    }
+    else if (type.equals("orderByLook")) {
+      products = productRepository.findByTitleContainingOrNameContainingOrCategoryContainingOrDescriptionContainingOrderByCreatedAtDesc(query, query, query, query);
+      System.out.println("조회순");
+    }
+    else if (type.equals("orderByLike")) {
+      products = productRepository.findByTitleContainingOrNameContainingOrCategoryContainingOrDescriptionContainingOrderByCreatedAtDesc(query, query, query, query);
+      System.out.println("좋아요순");
+    }
+    else if (type.equals("orderByHighPrice")) {
+      products = productRepository.findByTitleContainingOrNameContainingOrCategoryContainingOrDescriptionContainingOrderByPriceDesc(query, query, query, query);
+      System.out.println("높은가격순");
+    }
+    else if (type.equals("orderByLowPrice")) {
+      products = productRepository.findByTitleContainingOrNameContainingOrCategoryContainingOrDescriptionContainingOrderByPriceAsc(query, query, query, query);
+      System.out.println("낮은가격순");
+    }
     // Product를 ProductDTO로 변환
     return products.stream()
             .map(this::convertToDTO)

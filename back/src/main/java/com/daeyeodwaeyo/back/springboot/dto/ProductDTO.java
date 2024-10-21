@@ -16,7 +16,7 @@ public class ProductDTO {
   private String title;
   private String name;
   private String category;
-  private String price;
+  private int price;
   private LocalDateTime startDate;
   private LocalDateTime endDate;
   private String description;

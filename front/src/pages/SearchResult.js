@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import style from "../styles/searchResult.module.css"
 import { useLocation } from 'react-router-dom'
+import axios from 'axios';
 
 export default function SearchResult() {
 
-  const [oderBy, setOderBy] = useState("orderByLatest");
+  const [orderBy, setorderBy] = useState("orderByLatest");
+  const [productList, setProductList] = useState([]);
 
   const location = useLocation(); // navigate로 전달된 데이터 접근
-  const productList = location.state.productList || [] // 만약 state가 없을 경우 빈 배열로 처리
+  // const products = location.state.productList || [] // 만약 state가 없을 경우 빈 배열로 처리
+  
   const query = location.state.query || "";
 
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
@@ -25,10 +28,21 @@ export default function SearchResult() {
   console.log("SearchResult / currentItems: ", productList);
   console.log("SearchResult / query: ", query);
 
+  useEffect(() => {
+    if (location.state && location.state.productList) {
+      setProductList(location.state.productList);
+    }
+  }, [location.state])
+
   const requestProductImageURL = (productImage) => {
     const productImageURL = "http://localhost:8080/productImagePath/" + productImage;
     return productImageURL;
   };
+
+  // price에 천단위 콤마 추가
+  const priceAddComma = (price) => {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
   // 페이지네이션 버튼 생성
   const renderPaginationButtons = () => {
@@ -45,6 +59,22 @@ export default function SearchResult() {
     return buttons;
   };
 
+  const handleOrderBy = async (type) => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/products/searchByQuery", {
+        params: { query, type }
+      });
+      alert(type);
+      setProductList(response.data);
+    } catch (err) {
+      console.log("error: ", err);
+    }
+  }
+
+  useEffect(() => {
+    handleOrderBy(orderBy);
+  }, [orderBy])
+
   return (
     <div className={style.searchResult_page}>
       <div className={style.searchResult_title_wrap}>
@@ -56,11 +86,11 @@ export default function SearchResult() {
       <div className={style.searchResult_content_wrap}>
 
         <div className={style.searchResult_nav_wrap}>
-          <div className={`${style.orderByLatest_result} ${style.searchResult_nav} ${oderBy === "orderByLatest" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setOderBy("oderByLatest");}}>최신순</div>
-          <div className={`${style.orderByHits_result} ${style.searchResult_nav} ${oderBy === "orderByHits" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setOderBy("oderByHits");}}>조회순</div>
-          <div className={`${style.orderByLike_result} ${style.searchResult_nav} ${oderBy === "orderByLike" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setOderBy("oderByLike");}}>좋아요순</div>
-          <div className={`${style.orderByHighPrice_result} ${style.searchResult_nav} ${oderBy === "orderByHighPrice" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setOderBy("oderByHighPrice");}}>높은가격순</div>
-          <div className={`${style.orderByLowPrice_result} ${style.searchResult_nav} ${oderBy === "orderByLowPrice" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setOderBy("oderByLowPrice");}}>낮은가격순</div>
+          <div className={`${style.orderByLatest_result} ${style.searchResult_nav} ${orderBy === "orderByLatest" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLatest"); }}>최신순</div>
+          <div className={`${style.orderByHits_result} ${style.searchResult_nav} ${orderBy === "orderByLook" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLook"); }}>조회순</div>
+          <div className={`${style.orderByLike_result} ${style.searchResult_nav} ${orderBy === "orderByLike" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLike"); }}>좋아요순</div>
+          <div className={`${style.orderByHighPrice_result} ${style.searchResult_nav} ${orderBy === "orderByHighPrice" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByHighPrice"); }}>높은가격순</div>
+          <div className={`${style.orderByLowPrice_result} ${style.searchResult_nav} ${orderBy === "orderByLowPrice" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLowPrice"); }}>낮은가격순</div>
         </div>
 
         {/* <div className={style.product_box}>
@@ -78,8 +108,8 @@ export default function SearchResult() {
         {currentItems.length > 0 ? (
           <>
             {currentItems.map((product) => (
-              <div className={style.product_box}>
-                <div className={style.product_id} key={product.id}></div>
+              <div className={style.product_box} key={product.id}>
+                <div className={style.product_id}></div>
                 <div className={style.product_image_wrap}>
                   <img className={style.product_image} src={requestProductImageURL(product.imageUrl[0])} alt='상품 사진' />
                 </div>
@@ -96,7 +126,7 @@ export default function SearchResult() {
                     </div>
                   </div>
                   <div className={style.product_price_wrap}>
-                    {product.price}원
+                    {priceAddComma(product.price)}원
                   </div>
                 </div>
               </div>

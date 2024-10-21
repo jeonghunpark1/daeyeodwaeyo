@@ -77,7 +77,7 @@ public class UserController {
     return ResponseEntity.ok(isIdDuplicate);
   }
 
-  // 아이디 중복확인 엔드포인트
+  // 닉네임 중복확인 엔드포인트
   @GetMapping("/nickNameDuplicate")
   public ResponseEntity<Boolean> checkNickNameDuplicate(@RequestParam String nickName) {
     boolean isNickNameDuplicate = userService.isNickNameDuplicate(nickName);

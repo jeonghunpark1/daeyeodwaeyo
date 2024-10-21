@@ -33,7 +33,7 @@ public class Product {
     private String category;
 
     @Column(name = "price", nullable = false, length = 30)
-    private String price;
+    private int price;
 
     @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
