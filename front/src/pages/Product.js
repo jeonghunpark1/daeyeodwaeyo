@@ -253,9 +253,9 @@ export default function Product() {
             <div className={style.product_detail_info_bottom_wrap}>
               <p className={`${style.product_lent_period_title} ${style.title_p_type}`}>대여 가능 날짜</p>
               <div className={style.product_lent_period_select_wrap}>
-                <input className={`${style.start_date} ${style.input_type}`} type="datetime-local" onChange={(e) => {setStartDate(e.target.value)}} value={startDate}></input>
+                <input className={`${style.start_date} ${style.input_type}`} type="date" onChange={(e) => {setStartDate(e.target.value)}} value={startDate}></input>
                 <p>~</p>
-                <input className={`${style.end_date} ${style.input_type}`} type="datetime-local" onChange={(e) => {setEndDate(e.target.value)}} value={endDate}></input>                
+                <input className={`${style.end_date} ${style.input_type}`} type="date" onChange={(e) => {setEndDate(e.target.value)}} value={endDate}></input>                
               </div>
             </div>
           </div>

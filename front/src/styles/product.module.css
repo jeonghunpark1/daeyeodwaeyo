@@ -364,9 +364,6 @@
 .start_date,
 .end_date {
   width: 46%;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -0.5px;
 }
 
 .product_lent_period_select_wrap  p {

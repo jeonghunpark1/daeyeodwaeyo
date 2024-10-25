@@ -21,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -47,6 +49,11 @@ public class ProductService {
 
   @Transactional
   public void createProduct(String userId, String productId, ProductDTO productDTO, List<MultipartFile> images, MultipartFile video) {
+//    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//
+//    LocalDate startDate = LocalDate.parse(productDTO.getStartDate(), formatter);
+//    LocalDate endDate = LocalDate.parse(productDTO.getEndDate(), formatter);
+
     // Product 엔티티 생성
     Product product = new Product();
     product.setId(productId);
@@ -156,7 +163,19 @@ public class ProductService {
 
   public ProductDetailDTO getProductDetailById(String productId) {
     Product product = productRepository.findById(productId).orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + productId));
+
+    // 해당 상품과 연관된 이미지 조회
+    List<ProductImage> images = productImageRepository.findByProduct(product);
+    List<String> imageUrls = images.stream()
+            .map(ProductImage::getImageUrl) // 이미지 URL만 추출
+            .collect(Collectors.toList());
+
+    // 해당 상품과 연관된 비디오 조회
+    ProductVideo video = productVideoRepsitory.findByProduct(product);
+    String videoUrl = video != null ? video.getVideoUrl() : null;
+
     ProductDetailDTO productDetailDTO = new ProductDetailDTO();
+
     productDetailDTO.setId(product.getId());
     productDetailDTO.setTitle(product.getTitle());
     productDetailDTO.setName(product.getName());
@@ -167,7 +186,8 @@ public class ProductService {
     productDetailDTO.setDescription(product.getDescription());
     productDetailDTO.setCreatedAt(product.getCreatedAt());
     productDetailDTO.setWriterId(product.getUser().getId()); // User 객체의 ID만 설정
-
+    productDetailDTO.setImageUrls(imageUrls);
+    productDetailDTO.setVideoUrl(videoUrl);
     return productDetailDTO;
   }
 }

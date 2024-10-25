@@ -23,7 +23,8 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
   const requestProfileImageURL = (profileImage) => {
     console.log("프로필 사진: ", profileImage);
     console.log("프로필 사진: ", headerUserInfo.profileImage);
-    const profileImageURL = "http://localhost:8080/imagePath/" + profileImage;
+    const profileImageURL = "http://localhost:8080/profileImagePath/" + profileImage;
+    console.log(profileImageURL);
     return profileImageURL;
   };
 

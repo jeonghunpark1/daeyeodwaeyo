@@ -66,7 +66,7 @@ export default function SearchResult() {
       const response = await axios.get("http://localhost:8080/api/products/searchByQuery", {
         params: { query, type }
       });
-      alert(type);
+      // alert(type);
       setProductList(response.data);
     } catch (err) {
       console.log("error: ", err);

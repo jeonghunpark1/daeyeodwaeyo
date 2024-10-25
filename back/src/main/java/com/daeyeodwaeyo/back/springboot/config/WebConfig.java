@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
   // 프로필 사진
-  private String imageConnectPath = "/imagePath/**";
+  private String profileImageConnectPath = "/profileImagePath/**";
   private String profileImageResourcePath = "file:///Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage/";
 
   // 상품 이미지
@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
   private String productImageResourcePath = "file:///Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/productImage/";
 
   // 상품 동영상
-  private String videoConnectPath = "/videoPath/**";
+  private String videoConnectPath = "/productVideoPath/**";
   private String productVideoResourcePath = "file:///Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/videos/productVideo/";
 
   @Override
@@ -33,7 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     // 프로필 사진에 대한 리소스 핸들러
     // 요청 URL : http://localhost:8080/imagePath/{filename}
-    registry.addResourceHandler(imageConnectPath)
+    registry.addResourceHandler(profileImageConnectPath)
             .addResourceLocations(profileImageResourcePath);
 
     // 상품 사진에 대한 리소스 핸들러
@@ -42,7 +42,7 @@ public class WebConfig implements WebMvcConfigurer {
             .addResourceLocations(productImageResourcePath);
 
     // 상품 동영상에 대한 리소스 핸들러
-    // 요청 URL : http://localhost:8080/videoPath/{filename}
+    // 요청 URL : http://localhost:8080/productVideoPath/{filename}
     registry.addResourceHandler(videoConnectPath)
             .addResourceLocations(productVideoResourcePath);
   }

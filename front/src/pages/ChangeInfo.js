@@ -49,7 +49,7 @@ export default function ChangeInfo() {
             <div className={style.profileImage_wrap}>
               <div className={style.userProfileImage_wrap}>
                 {userInfo ? (
-                  <img src={`http://localhost:8080/imagePath/${userInfo.profileImage}`} className={style.userProfileImage} alt='프로필 이미지'></img>  
+                  <img src={`http://localhost:8080/profileImagePath/${userInfo.profileImage}`} className={style.userProfileImage} alt='프로필 이미지'></img>  
                 ) : (
                   <img src="https://placehold.co/150x150" className={style.userProfileImage} alt='기본 프로필 이미지'></img>
                 )}

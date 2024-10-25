@@ -18,7 +18,7 @@ public class ProductImage {
   private String id; // UUID로 생성
 
   @Column(name = "image_url", nullable = false, length = 255)
-  private  String imageUrl;
+  private String imageUrl;
 
   @ManyToOne
   @JoinColumn(name = "product_id", nullable = false)
