@@ -1,2 +1,5 @@
 # FastAPI 가상환경 폴더 무시
 .venv/
+
+# ResNet50 모델 무시 (용량이 너무 큼)
+/app/models/ResNet50_v1i_50layer_Adam00001_78percent_model.keras
