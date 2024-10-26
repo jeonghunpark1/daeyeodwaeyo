@@ -29,6 +29,7 @@ public class ImageController {
     } catch (IOException e) {
       return ResponseEntity.status(500).body("Error processing image for prediction");
     }
+
   }
 
   // 유사한 이미지 검색 엔드포인트

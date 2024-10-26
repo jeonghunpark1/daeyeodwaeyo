@@ -108,6 +108,7 @@ export default function Product() {
       });
       alert("카테고리 예측: " + response.data.category);
       // setCategory(response.data.categorya); // 예측된 카테고리 설정
+      
     } catch (err) {
       console.error("카테고리 예측 실패:", err);
       alert("카테고리 예측에 실패했습니다.");

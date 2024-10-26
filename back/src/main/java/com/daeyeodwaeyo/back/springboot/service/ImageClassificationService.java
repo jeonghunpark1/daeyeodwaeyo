@@ -39,6 +39,7 @@ public class ImageClassificationService {
     } else {
       throw new IOException("Error predicting category: " + response.getStatusCode());
     }
+
   }
 
   // 유사한 이미지 검색을 위한 메서드
