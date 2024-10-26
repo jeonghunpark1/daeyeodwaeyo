@@ -94,6 +94,33 @@ export default function Product() {
     );
   };
 
+  // 카테고리 예측 요청 함수
+  const predictCategory = async (imageFile) => {
+    const formData = new FormData();
+    formData.append("file", imageFile);
+
+    try {
+      const response = await axios.post("http://localhost:8080/api/images/predict", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      alert("카테고리 예측: " + response.data.category);
+      // setCategory(response.data.categorya); // 예측된 카테고리 설정
+    } catch (err) {
+      console.error("카테고리 예측 실패:", err);
+      alert("카테고리 예측에 실패했습니다.");
+    }
+  };
+
+  // 이미지 변경 시 카테고리 예측 요청
+  useEffect(() => {
+    if (images.length > 0) {
+      predictCategory(images[0]); // 첫 번째 이미지를 사용해 카테고리 예측 요청
+    }
+  }, [images]);
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // 기본 동작 방지
 

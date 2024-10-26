@@ -47,6 +47,8 @@ public class ProductService {
   @Autowired
   private ProductVideoRepsitory productVideoRepsitory;
 
+
+
   @Transactional
   public void createProduct(String userId, String productId, ProductDTO productDTO, List<MultipartFile> images, MultipartFile video) {
 //    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -190,4 +192,6 @@ public class ProductService {
     productDetailDTO.setVideoUrl(videoUrl);
     return productDetailDTO;
   }
+
+
 }
