@@ -17,6 +17,8 @@ export default function ProductDetail() {
   const [selectContentPreview, setSelectContentPreview] = useState("selectImage");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [lentPeriod, setLentPeriod] = useState(0);
+  const [lentPrice, setLentPrice] = useState(0);
 
   const requestProductImageURL = (productImage) => {
     const productImageURL = "http://localhost:8080/productImagePath/" + productImage;
@@ -101,6 +103,70 @@ export default function ProductDetail() {
     
   };
 
+  // price에 천단위 콤마 추가
+  const priceAddComma = (price) => {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  // 렌트 날짜 선택
+  const chooseLentPeriod = (type, value) => {
+    if (type === "startDate") {
+      if (endDate) {
+        if (value < endDate || value == endDate) {
+          setStartDate(value);
+        }
+        else {
+          alert("종료일 이전 날짜로 선택해주세요.");
+        }
+      }
+      else {
+        setStartDate(value);
+      }
+    }
+    else if (type === "endDate") {
+      if (startDate) {
+        if (value > startDate || value == startDate) {
+          setEndDate(value);
+        }
+        else {
+          alert("시작일 이후 날짜로 선택해주세요.");
+        }
+      }
+      else {
+        setEndDate(value);
+      }
+    }
+    else {
+      console("type 입력 오류");
+    }
+  }
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      // 날짜 객체로 변환
+      let s_date = new Date(startDate);
+      let e_date = new Date(endDate);
+
+      // 두 날짜 간의 시간 차이를 밀리초 단위로 계산
+      let diffTime = e_date.getTime() - s_date.getTime();
+
+      // 밀리초를 일 단위로 변환
+      let diffDays = diffTime / (1000 * 60 * 60 * 24) + 1;
+
+      console.log(diffDays);
+      setLentPeriod(diffDays);
+    }
+  }, [startDate, endDate]);
+
+  useEffect(() => {
+    if (productDetail) {
+      if (lentPeriod === 0) {
+        setLentPrice(productDetail.price);
+      }
+      setLentPrice(productDetail.price * lentPeriod);
+    }
+  }, [lentPeriod])
+
   useEffect(() => {
     const fetchProductDetail = async () => {
       try {
@@ -109,6 +175,7 @@ export default function ProductDetail() {
         });
         setProductDetail(response.data); // 상품 정보를 상태에 저장
         console.log("productDetail", response.data);
+        setLentPrice(response.data.price);
       } catch (err) {
         console.log("error: ", err);
       }
@@ -144,26 +211,8 @@ export default function ProductDetail() {
       )} */}
       {productDetail ? (
         <div className={style.productDetail_content_wrap}>
-          <div className={style.product_title_writer_wrap}>
-            {/* <div className={style.productWriterId_wrap}>
-              {productDetail.writerId}
-            </div> */}
-            <div className={style.productTitle_wrap}>
-              <h2 className={style.productTitle}>
-                {productDetail.title}
-              </h2>
-            </div>
-          </div>  
-          <div className={style.product_category_name_wrap}>
-            <div className={style.productCategory_wrap}>
-              {productDetail.category}
-            </div>
-            <div className={style.productName_wrap}>
-              {productDetail.name}
-            </div>
-          </div>
-          <div className={style.productDetail_image_info_wrap}>
-            <div className={style.productDetail_image_wrap}>
+          <div className={style.productDetail_info_box}>
+            <div className={style.productDetail_imageOrVideo_wrap}>
               <div className={style.product_imageOrVideo_box}>
                 <div className={style.imageOrVideo_wrap}>
                   <div className={`${style.selectBox} ${selectContentPreview === "selectImage" ? style.selectImage : style.selectVideo}`}></div>
@@ -196,29 +245,90 @@ export default function ProductDetail() {
               </div> 
             </div>
             <div className={style.productDetail_info_wrap}>
-              <div className={style.product_info_wrap}>
-                <div className={style.product_start_end_date_wrap}>
-                
-                
-                  <div className={style.productStartDate_wrap}>
-                  {productDetail.startDate}
-                  
-                    <label className={style.productStartDate_label}>렌트 시작 날짜</label>
-                    <input className={`${style.productStartDate} ${style.input_date}`} type="date" min={formatDateForInput(productDetail.startDate)} max={formatDateForInput(productDetail.endDate)} onChange={(e) => {setStartDate(e.target.value)}} value={startDate}></input>
+              <div className={style.product_title_category_name_wrap}>
+                <div className={style.product_title_writer_wrap}>
+                  {/* <div className={style.productWriterId_wrap}>
+                    {productDetail.writerId}
+                  </div> */}
+                  <div className={style.productTitle_wrap}>
+                    <h2 className={style.productTitle}>
+                      {productDetail.title}
+                    </h2>
                   </div>
-                  <div className={style.productEndDate_wrap}>
-                  {productDetail.endDate}
-                  
-                    <label className={style.productEndDate_label}>렌트 종료 날짜</label>
-                    <input className={`${style.productEndDate} ${style.input_date}`} type="date" min={formatDateForInput(productDetail.startDate)} max={formatDateForInput(productDetail.endDate)} onChange={(e) => {setEndDate(e.target.value)}} value={endDate}></input>
+                </div>  
+                <div className={style.product_category_name_writer_box}>
+                  <div className={style.product_category_name_wrap}>
+                    <div className={style.productCategory_wrap}>
+                      {productDetail.category}
+                    </div>
+                    <div className={style.productName_wrap}>
+                      {productDetail.name}
+                    </div>
+                  </div>
+                  <div className={style.product_writer_wrap}>
+                    작성자: {productDetail.writerId}
                   </div>
                 </div>
               </div>
-              
-              price
-              start_date
-              end_date
+              <div className={style.product_info_wrap}>
+                <div className={style.product_start_end_date_wrap}>
+                  <div className={style.product_start_end_date_title_wrap}>
+                    대여 기간 선택
+                  </div>
+                  <div className={style.product_start_end_date_input_wrap}>
+                    <input className={`${style.productStartDate} ${style.input_date}`} type="date" min={productDetail.startDate} max={formatDateForInput(productDetail.endDate)} onChange={(e) => {chooseLentPeriod("startDate", e.target.value)}} onKeyDown={(e) => e.preventDefault()}></input>
+                    ~
+                    <input className={`${style.productEndDate} ${style.input_date}`} type="date" min={formatDateForInput(productDetail.startDate)} max={formatDateForInput(productDetail.endDate)} onChange={(e) => {chooseLentPeriod("endDate", e.target.value)}} onKeyDown={(e) => e.preventDefault()}></input>
+                  </div>      
+                </div>
+                <div className={style.product_lentPeriod_wrap}>
+                  <div className={style.product_lentPeriod_title_wrap}>
+                    대여 기간
+                  </div>
+                  <div className={style.product_lentPeriod_display_wrap}>
+                    <div className={style.product_lentPeriod_value_wrap}>
+                      {startDate && endDate ? (
+                        <>
+                          {lentPeriod}일
+                        </>
+                      ) : (
+                        <>
+                          기간을 선택해주세요.
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className={style.product_price_wrap}>
+                  <div className={style.product_price_title_wrap}>
+                    대여 가격
+                  </div>
+                  <div className={style.product_price_display_wrap}>
+                    <div className={style.product_price_value_wrap}>
+                      {priceAddComma(lentPrice)}원
+                    </div>
+                  </div>
+                </div>
+                <div className={style.product_chat_lent_button_wrap}>
+                  <div className={style.product_chat_button_wrap}>
+                    <button className={`${style.chat_button} ${style.button}`}>
+                      채팅하기
+                    </button>
+                  </div>
+                  <div className={style.product_lent_button_wrap}>
+                    <button className={`${style.lent_button} ${style.button}`}>
+                      빌리기
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+          <div className={style.productDetail_description_box}>
+            {productDetail.description}
+          </div>
+          <div className={style.productDetail_review_box}>
+            리뷰 들어갈 자리
           </div>
         </div>
       ) : (
