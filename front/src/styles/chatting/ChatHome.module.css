@@ -1,0 +1,139 @@
+/* 전체 컨테이너 설정 */
+html, body {
+    min-width: 400px;
+    min-height: 600px;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ChatHome 전체 컨테이너 - 최소 크기 설정 */
+.chat-home-container {
+    width: 100%;
+    height: 100%;
+
+}
+
+/* 구분선 */
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: #e0e0e0; /* 선의 색상 */
+    margin: 8px 0; /* 위아래 간격 */
+}
+
+/* 프로필 이미지 영역 */
+.profile-container {
+    width: 70px;
+    height: 70px;
+}
+.profile-image-wrapper {
+    width: 70px;
+    height: 70px;
+    background-color: lightgray; /* 예시 배경 */
+    border-radius: 20%;
+    display: flex;
+    overflow: hidden;
+}
+.profile-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지 비율 유지하면서 크기 조정 */
+}
+
+/* 정보 영역 (닉네임, 마지막 메시지) */
+.info-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* 세로로 배치 */
+    justify-content: center;
+}
+.nickname {
+    color: #000; /* 글자 색상을 검정으로 설정 */
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-left: 15px;
+    text-align: left;
+}
+
+/* 채팅방 항목 */
+.chat-room-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%; /* 가로로 채우기 */
+    box-sizing: border-box;
+    transition: background-color 0.2s ease;
+
+}
+.chat-room-item:hover {
+    background-color: #f1f1f1;
+}
+.chat-room-content {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+
+}
+
+/* 텍스트 컨테이너 (닉네임과 마지막 메시지) */
+.text-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.last-message {
+    font-size: 12px;
+    color: #888;
+    margin-left: 15px;
+    text-align: left;
+    height: 16px;
+}
+
+/* 우측 정보 컨테이너 (시간, 읽지 않은 메시지 개수 자리) */
+.right-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 70px;
+}
+.message-time {
+    font-size: 12px;
+    color: #bbb;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    width: 100%;
+
+}
+
+.unread-count {
+    font-size: 12px;
+    color: #bbb;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    margin-left: 10px;
+    height: 30px;
+    width: 100%;
+}
+/* 리스트 스타일 제거 */
+ul, .chat-room-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+li {
+    margin: 0;
+    padding: 0;
+}
+
+/* 채팅방 컨테이너 */
+.chat-room-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer; /* 전체 영역 클릭 가능 */
+    transition: background-color 0.2s ease; /* 클릭 시 색상 변경 효과 */
+}

@@ -385,7 +385,7 @@
 }
 
 .product_price_graph_image_wrap {
-  background-color: lightgray;
+  /* background-color: lightgray; */
   width: 100%;
   height: 170px;
   border: 1px solid black;

@@ -1,0 +1,296 @@
+@import "../globalVar.module.css";
+
+.changeAddress_page {
+  /* background-color: lightblue; */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.changeAddress_title_wrap {
+  /* background-color: lightcoral; */
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.changeAddress_title {
+  /* background-color: lightcyan; */
+  padding: 0;
+  margin: 0;
+}
+
+.changeAddress_content_wrap {
+  /* background-color: lightgoldenrodyellow; */
+  width: 100%;
+  height: 80%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* 여기부터 입력 wrap 디자인 */
+.input_wrap {
+  /* background-color: lightblue; */
+  position: relative;
+  width: 80%;
+  height: 160px;
+  box-sizing: border-box;
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content_input {
+  position: relative;
+  display: block;
+  width: 90%;
+  height: 22px;
+  font-size: 16px;
+  font-weight: 400px;
+  line-height: 22px;
+  letter-spacing: -.2px;
+  color: #1e1e23;
+  z-index: 5;
+  
+  
+  margin: 10px 0 0 0;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  background: 0 0;
+  appearance: none;
+  outline: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* input 태그를 클릭해서 focus가 되면 label이 위로 올라감 */
+.content_input:focus ~ .content_input_label {
+  bottom: 35px;
+  font-size: 13px;
+}
+
+
+/* input 태그를 클릭 했을 때 label이 위로 올라가서 고정
+input 태그에 placeholder 값을 공백으로 주고 사용자가 값을 입력해서
+placeholder 값이 없지면 label이 위로 올라가서 고정 */
+.content_input:not(:placeholder-shown) ~ .content_input_label {
+  /* display: none; */
+  bottom: 35px;
+  font-size: 13px;
+  transition: none;
+}
+
+.content_input_label {
+  display: inline-block;
+  position: absolute;
+  bottom: 18px;
+  left: 5%;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -.2px;
+  transition: all .3s cubic-bezier(.4, 0, .2, 1);
+  color: rgba(0, 0, 0, .38);
+  pointer-events: none;
+  box-sizing: border-box;
+  z-index: 3;
+}
+/* 여기까지 입력 wrap 디자인 */
+
+
+/* 여기부터 주소 입력 wrap 디자인 */
+.address_input_wrap {
+  /* background-color: lightcoral; */
+  height: 120px;
+}
+
+.address_top_wrap {
+  /* border: 4px solid black; */
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.address_top_input_wrap {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+}
+
+.address_wrap {
+  position: relative;
+  /* background-color: lightblue; */
+  display: flex;
+  align-items: center;
+  width: 60%;
+}
+
+.address_input {
+  /* background-color: pink; */
+  width: 100%;
+}
+
+.address_input_label {
+  left: 0;
+}
+
+
+.zipCode_wrap {
+  /* background-color: lightgoldenrodyellow; */
+  border-left: 1px dotted var(--line-color);
+  /* border-right: 1px solid var(--line-color); */
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 15%;
+
+
+}
+
+.zipCode_input {
+  /* background-color: pink; */
+  margin-left: 12%;
+}
+
+.zipCode_input_label {
+  margin-left: 6%;
+}
+
+.address_search_button_wrap {
+  /* background-color: lightslategray; */
+  width: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.address_search_button {
+  width: 90%;
+  height: 70%;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -.2px;
+  background-color: white;
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+}
+
+.address_search_button:hover {
+  background-color: var(--hover-color);
+}
+
+.address_bottom_wrap {
+  /* border: 4px solid red; */
+  border-top: 1px solid var(--line-color);
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.detailAddress_wrap {
+  /* background-color: lightgreen; */
+  width: 90%;
+  display: flex;
+  align-items: center;
+}
+
+.detailAddress_input {
+  /* background-color: pink; */
+}
+
+.daumpostcode_background {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  background-color: black;
+  opacity: 0.3;
+  width: 100vw;
+  height: 100vh;
+  z-index: 90;
+}
+
+.daumpostcode_window {
+  background-color: white;
+  width: 340px;
+  border: 1px solid black;
+  position: absolute;
+  top: 3vh;
+  left: 32vw;
+  z-index: 100;
+}
+
+.daumpostcode_top {
+  /* background-color: lightpink; */
+  border-bottom: 1px solid gray;
+  width: 340px;
+  height: 40px;
+}
+
+.close_window_button {
+  background-color: white;
+  height: 100%;
+  width: 12%;
+  border: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+
+  cursor: pointer;
+}
+
+.close_icon {
+  font-size: 100px;
+}
+
+.close_window_button:hover {
+  background-color: rgb(255, 134, 134);
+}
+
+.daumpostcode {
+  width: 340px;
+  height: 350px;
+  background-color: white;
+}
+/* 여기까지 주소 입력 wrap 디자인 */
+
+
+.addressChange_button_wrap {
+  /* background-color: lightgray; */
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.addressChange_button{
+  background-color: white;
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+  width: 80%;
+  height: 100%;
+  font-size: 16px;
+}
+
+.actived_button:hover,
+.cancel_button:hover {
+  background-color: var(--hover-color);
+  cursor: pointer;
+}

@@ -16,8 +16,9 @@ export default function SearchResult() {
   
   const query = location.state.query || "";
 
+  const [keyword, setKeyword] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-  const itemsPerPage = 6; // 한 페이지에 보여줄 아이템 수
+  const itemsPerPage = 12; // 한 페이지에 보여줄 아이템 수
 
   // 페이지 수 계산
   const totalPages = Math.ceil(productList.length / itemsPerPage);
@@ -27,14 +28,25 @@ export default function SearchResult() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = productList.slice(indexOfFirstItem, indexOfLastItem);
 
-  console.log("SearchResult / currentItems: ", productList);
-  console.log("SearchResult / query: ", query);
+  // console.log("SearchResult / currentItems: ", currentItems);
+  // console.log("SearchResult / query: ", query);
+
+  // useEffect(() => {
+  //   if (location.state && location.state.productList) {
+  //     setProductList(location.state.productList);
+  //   }
+  // }, [location.state])
 
   useEffect(() => {
-    if (location.state && location.state.productList) {
-      setProductList(location.state.productList);
+    setKeyword(query);
+  }, [query])
+
+  useEffect(() => {
+    if (keyword){
+      console.log("keyword: ", keyword)
+      handleOrderBy(orderBy);
     }
-  }, [location.state])
+  }, [keyword])
 
   const requestProductImageURL = (productImage) => {
     const productImageURL = "http://localhost:8080/productImagePath/" + productImage;
@@ -62,6 +74,12 @@ export default function SearchResult() {
   };
 
   const handleOrderBy = async (type) => {
+    let query = "";
+    if (keyword === "전체") {
+      query = "";
+    } else {
+      query = keyword;
+    }
     try {
       const response = await axios.get("http://localhost:8080/api/products/searchByQuery", {
         params: { query, type }
@@ -78,23 +96,23 @@ export default function SearchResult() {
   }
 
   useEffect(() => {
-    handleOrderBy(orderBy);
+    if(keyword) {
+      handleOrderBy(orderBy);
+    }
   }, [orderBy])
 
   return (
     <div className={style.searchResult_page}>
       <div className={style.searchResult_title_wrap}>
-        <h2 className={style.searchResult_title}>"{query}"&nbsp;&nbsp;검색 결과</h2>
+        <h2 className={style.searchResult_title}>"{keyword}"&nbsp;&nbsp;검색 결과</h2>
       </div>
       
-      
-
       <div className={style.searchResult_content_wrap}>
 
         <div className={style.searchResult_nav_wrap}>
           <div className={`${style.orderByLatest_result} ${style.searchResult_nav} ${orderBy === "orderByLatest" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLatest"); }}>최신순</div>
           <div className={`${style.orderByHits_result} ${style.searchResult_nav} ${orderBy === "orderByLook" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLook"); }}>조회순</div>
-          <div className={`${style.orderByLike_result} ${style.searchResult_nav} ${orderBy === "orderByLike" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLike"); }}>좋아요순</div>
+          <div className={`${style.orderByLike_result} ${style.searchResult_nav} ${orderBy === "orderByReview" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByReview"); }}>후기순</div>
           <div className={`${style.orderByHighPrice_result} ${style.searchResult_nav} ${orderBy === "orderByHighPrice" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByHighPrice"); }}>높은가격순</div>
           <div className={`${style.orderByLowPrice_result} ${style.searchResult_nav} ${orderBy === "orderByLowPrice" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLowPrice"); }}>낮은가격순</div>
         </div>
@@ -111,7 +129,7 @@ export default function SearchResult() {
           </div>
         </div> */}
 
-        {currentItems.length > 0 ? (
+        {productList && currentItems.length > 0 ? (
           <>
             {currentItems.map((product) => (
               <div className={style.product_box} key={product.id} onClick={() => {handleProductClick(product.id)}}>

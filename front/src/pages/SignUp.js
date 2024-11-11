@@ -474,9 +474,9 @@ export default function SignUp() {
           {progressBox(currentPage)}
         </div>
         <div className={style.signup_content}>
-          <div className={style.signup_title}>
+          {/* <div className={style.signup_title}>
             <h1>회원가입</h1>
-          </div>
+          </div> */}
           { showSignupPage(currentPage) }
           { buttonByPage(currentPage) }
         </div>

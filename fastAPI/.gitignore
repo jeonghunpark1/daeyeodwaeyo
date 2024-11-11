@@ -1,5 +1,5 @@
 # FastAPI 가상환경 폴더 무시
 .venv/
 
-# ResNet50 모델 무시 (용량이 너무 큼)
-*.keras
+# YOLOv8 모델 무시 (용량이 너무 큼)
+YoloV8_custom_model.pt

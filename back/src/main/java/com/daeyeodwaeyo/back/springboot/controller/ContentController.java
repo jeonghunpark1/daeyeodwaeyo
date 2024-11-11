@@ -4,13 +4,11 @@ import com.daeyeodwaeyo.back.springboot.service.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/content")
@@ -39,4 +37,5 @@ public class ContentController {
 //      return ResponseEntity.badRequest().body("유효하지 않은 파일입니다.");
 //    }
 //  }
+
 }

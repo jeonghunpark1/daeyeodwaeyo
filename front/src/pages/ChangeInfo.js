@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 import CheckPassword from './changeInfo/CheckPassword';
 import ChangePassword from './changeInfo/ChangePassword';
+import ChangeAddress from './changeInfo/ChangeAddress';
+import ChangeNickName from './changeInfo/ChangeNickName';
+import ChangeProfileImage from './changeInfo/ChangeProfileImage';
 
 export default function ChangeInfo() {
 
@@ -128,6 +131,21 @@ export default function ChangeInfo() {
     else if (currentPage == "changePassword") {
       return (
         <ChangePassword />
+      )
+    }
+    else if (currentPage == "changeAddress") {
+      return (
+        <ChangeAddress />
+      )
+    }
+    else if (currentPage == "changeNickName") {
+      return (
+        <ChangeNickName />
+      )
+    }
+    else if (currentPage == "changeProfileImage") {
+      return (
+        <ChangeProfileImage />
       )
     }
   }

@@ -1,0 +1,177 @@
+/* 기본 스타일 설정 */
+.chatWindow {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 화면 전체 높이 */
+    overflow: hidden;
+}
+
+.messagesContainer {
+    background-color: #BEE8F5;
+    height: calc(100vh - 150px); /* 입력창 높이를 제외한 공간 */
+    flex-direction: column;
+    overflow-y: auto;
+
+}
+
+/* 메시지 스타일 */
+.messageWrapper {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+/* 첫 번째 메시지 래퍼에만 적용되는 스타일 */
+.firstMessageWrapper {
+    margin-top: 20px; /* 추가 마진 */
+}
+
+.messageTimestamp{
+    font-size: 12px; /* 글자 크기 설정 */
+    color: #444; /* 글자 색상 설정 */
+    margin-top: 5px; /* 메시지와 타임스탬프 사이의 간격 설정 */
+    text-align: left; /* 텍스트 정렬 설정 */
+}
+/* 프로필 이미지 컨테이너 */
+.profileImageContainer {
+    width: 40px;
+    height:40px;
+    align-items: center;
+    justify-content: center;
+    margin-right:20px;
+}
+
+.profileImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 10%;
+    margin-left: 7px;
+}
+
+/* 내 메시지 스타일 */
+.myMessageContainer {
+    justify-content: flex-end;
+    display: flex;
+    width: 100%;
+    min-height: 40px;
+}
+.nicknameAboveMessage {
+    font-size: 12px;
+    font-weight: bold;
+}
+.myMessageBubble {
+    max-width: 60%;
+    padding: 8px 12px;
+    background-color: #FFFF00;
+    color: #000;
+    border-radius: 15px;
+    text-align: left;
+    position: relative;
+}
+/* 첫 번째 메시지 전용 컨테이너 */
+.firstMessageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* 닉네임 스타일: 메시지 위에 표시 */
+.nicknameAboveMessage {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* 메시지와 시간을 함께 배치하는 컨테이너 */
+.messageAndTimestamp {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.locationButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #007bff; /* 원하는 색상으로 조정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+/* 상대방 메시지 스타일 */
+.theirMessageContainer {
+    justify-content: flex-start;
+    display: flex;
+    width: 100%;
+    min-height: 40px;
+}
+
+.theirMessageBubble {
+    max-width: 60%;
+    padding: 8px 12px;
+    background-color: #FFFFFF; /* 상대방 메시지 색상 */
+    color: #000;
+    border-radius: 15px;
+    text-align: left;
+    position: relative;
+}
+
+/* 시간 표시 */
+.messageTimestamp {
+    font-size: 12px;
+    color: #555;
+    align-self: flex-end; /* 컨테이너의 아래쪽에 배치 */
+}
+
+
+
+
+/* 입력창 스타일 */
+.inputContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%; /* 화면 전체 너비로 확장 */
+    background-color: #FFFFFF; /* 입력창 배경색 */
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    height: 150px; /* 적절한 높이 조정 */
+    box-sizing: border-box;
+}
+
+.messageInput {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    padding: 10px;
+    font-size: 16px;
+    resize: none;
+    box-sizing: border-box;
+    height: 130px; /* 입력창 높이 축소 */
+}
+
+/* 전송 버튼 */
+.sendButton {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #007AFF;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* 스크롤바 숨기기 */
+.messageInput::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.scrollbar-hidden {
+    scrollbar-width: none; /* Firefox */
+}

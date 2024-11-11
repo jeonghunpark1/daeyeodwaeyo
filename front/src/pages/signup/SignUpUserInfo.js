@@ -74,7 +74,7 @@ export default function SignUpUserInfo({ setStateValue, getStateValue, setStateV
     // 처음 보이는 메시지
     else if (isCorrect == "default") {
       if (type == "id") {
-        return "default";
+        return "";
       }
       else if (type == "password") {
         return <p>영문, 숫자, 특수문자 포함 <br/>8글자 이상 작성해주세요.</p>;
@@ -226,7 +226,7 @@ export default function SignUpUserInfo({ setStateValue, getStateValue, setStateV
   return (
     <div className={style.signup_div}>
       <h1>
-        SignUpUserInfo
+        회원 정보
       </h1>
       <div className={style.input_wrap_div}>
         <div className={`${style.id_box} ${input_style.input_wrap}`}>

@@ -170,7 +170,7 @@ public class UserController {
   // 마이페이지에서 현재 비밀번호 인증
   @PostMapping("/checkPassword")
   public ResponseEntity<Boolean> checkPassword(@RequestBody Map<String, String> inputPassword,
-                                              @RequestHeader("Authorization") String token) {
+                                               @RequestHeader("Authorization") String token) {
     try {
       // 토큰에서 사용자 정보 추출
 
@@ -180,12 +180,12 @@ public class UserController {
       System.out.println("userId: " + user.getId());
 
       // 사용자 정보 반환
-      UserInfoDTO userInfoDTO = new UserInfoDTO(user.getPassword());
+      ChangeUserInfoDTO changeUserInfoDTO = new ChangeUserInfoDTO(user.getPassword());
 
       // 테스트 출력
-      System.out.println("checkPassword / userinfoDTO.getPassword(): " + userInfoDTO.getPassword());
+      System.out.println("checkPassword / userinfoDTO.getPassword(): " + changeUserInfoDTO.getPassword());
 
-      boolean matches = userService.checkPassword(userInfoDTO, inputPassword.get("password")); // json 형식으로 inputPassword를 받기 때문에 .get() 사용
+      boolean matches = userService.checkPassword(changeUserInfoDTO, inputPassword.get("password")); // json 형식으로 inputPassword를 받기 때문에 .get() 사용
 
       // 테스트 출력
       System.out.println("비밀번호 일치 여부: " + matches);
@@ -214,12 +214,12 @@ public class UserController {
       System.out.println("userId: " + user.getId());
 
       // 사용자 정보 반환
-      UserInfoDTO userInfoDTO = new UserInfoDTO(user.getId(), changePassword.get("password"));
+      ChangeUserInfoDTO changeUserInfoDTO = new ChangeUserInfoDTO(user.getId(), changePassword.get("password"));
 
       // 테스트 출력
-      System.out.println("changePassword / userinfoDTO.getPassword(): " + userInfoDTO.getPassword());
+      System.out.println("changePassword / userinfoDTO.getPassword(): " + changeUserInfoDTO.getPassword());
 
-      String result = userService.changePassword(userInfoDTO);
+      String result = userService.changePassword(changeUserInfoDTO);
 
       // 테스트 출력
       System.out.println("result: " + result);
@@ -232,6 +232,135 @@ public class UserController {
       } else {
         // 태스트 출력
         System.out.println("비밀번호 변경에 실패했습니다.");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+      }
+    } catch (Exception e) {
+      // 태스트 출력
+      System.out.println("서버 오류");
+
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+    }
+  }
+
+  // 마이페이지의 내정보 변경에서 주소 변경
+  @PostMapping("/changeAddress")
+  public ResponseEntity<?> changeAddress(@RequestBody Map<String, String> changeAddress,
+                                         @RequestHeader("Authorization") String token) {
+    try {
+      // 토큰에서 사용자 정보 추출
+
+      String userId = jwtUtil.extractUsername(token.substring(7)); // "Bearer " 부분 제거
+      User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+
+      // 테스트 출력
+      System.out.println("userId: " + user.getId());
+
+      // 사용자 정보 반환
+      ChangeUserInfoDTO changeUserInfoDTO = new ChangeUserInfoDTO(user.getId(), changeAddress.get("address"));
+
+      // 테스트 출력
+      System.out.println("changeAddress / userinfoDTO.getAddress(): " + changeUserInfoDTO.getAddress());
+
+      String result = userService.changeAddress(changeUserInfoDTO);
+
+      // 테스트 출력
+      System.out.println("result: " + result);
+
+      if (result.equals("success")) {
+        // 태스트 출력
+        System.out.println("주소 변경에 성공했습니다.");
+
+        return ResponseEntity.ok(true);
+      } else {
+        // 태스트 출력
+        System.out.println("주소 변경에 실패했습니다.");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+      }
+    } catch (Exception e) {
+      // 태스트 출력
+      System.out.println("서버 오류");
+
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+    }
+  }
+
+  // 마이페이지의 내정보 변경에서 프로필사진 변경
+  @PostMapping("/changeProfileImage")
+  public ResponseEntity<?> changeProfileImage(@RequestParam("profileImage") MultipartFile profileImage,
+                                              @RequestHeader("Authorization") String token) {
+    try {
+      // 토큰에서 사용자 정보 추출
+
+      String userId = jwtUtil.extractUsername(token.substring(7)); // "Bearer " 부분 제거
+      User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+
+      // 테스트 출력
+      System.out.println("userId: " + user.getId());
+
+      // 사용자 정보 반환
+      ChangeUserInfoDTO changeUserInfoDTO = new ChangeUserInfoDTO(user.getId(), profileImage);
+
+      // 테스트 출력
+      System.out.println("changeProfileImage / userinfoDTO.getProfileImage(): " + changeUserInfoDTO.getProfileImage());
+
+      String result = userService.changeProfileImage(changeUserInfoDTO);
+
+      // 테스트 출력
+      System.out.println("result: " + result);
+
+      if (result.equals("success")) {
+        // 태스트 출력
+        System.out.println("프로필사진 변경에 성공했습니다.");
+
+        return ResponseEntity.ok(true);
+      } else {
+        // 태스트 출력
+        System.out.println("프로필사진 변경에 실패했습니다.");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+      }
+    } catch (Exception e) {
+      // 태스트 출력
+      System.out.println("서버 오류");
+
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+    }
+  }
+
+  // 마이페이지의 내정보 변경에서 닉네임 변경
+  @PostMapping("/changeNickName")
+  public ResponseEntity<?> changeNickName(@RequestBody Map<String, String> changeNickName,
+                                         @RequestHeader("Authorization") String token) {
+    try {
+      // 토큰에서 사용자 정보 추출
+
+      String userId = jwtUtil.extractUsername(token.substring(7)); // "Bearer " 부분 제거
+      User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+
+      // 테스트 출력
+      System.out.println("userId: " + user.getId());
+
+      // 사용자 정보 반환
+      ChangeUserInfoDTO changeUserInfoDTO = new ChangeUserInfoDTO(user.getId(), changeNickName.get("nickName"));
+
+      // 테스트 출력
+      System.out.println("changeNickName / userinfoDTO.getNickName(): " + changeUserInfoDTO.getNickName());
+
+      String result = userService.changeNickName(changeUserInfoDTO);
+
+      // 테스트 출력
+      System.out.println("result: " + result);
+
+      if (result.equals("success")) {
+        // 태스트 출력
+        System.out.println("닉네임 변경에 성공했습니다.");
+
+        return ResponseEntity.ok(true);
+      } else {
+        // 태스트 출력
+        System.out.println("닉네임 변경에 실패했습니다.");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
       }

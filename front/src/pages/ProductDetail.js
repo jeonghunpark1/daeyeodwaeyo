@@ -1,12 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+
+import { TiThMenu } from "react-icons/ti";
+import { TiThMenuOutline } from "react-icons/ti";
 
 import style from "../styles/productDetail.module.css"
 
-export default function ProductDetail() {
+export default function ProductDetail( {loggedInUserId, chatWindowRef} ) {
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const productId = location.state.productId || "";
 
@@ -19,6 +23,19 @@ export default function ProductDetail() {
   const [endDate, setEndDate] = useState("");
   const [lentPeriod, setLentPeriod] = useState(0);
   const [lentPrice, setLentPrice] = useState(0);
+
+  // 토글 메뉴
+  const [isMenuOpen, setIsMenuOpen] = useState({
+    postMenu: false,
+  });
+
+  const toggleMenu = (menu) => {
+    setIsMenuOpen(prevState => ({
+      ...prevState,
+      [menu]: !prevState[menu] // 해당 메뉴 상태를 토글
+    }));
+    console.log("postMenu", isMenuOpen.postMenu);
+  }
 
   const requestProductImageURL = (productImage) => {
     const productImageURL = "http://localhost:8080/productImagePath/" + productImage;
@@ -185,6 +202,59 @@ export default function ProductDetail() {
     fetchProductDetail();
   }, [productId]); // productId가 변경될 때마다 useEffect가 다시 실행됨
 
+  const deleteProduct = async (productId) => {
+    try {
+      const response = await axios.delete(`http://localhost:8080/api/products/remove/${productId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // 토큰과 함께 전송
+        }
+      });
+      if (response.status === 200) {
+        alert("상품이 삭제되었습니다.")
+        navigate(-1) // 이전 페이지로 이동
+      }
+    } catch (err) {
+      console.log("error: ", err);
+      alert("상품 삭제 중 오류가 발생했습니다.");
+    }
+  }
+
+  const openChatHome = () => {
+    const chatHomeUrl = '/ChatHome';
+
+    // 이미 열린 창이 있는지 확인
+    if (chatWindowRef.current && !chatWindowRef.current.closed) {
+        console.log("이미 열린 창이 있습니다. 포커스를 맞춥니다.");
+        chatWindowRef.current.focus();
+    } else {
+        console.log("새 창을 엽니다.");
+        // 새 창 열기 및 ref에 저장
+        chatWindowRef.current = window.open(chatHomeUrl, 'ChatHome', 'width=400,height=600');
+
+        if (!chatWindowRef.current) {
+            console.error("새 창을 열 수 없습니다. 팝업 차단이 설정되었을 수 있습니다.");
+        } else {
+            console.log("새 창이 성공적으로 열렸습니다.");
+        }
+    }
+};
+
+  const handleLentButton = async(writerId) => {
+    try {
+        const response = await axios.post('http://localhost:8080/Chat/findOrCreateRoom', {
+          joinerId: writerId,
+      }, {
+          headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}` // 토큰과 함께 전송
+          }
+      });
+      // alert('채팅방 생성에 성공했습니다.' + response.data.chatRoomId);
+      openChatHome();
+    } catch (err) {
+      alert('채팅방 생성에 실패했습니다.', err);
+    }
+  }
+
   return (
     <div className={style.productDetail_page}>
       {/* {productId}
@@ -211,6 +281,25 @@ export default function ProductDetail() {
       )} */}
       {productDetail ? (
         <div className={style.productDetail_content_wrap}>
+          {loggedInUserId && loggedInUserId == productDetail.writerId ? (
+            <>
+              <button className={style.postMenu} onClick={() => {toggleMenu("postMenu")}}>
+                {isMenuOpen.postMenu ? <TiThMenuOutline className={style.postMenu_icon}/> : <TiThMenu className={style.postMenu_icon}/>}
+              </button>
+              {isMenuOpen.postMenu && (
+                <ul className={style.lowLevelMenu_box}>
+                  <li className={style.lowLevelMenu_wrap}>
+                    <button className={`${style.updatePost} ${style.lowLevelMenu}`} onClick={() => {}}>게시물 수정</button>
+                  </li>
+                  <li className={style.lowLevelMenu_wrap}>
+                    <button className={`${style.deletePost} ${style.lowLevelMenu}`} onClick={() => {deleteProduct(productId);}}>게시물 삭제</button>
+                  </li>
+                </ul>
+              )}
+            </>
+          ) : (
+            <></>
+          )}
           <div className={style.productDetail_info_box}>
             <div className={style.productDetail_imageOrVideo_wrap}>
               <div className={style.product_imageOrVideo_box}>
@@ -311,7 +400,7 @@ export default function ProductDetail() {
                 </div>
                 <div className={style.product_chat_lent_button_wrap}>
                   <div className={style.product_chat_button_wrap}>
-                    <button className={`${style.chat_button} ${style.button}`}>
+                    <button className={`${style.chat_button} ${style.button}`} onClick={() => {handleLentButton(productDetail.writerId);}}>
                       채팅하기
                     </button>
                   </div>

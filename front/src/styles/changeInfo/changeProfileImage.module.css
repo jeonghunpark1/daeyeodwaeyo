@@ -1,0 +1,146 @@
+@import "../globalVar.module.css";
+
+.changeProfileImage_page {
+  /* background-color: lightblue; */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.changeProfileImage_title_wrap {
+  /* background-color: lightcoral; */
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.changeProfileImage_title {
+  /* background-color: lightcyan; */
+  padding: 0;
+  margin: 0;
+}
+
+.changeProfileImage_content_wrap {
+  background-color: lightgoldenrodyellow;
+  width: 100%;
+  height: 80%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileImage_wrap {
+  /* background-color: lightblue; */
+  width: 180px;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileImage_input_wrap {
+  background-color: lightgray;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+}
+
+.profileImage_input {
+  display: none;
+}
+
+.profileImage,
+.add_profileImage_button_wrap {
+  width: 180px;
+  height: 180px;
+  border: 1px solid var(--line-color);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform:translate(-50%, -50%);
+}
+
+.add_profileImage_button_wrap {
+  background-color: transparent;
+  border: 0;
+}
+
+.add_profileImage_button {
+  background-color: transparent;
+  /* background-color: lightblue; */
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+}
+
+.add_profileImage_button:hover {
+  background-color: rgba(148, 148, 148, 0.499);
+  cursor: pointer;
+}
+
+.add_profileImage_button:hover .add_profileImage_button_icon {
+  display: inline;
+}
+
+.add_profileImage_button_icon {
+  color: white;
+  width: 40%;
+  height: 40%;
+  display: none;
+}
+
+.profileImage_select_button_wrap {
+  /* background-color: lightgreen; */
+  margin: 10px 0 20px 0;
+}
+
+.profileImage_select_button:hover{
+  /* background-color: lightgrey */
+  background-color: var(--hover-color);
+  
+}
+
+.profileImage_select_button {
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+  background-color: white;
+  height: 35px;
+  width: 100px;
+
+  font-size: 16px;
+  font-weight: 400px;
+  line-height: 22px;
+  letter-spacing: -.2px;
+}
+
+.profileImageChange_button_wrap {
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.profileImageChange_button {
+  background-color: white;
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+  width: 180px;
+  height: 100%;
+  font-size: 16px;
+}
+
+.actived_button:hover,
+.cancel_button:hover {
+  background-color: var(--hover-color);
+  cursor: pointer;
+}

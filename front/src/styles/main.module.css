@@ -1,0 +1,136 @@
+@import "globalVar.module.css";
+
+.main_page {
+  /* background-color: lightblue; */
+  width: 100%;
+  height: 100%;
+  min-width: var(--min-width-value);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+.main_content {
+  /* background-color: lightcoral; */
+  width: 1000px;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 60px;
+}
+
+.category_wrap {
+  /* background-color: lightcyan; */
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.orderByLatest_product_area {
+  /* background-color: lightgoldenrodyellow; */
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+.orderByLatest_product_title_wrap {
+  /* background-color: lightgray; */
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.orderByLatest_product_title {
+  /* background-color: lightgreen; */
+  text-align: start;
+  padding: 0;
+  margin: 0;
+}
+
+.orderByLatest_product_box {
+  /* background-color: lightpink; */
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+
+
+/* 여기부터 쇼츠 스타일 */
+
+.shorts_area {
+  /* background-color: lightgoldenrodyellow; */
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+.shorts_area_title_wrap {
+  /* background-color: lightgray; */
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.shorts_area_title {
+  /* background-color: lightgreen; */
+  text-align: start;
+  padding: 0;
+  margin: 0;
+}
+
+.shorts_box {
+  /* background-color: lightpink; */
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+
+/* 여기까지 쇼츠 스타일 */
+
+.moreProductView_button,
+.moreShortsView_button {
+  background-color: transparent;
+  width: auto;
+  height: 100%;
+  border: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+}
+
+.moreProductView_button:hover,
+.moreShortsView_button:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}

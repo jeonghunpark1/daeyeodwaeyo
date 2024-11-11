@@ -1,0 +1,4 @@
+# resources 폴더 무시
+./resources
+
+./fastAPI/app/models/YoloV8_custom_model.pt

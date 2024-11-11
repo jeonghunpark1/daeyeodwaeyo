@@ -2,6 +2,8 @@ package com.daeyeodwaeyo.back.springboot.repository;
 
 import com.daeyeodwaeyo.back.springboot.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -33,4 +35,10 @@ public interface UserRepository extends JpaRepository<User, String> {
   Optional<User> findByNameAndEmail(String name, String email);
 
   Optional<User> findByNameAndIdAndEmail(String name, String id, String email);
+
+  @Query("SELECT u.nickName FROM User u WHERE u.id = :userId")
+  Optional<String> findNicknameById(@Param("userId") String userId);
+
+  @Query("SELECT u.profileImage FROM User u WHERE u.id = :userId")
+  Optional<String> findProfileImageById(@Param("userId") String userId);
 }

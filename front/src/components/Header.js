@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from "../styles/header.module.css"
 import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,15 +9,15 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
 
   const [query, setQuery] = useState("");
 
-
   const handleLogout = () => {
     // 토큰 삭제    
     localStorage.removeItem('token');
     localStorage.removeItem('isLogin');
 
-    window.location.reload();
+    // window.location.reload();
     // 로그아웃 후 메인 페이지로 이동
     navigate("/main");
+    window.location.reload();
   };
 
   const requestProfileImageURL = (profileImage) => {
@@ -29,14 +29,10 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
   };
 
   const handleSearch = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/api/products/searchByQuery", {
-        params: { query, type:"orderByLatest"}
-      });
-      console.log("productList: ", response.data);
-      navigate("/searchResult", { state: {productList: response.data, query: query} });
-    } catch (err) {
-      console.log("error: ", err);
+    if (query) {
+      navigate("/searchResult", { state: {query: query} });
+    } else {
+      alert("검색어를 입력하세요.");
     }
   }
 
@@ -57,7 +53,7 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
               <input type="text" className={style.search_input} onChange={(e) => {setQuery(e.target.value)}} value={query} placeholder='검색어를 입력하세요.' onKeyDown={(e) => {if (e.key === "Enter") {handleSearch();}}}/>
             </label>
             <label className={style.search_button_label}>
-              <button className={style.search_button} onClick={() => {handleSearch()}}>
+              <button className={style.search_button} onClick={() => {handleSearch();}}>
                 <FaSearch />
               </button>
             </label>
@@ -97,21 +93,21 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
           <li>
             <Link className={style.nav_menu} to={'/shorts'}>쇼츠</Link>
           </li>
-          <li>
-            <Link className={style.nav_menu} to={'/product'}>Q&A</Link>
-          </li>
+          {/* <li>
+            <Link className={style.nav_menu} to={'/'}>Q&A</Link>
+          </li> */}
           <li>
             {/* <Link className={style.nav_menu} to={'/myPage'}>마이페이지</Link> */}
             <button className={style.nav_menu} onClick={() => {getterIsLogin ? navigate('/myPage'):navigate('/login')}}>마이페이지</button>
           </li>
           <li>
-            <Link className={style.nav_menu} to={'/productAdd'}>상품등록</Link>
+            <Link className={style.nav_menu} to={'/product'}>상품등록</Link>
           </li>
           
-          {/* route 확인 */}
+          {/* route 확인
           <li>
             <Link className={style.nav_menu} to={'/login'}>로그인</Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

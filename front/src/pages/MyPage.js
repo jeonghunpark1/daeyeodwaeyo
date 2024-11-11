@@ -1,9 +1,14 @@
-import {React, useState} from 'react'
+import {React, useEffect, useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
+import PreviewProduct_mypage from '../components/PreviewProduct_mypage';
+
 import style from "../styles/myPage.module.css";
+import axios from 'axios';
 
 export default function MyPage() {
+
+  const [myProductList, setMyProductList] = useState([]);
 
   const [isOpenMenu, setIsOpenMenu] = useState({
     menu1: false,
@@ -20,21 +25,22 @@ export default function MyPage() {
     }));
   };
 
-  const myProducts = () => {
-    const result = [];
-    for (let i = 0; i < 10; i++) {
-      result.push(
-        <div className={`${style.myProduct_preview_warp} ${style.product_preview_wrap}`}>
-          <div className={`${style.myProduct_preview_title} ${style.product_preview_title}`}>
-            내상품 {i+1}
-          </div>
-          <div className={`${style.myProduct_preview_image} ${style.product_preview_image}`}>
-            <img src="http://localhost:8080/imagePath/ca224281-2bc3-42bd-b6c0-91d9a66599f2_image_2e3a2f8b554a5.jpeg" alt='상품 사진 미리보기'></img>
-          </div>
-        </div>
-      );
+  useEffect(() => {
+    fetchMyProducts();
+  }, [])
+
+  const fetchMyProducts = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/products/myProduct", {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+      });
+      setMyProductList(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Failed to fetch my products:", error);
     }
-    return result;
   };
 
   const borrowedProducts = () => {
@@ -132,7 +138,7 @@ export default function MyPage() {
                 내정보 <br/> 변경
               </button>
             </div>
-            <div className={`${style.manner_level_menu_wrap} ${style.mypage_menu_wrap}`}>
+            {/* <div className={`${style.manner_level_menu_wrap} ${style.mypage_menu_wrap}`}>
               <button className={`${style.manner_level_menu} ${style.mypage_menu}`}>
                 매너등급
               </button>
@@ -141,7 +147,7 @@ export default function MyPage() {
               <button className={`${style.report_menu} ${style.mypage_menu}`}>
                 신고접수
               </button>
-            </div>
+            </div> */}
             <div className={`${style.review_menu_wrap} ${style.mypage_menu_wrap}`}>
               <button className={`${style.review_menu} ${style.mypage_menu}`}>
                 후기
@@ -160,7 +166,17 @@ export default function MyPage() {
               <Link className={style.more_show_button} to={'/myProduct'}>+더보기</Link>
             </div>
             <div className={`${style.myProduct_preview_list_box} ${style.product_preview_box}`}>
-              {myProducts()}
+              {myProductList && myProductList.length > 0 ? (
+                <>
+                  {myProductList.map((product) => (
+                    <PreviewProduct_mypage product={product} />
+                  ))}
+                </>
+              ) : (
+                <>
+                  등록된 상품이 없습니다.
+                </>
+              )}
             </div>
           </div>
           {/* 빌린상품 목록 보기 */}

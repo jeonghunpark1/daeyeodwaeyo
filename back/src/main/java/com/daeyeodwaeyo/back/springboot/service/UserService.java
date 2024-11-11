@@ -2,6 +2,7 @@ package com.daeyeodwaeyo.back.springboot.service;
 
 import com.daeyeodwaeyo.back.springboot.config.JwtUtil;
 import com.daeyeodwaeyo.back.springboot.domain.User;
+import com.daeyeodwaeyo.back.springboot.dto.ChangeUserInfoDTO;
 import com.daeyeodwaeyo.back.springboot.dto.UserInfoDTO;
 import com.daeyeodwaeyo.back.springboot.dto.UserLoginDTO;
 import com.daeyeodwaeyo.back.springboot.dto.UserRegisterDTO;
@@ -185,8 +186,8 @@ public class UserService {
     }
   }
 
-  public Boolean checkPassword(UserInfoDTO userInfoDTO, String inputPassword) throws Exception {
-    String userPassword = userInfoDTO.getPassword();
+  public Boolean checkPassword(ChangeUserInfoDTO changeUserInfoDTO, String inputPassword) throws Exception {
+    String userPassword = changeUserInfoDTO.getPassword();
 
     boolean matches = passwordEncoder.matches(inputPassword, userPassword);
 
@@ -207,10 +208,10 @@ public class UserService {
     }
   }
 
-  public String changePassword(UserInfoDTO userInfoDTO) throws Exception {
+  public String changePassword(ChangeUserInfoDTO changeUserInfoDTO) throws Exception {
 
-    String userId = userInfoDTO.getId();
-    String changePassword = userInfoDTO.getPassword();
+    String userId = changeUserInfoDTO.getId();
+    String changePassword = changeUserInfoDTO.getPassword();
     User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
     String userPassword = user.getPassword();
 
@@ -233,4 +234,93 @@ public class UserService {
       return "success";
     }
   }
+
+  public String changeAddress(ChangeUserInfoDTO changeUserInfoDTO) throws Exception {
+
+    String userId = changeUserInfoDTO.getId();
+    String changeAddress = changeUserInfoDTO.getAddress();
+    User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+    String userAddress = user.getAddress();
+
+    Boolean matches = changeAddress.equals(userAddress);
+
+    // 테스트 출력
+    System.out.println("matches: " + matches);
+    System.out.println("changeAddress: " + changeAddress);
+
+    if (matches) {
+      System.out.println("이전과 동일한 주소입니다.");
+      return "Not change";
+    } else {
+      // 사용자 비밀번호 업데이트
+      user.setAddress(changeAddress);
+      userRepository.save(user);
+
+      System.out.println("주소가 변경되었습니다.");
+      return "success";
+    }
+  }
+
+  public String changeProfileImage(ChangeUserInfoDTO changeUserInfoDTO) throws Exception {
+
+    String userId = changeUserInfoDTO.getId();
+    MultipartFile changeProfileImage = changeUserInfoDTO.getProfileImage();
+    User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+    String userProfileImage = user.getProfileImage();
+
+    // 프로필 이미지 처리 로직
+    if (!changeUserInfoDTO.getProfileImage().isEmpty()) {
+      // 프로필 이미지 삭제
+      boolean deleted = contentService.deleteProfileImage(userProfileImage);
+
+      if (deleted) {
+        // 프로필 이미지 저장
+        String profileImage = contentService.saveProfileImage(changeProfileImage);
+        user.setProfileImage(profileImage);
+
+        // 테스트 출력
+        System.out.println("changeProfileImageName: " + profileImage);
+
+        // 사용자 프로필사진 업데이트
+        userRepository.save(user);
+
+        System.out.println("프로필사진이 변경되었습니다.");
+        return "success";
+      } else {
+        System.out.println("프로필사진 저장에 실패했습니다.");
+        return "Failed to save";
+      }
+    } else {
+      System.out.println("기존 프로필사진 삭제에 실패했습니다.");
+      return "Failed to delete";
+    }
+  }
+
+  public String changeNickName(ChangeUserInfoDTO changeUserInfoDTO) throws Exception {
+
+    String userId = changeUserInfoDTO.getId();
+    String changeNickName = changeUserInfoDTO.getNickName();
+    User user = userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("아이디가 존재하지 않습니다."));
+    String userNickName = user.getNickName();
+
+    Boolean matches = changeNickName.equals(userNickName);
+
+    // 테스트 출력
+    System.out.println("matches: " + matches);
+    System.out.println("changeNickName: " + changeNickName);
+
+    if (matches) {
+      System.out.println("이전과 동일한 닉네임입니다.");
+      return "Not change";
+    } else {
+      // 사용자 비밀번호 업데이트
+      user.setNickName(changeNickName);
+      userRepository.save(user);
+
+      System.out.println("닉네임이 변경되었습니다.");
+      return "success";
+    }
+  }
+
+
 }

@@ -95,7 +95,7 @@ export default function SignUpCertification({ setStateValue, getStateValue, setS
   return (
     <div className={style.signup_div}>
       <h1>
-        <div>SignUpCertification</div>
+        <div>이메일 인증</div>
       </h1>
       <div className={style.input_wrap_div}>
         <div className={`${style.email_input_wrap} ${input_style.input_wrap}`}>
@@ -131,7 +131,7 @@ export default function SignUpCertification({ setStateValue, getStateValue, setS
             </div>
             <div className={style.certificationNumberCheck_button_div}>
               <div className={style.timer_wrap}>
-                {getStateValid("isEmailSend") ? formatTime(remainingTime) : "타이머타이머타이머"}
+                {getStateValid("isEmailSend") ? formatTime(remainingTime) : ""}
               </div>
               <div className={style.certificationNumberCheck_button_wrap}>
                 <button className={style.certificationNumberCheck_button} onClick={checkVerificationCode}>인증하기</button>

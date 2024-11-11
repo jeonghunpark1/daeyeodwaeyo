@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { IoIosClose } from "react-icons/io";
+import PriceGraph from '../components/priceGraph';
 
 export default function Product() {
 
@@ -20,6 +21,8 @@ export default function Product() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [description, setDescription] = useState("");
+
+  const [priceList, setPriceList] = useState([]);
 
   // price에 천단위 콤마 추가
   const priceAddComma = (price) => {
@@ -95,7 +98,7 @@ export default function Product() {
   };
 
   // 카테고리 예측 요청 함수
-  const predictCategory = async (imageFile) => {
+  const predictCategory = async (imageFile) => { 
     const formData = new FormData();
     formData.append("file", imageFile);
 
@@ -106,8 +109,12 @@ export default function Product() {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      alert("카테고리 예측: " + response.data.category);
+      // alert("카테고리 예측: " + response.data.category);
       // setCategory(response.data.categorya); // 예측된 카테고리 설정
+      const [firstPart, secondPart] = response.data.category.split("-");
+
+      setCategory(firstPart);
+      setName(secondPart);
       
     } catch (err) {
       console.error("카테고리 예측 실패:", err);
@@ -120,7 +127,38 @@ export default function Product() {
     if (images.length > 0) {
       predictCategory(images[0]); // 첫 번째 이미지를 사용해 카테고리 예측 요청
     }
+    else if (images.length == 0) {
+      setName("");
+      setCategory("");
+    }
   }, [images]);
+
+  // name에 따른 price값 요청
+  const pricesByName = async (productName) => {
+    
+    try {
+      const response = await axios.get("http://localhost:8080/api/products/prices", {
+        params: { name: productName },
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // 토큰과 함께 전송
+        }
+      });
+      setPriceList(response.data)
+    } catch (err) {
+      console.log("가격 데이터를 불러오는 데 실패했습니다.", err);
+    }
+  };
+
+  // name 변경 시 그래프를 위해 name에 따른 price값 요청
+  useEffect(() => {
+    if (name) {
+      pricesByName(name);
+    }
+    else {
+      setName("");
+      setCategory("");
+    }
+  }, [name])
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // 기본 동작 방지
@@ -160,7 +198,7 @@ export default function Product() {
             },
         });
         if (response.status === 200) {
-            alert('상품 등록에 성공했습니다.' + response.status);
+            alert('상품 등록이 되었습니다.');
             // setProductTitle('');
             // setName('');
             // setCategory('');
@@ -290,7 +328,14 @@ export default function Product() {
           <div className={style.product_price_graph_wrap}>
             <p className={`${style.product_price_graph_title} ${style.title_p_type}`}>유사 상품 가격 분포</p>
             <div className={style.product_price_graph_image_wrap}>
-              <img className={style.product_price_graph_image} src="https://placehold.co/200x100"></img>
+              {/* <img className={style.product_price_graph_image} src="https://placehold.co/200x100"></img> */}
+              {name ? (
+                <PriceGraph priceList={priceList}/>
+              ) : (
+                <>
+                  사진을 등록해주세요.
+                </>
+              )}
             </div>
           </div>
         </div>

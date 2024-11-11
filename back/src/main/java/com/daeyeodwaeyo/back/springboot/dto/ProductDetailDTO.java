@@ -26,6 +26,7 @@ public class ProductDetailDTO {
   private String description;
   private LocalDateTime createdAt;
   private String writerId;
+  private String writerNickName;
   private List<String> imageUrls;
   private String videoUrl;
 }

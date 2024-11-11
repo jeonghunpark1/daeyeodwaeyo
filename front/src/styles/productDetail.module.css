@@ -20,6 +20,8 @@
   /* box-sizing: border-box; */
   border: 1px solid var(--line-color);
   border-radius: var(--box-radius-value);
+  
+  position: relative;
 }
 
 .product_title_writer_wrap {
@@ -28,6 +30,89 @@
 
 .productTitle_wrap {
   /* background-color: lightslategray; */
+}
+
+/* .postMenu_wrap {
+  background-color: lightblue;
+  width: 100%;
+  height: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: end;
+} */
+
+.postMenu {
+  background-color: transparent;
+  border: 0;
+  width: 40px;
+  height: 40px;
+
+  position: absolute;
+  top: 5px;  
+  left: 5px;
+}
+
+.postMenu:hover {
+  cursor: pointer;
+}
+
+.postMenu_icon {
+  width: 100%;
+  height: 100%;
+}
+
+.lowLevelMenu_box {
+  background-color: lightgreen;
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+  width: 100px;
+  height: 70px;
+  box-sizing: border-box;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  padding: 0;
+  margin: 0;
+
+  position: absolute;
+  top: 40px;
+  left: 12px;
+}
+
+.lowLevelMenu_wrap {
+
+  width: 100%;
+  height: 50%;
+  box-sizing: border-box;
+  padding: 0;
+  text-align: start;
+}
+
+.lowLevelMenu {
+  background-color: white;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-size: 15px;
+  text-align: center;
+}
+
+.lowLevelMenu:hover {
+  background-color: var(--hover-color);
+  cursor: pointer;
+}
+
+.updatePost {
+  border-radius: var(--box-radius-value) var(--box-radius-value) 0 0;
+}
+
+.deletePost {
+  border-top: 1px solid var(--line-color);
+  border-radius: 0 0 var(--box-radius-value) var(--box-radius-value);
 }
 
 .productDetail_info_box {
@@ -222,7 +307,6 @@
   /* background-color: lightblue; */
   width: 100%;
   height: 40px;
-  padding-right: 30px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;

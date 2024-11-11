@@ -102,7 +102,7 @@ const ProductAdd = () => {
                 },
             });
             if (response.status === 200) {
-                alert('상품 등록에 성공했습니다.' + response.status);
+                alert('상품 등록에 성공했습니다.');
                 // setProductTitle('');
                 // setName('');
                 // setCategory('');

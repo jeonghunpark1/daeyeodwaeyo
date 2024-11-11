@@ -102,7 +102,7 @@ export default function SignUpUserProfile({ setStateValue, getStateValue, setSta
       return "중복된 닉네임입니다.";
     }
     else if (isCorrect == "default") {
-      return "default";
+      return "";
     }
   }
 
@@ -132,7 +132,7 @@ export default function SignUpUserProfile({ setStateValue, getStateValue, setSta
     } 
     else if (getStateValid("nickNameOverlap") == true) {
       if (isCorrect == true) {
-        if (getStateValue("nickName") == getStateValue("availableId")) {
+        if (getStateValue("nickName") == getStateValue("availableNickName")) {
           return (
             <div className={style.correct_message_wrap}>
               {checkMessage(isCorrect)}
@@ -190,7 +190,7 @@ export default function SignUpUserProfile({ setStateValue, getStateValue, setSta
   return (
     <div className={style.signup_div}>
       <h1>
-        <div>SignUpUserProfile</div>
+        <div>프로필 설정</div>
       </h1>
       <div className={style.input_wrap_div}>
         <div className={`${style.profileImage_wrap}`}>

@@ -26,12 +26,12 @@ export default function CheckPassword({ setState, getState }) {
       console.log("response: ", response.data)
       if(response && response.data === true) {
 
-          alert("비밀번호가 일치합니다. / " + response.data);
+          alert("비밀번호가 일치합니다. / ");
           setState("currentPage", getState("page"));
 
       } else {
         console.log("비밀번호가 일치하지 않습니다.")
-        alert("비밀번호가 일치하지 않습니다. / " + response.data);
+        alert("비밀번호가 일치하지 않습니다.");
         setPassword("");
       }
     } catch (err) {

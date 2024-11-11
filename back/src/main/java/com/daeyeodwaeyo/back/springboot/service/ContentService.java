@@ -1,10 +1,17 @@
 package com.daeyeodwaeyo.back.springboot.service;
 
+import com.daeyeodwaeyo.back.springboot.domain.Product;
+import com.daeyeodwaeyo.back.springboot.domain.ProductImage;
+import com.daeyeodwaeyo.back.springboot.domain.ProductVideo;
+import com.daeyeodwaeyo.back.springboot.repository.ProductImageRepository;
+import com.daeyeodwaeyo.back.springboot.repository.ProductVideoRepsitory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -14,10 +21,20 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class ContentService {
 
-  private final String TEMP_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/tempImage/"; // 임시 이미지 경로
-  private final String PROFILE_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage/"; // 최종 이미지 경로
-  private final String TEMP_VIDEO_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/videos/tempVideo/"; // 임시 동영상 경로
-  private final String PRODUCT_VIDEO_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/videos/productVideo/"; // 최종 물건 동영상 경로
+  @Autowired
+  private ProductImageRepository productImageRepository;
+
+  @Autowired
+  private ProductVideoRepsitory productVideoRepsitory;
+
+  // 프로필 이미지 경로
+  private final String PROFILE_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage/";
+
+  // 상품 이미지 경로
+  private final String PRODUCT_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/productImage/";
+
+  // 상품 동영상 경로
+  private final String PRODUCT_VIDEO_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/videos/productVideo/";
 
   public String saveProfileImage(MultipartFile file) throws IOException {
     String OriginalFileName = "";
@@ -34,87 +51,120 @@ public class ContentService {
     return OriginalFileName;
   }
 
-  // 임시 파일 저장
-//  public String saveTempFile(MultipartFile file) throws IOException {
-//    // MIME 타입을 확인하여 이미지 또는 동영상인지 구분
-//    String contentType = file.getContentType();
-//
-//    // 이미지 처리
-//    if (contentType != null && contentType.startsWith("image/")) {
-//      String contentName = UUID.randomUUID() + "_image_" + file.getOriginalFilename();
-//      File tempImageFile = new File(TEMP_IMAGE_PATH, contentName);
-//      file.transferTo(tempImageFile);
-//      return PROFILE_IMAGE_PATH + contentName; // 이미지 저장 후 URL 반환
-//    }
-//    // 동영상 처리
-//    else if (contentType != null && contentType.startsWith("video/")) {
-//      String contentName = UUID.randomUUID() + "_video_" + file.getOriginalFilename();
-//      File tempVideoFile = new File(TEMP_VIDEO_PATH, contentName);
-//      file.transferTo(tempVideoFile);
-//      return PRODUCT_VIDEO_PATH + contentName;
-//    } else {
-//      throw new IllegalArgumentException("지원하지 않는 파일 형식입니다.");
-//    }
-//  }
-//
-//  // 임시 파일 폴더에서 최종 파일 폴더로 이동
-//  public void moveTempFileToFinal(String tempFileUrl, String category) {
-//    String fileName = tempFileUrl.substring(tempFileUrl.lastIndexOf("/") + 1);
-//    File tempFile = null;
-//    File finalFile = null;
-//
-//    // 이미지 파일 처리
-//    if (tempFileUrl.contains("image")) {
-//      // 프로필 사진 파일 처리
-//      if (category.equals("profileImage")) {
-//        tempFile = new File(TEMP_IMAGE_PATH, fileName);
-//        finalFile = new File(PROFILE_IMAGE_PATH, fileName);
-//      }
-//      // 동영상 파일 처리
-//      else if (tempFileUrl.contains("video")) {
-//        tempFile = new File(TEMP_VIDEO_PATH, fileName);
-//        // 물건 홍보 영상 파일 처리
-//        if (category.equals("productVideo")) {
-//          finalFile = new File(PRODUCT_VIDEO_PATH, fileName);
-//        }
-//      }
-//    }
-//    // 파일이 존재할 경우 이동
-//    if (tempFile != null && tempFile.exists()) {
-//      tempFile.renameTo(finalFile); // 파일 이동
-//    }
-//  }
-//
-//  // 임시 파일 폴더에서 24시간이 지난 파일 삭제
-//  public void cleanUpTempFiles() {
-//    // 이미지 파일 폴더
-//    File tempImageDir = new File(TEMP_IMAGE_PATH);
-//    File[] imageFiles = tempImageDir.listFiles();
-//
-//    // 동영상 파일 폴더
-//    File tempVideoDir = new File(TEMP_VIDEO_PATH);
-//    File[] videoFiles = tempVideoDir.listFiles();
-//
-//    // 이미지 파일 삭제
-//    if (imageFiles != null) {
-//      for (File file : imageFiles) {
-//        long diff = System.currentTimeMillis() - file.lastModified();
-//        // 24시간이 지난 파일 삭제
-//        if (diff > TimeUnit.HOURS.toMillis(24)) {
-//          file.delete();
-//        }
-//      }
-//    }
-//    // 동영상 파일 삭제
-//    else if (videoFiles != null) {
-//      for (File file : videoFiles) {
-//        long diff = System.currentTimeMillis() - file.lastModified();
-//        // 24시간이 지난 파일 삭제
-//        if (diff > TimeUnit.HOURS.toMillis(24)) {
-//          file.delete();
-//        }
-//      }
-//
-//    }
-//  }
+  // 프로필 사진을 삭제하는 메서드
+  public boolean deleteProfileImage(String profileImageName) throws IOException {
+    // 프로필 이미지 경로에서 삭제할 파일을 지정
+    File fileToDelete = new File(PROFILE_IMAGE_PATH, profileImageName);
+
+    // 파일이 존재하는지 확인
+    if (fileToDelete.exists()) {
+      // 파일이 존재하면 삭제
+      boolean deleted = fileToDelete.delete();
+      System.out.println("파일이 삭제되었습니다.");
+      // 삭제 여부 반환 (true: 성공, false: 실패)
+      return deleted;
+    } else {
+      // 파일이 존재하지 않으면 false 반환
+      System.out.println("파일이 존재하지 않습니다.");
+      return false;
+    }
+  }
+
+  // 물건 등록할 때 입력한 이미지를 저장하는 메서드
+  public List<String> saveProductImage(List<MultipartFile> images, Product product) {
+
+    List<String> imageNames = new ArrayList<>();
+
+    // 상품 이미지 저장
+    for (MultipartFile image : images) {
+      String imageId = UUID.randomUUID().toString();
+      String imageName = imageId + "_" + image.getOriginalFilename();
+      File imageFile = new File(PRODUCT_IMAGE_PATH, imageName);
+      try {
+        image.transferTo(imageFile);
+        System.out.println("save image name: " + imageName);
+        ProductImage productImage = new ProductImage();
+        productImage.setId(imageId);
+        productImage.setImageUrl(imageName);
+        productImage.setProduct(product);
+        productImageRepository.save(productImage);
+        imageNames.add(imageName);
+        System.out.println("이미지 저장 완료");
+      } catch (IOException e) {
+        System.err.println("Failed to store image: " + imageName);
+        return null;
+      }
+    }
+    return imageNames;
+  }
+
+  // 상품 사진을 삭제하는 메서드
+  public boolean deleteProductImage(List<String> imageNames) {
+    for (String imageName : imageNames) {
+      // 프로필 이미지 경로에서 삭제할 파일을 지정
+      File fileToDelete = new File(PRODUCT_IMAGE_PATH, imageName);
+
+      // 파일이 존재하는지 확인
+      if (fileToDelete.exists()) {
+        // 파일이 존재하면 삭제
+        boolean deleted = fileToDelete.delete();
+        if (deleted) {
+          System.out.println("파일이 삭제되었습니다.");
+        } else {
+          System.out.println("파일이 삭제되지 않았습니다.");
+          return deleted;
+        }
+      } else {
+        // 파일이 존재하지 않으면 false 반환
+        System.out.println("파일이 존재하지 않습니다.");
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // 물건 등록할 때 입력한 비디오를 저장하는 메서드
+  public String saveProductVideo(MultipartFile video, Product product) {
+
+    String videoName = "";
+
+    if (video != null) {
+      String videoId = UUID.randomUUID().toString();
+      videoName = videoId + "_" + video.getOriginalFilename();
+      File videoFile = new File(PRODUCT_VIDEO_PATH, videoName);
+      try {
+        video.transferTo(videoFile);
+        System.out.println("save video name: " + videoName);
+        ProductVideo productVideo = new ProductVideo();
+        productVideo.setId(videoId);
+        productVideo.setVideoUrl(videoName);
+        productVideo.setProduct(product);
+        productVideoRepsitory.save(productVideo);
+        System.out.println("비디오 저장 완료");
+      } catch (IOException e) {
+        System.err.println("Failed to store video: " + videoName);
+        return null; // 비디오 저장 실패 시 null 반환
+      }
+    }
+    return videoName;
+  }
+
+  // 상품 동영상을 삭제하는 메서드
+  public boolean deleteProductVideo(String videoName) {
+    // 프로필 이미지 경로에서 삭제할 파일을 지정
+    File fileToDelete = new File(PRODUCT_VIDEO_PATH, videoName);
+
+    // 파일이 존재하는지 확인
+    if (fileToDelete.exists()) {
+      // 파일이 존재하면 삭제
+      boolean deleted = fileToDelete.delete();
+      System.out.println("파일이 삭제되었습니다.");
+      // 삭제 여부 반환 (true: 성공, false: 실패)
+      return deleted;
+    } else {
+      // 파일이 존재하지 않으면 false 반환
+      System.out.println("파일이 존재하지 않습니다.");
+      return false;
+    }
+  }
 }

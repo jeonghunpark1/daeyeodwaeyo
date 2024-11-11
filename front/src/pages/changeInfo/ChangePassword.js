@@ -101,13 +101,15 @@ export default function ChangePassword() {
           'Authorization': `Bearer ${token}`,
         }
       });
-      console.log("response: ", response.data)
+      console.log("response: ", response.data);
       if(response && response.data === true) {
-          alert("비밀번호가 변경되었습니다. / " + response.data);
+          alert("비밀번호가 변경되었습니다.");
           
           window.location.reload();
       } else {
+        alert("비밀번호가 변경되지 않았습니다.");
 
+        window.location.reload();
       }
     } catch (err) {
       alert("서버에 요청을 실패했습니다." + err);

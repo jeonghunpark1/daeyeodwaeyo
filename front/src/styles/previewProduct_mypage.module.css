@@ -1,0 +1,110 @@
+@import "globalVar.module.css";
+
+.previewProduct_box {
+  /* background-color: lightseagreen; */
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+  width: 200px;
+  height: 80%;
+  flex: 0 0 200px 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin: 8px;
+
+  position: relative;
+}
+
+.previewProduct_box:hover {
+  cursor: pointer;
+}
+
+.previewProduct_title_wrap {
+  width: 100%;
+  height: 20%;
+  border-bottom: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value) var(--box-radius-value) 0 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
+.previewProduct_title {
+  width: 90%;
+  height: auto;
+  text-overflow: ellipsis;     /* 생략 처리 ( ... )*/
+  white-space: nowrap;         /* 줄바꿈 하지 않고 잘림*/
+  overflow: hidden;            /* 스크롤 처리 하지 않음*/
+}
+
+.previewProduct_image_wrap {
+  /* background-color: lightgray; */
+  width: 100%;
+  height: 80%;
+  border-radius: 0 0 var(--box-radius-value ) var(--box-radius-value);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product_image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product_info_wrap {
+  /* background-color: rgba(209, 209, 209, 0.499); */
+  background: linear-gradient(rgba(209, 209, 209, 0), black);
+  width: 100%;
+  max-width: 600px;
+  height: 30%;
+  padding: 2%;
+  box-sizing: border-box;
+  border-radius: var(--box-radius-value);
+
+  position: absolute;
+  top: 70%;
+  left: 0;
+  /* transform: translate(-50%, -50%); */
+
+  flex-direction: column;
+  justify-content: end;
+  align-items: start;
+
+  display: none;
+}
+
+.previewProduct_box:hover .product_info_wrap {
+  display: flex;
+}
+
+.product_category_name_wrap {
+  /* background-color: lightsalmon; */
+  width: 100%;
+  height: 20px;
+  margin-top: 1%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+.product_category,
+.product_name {
+  background-color: lightcyan;
+  width: auto;
+  height: 100%;
+  padding: 0 5px;
+  box-sizing: border-box;
+  border: 1px solid var(--line-color);
+  border-radius: var(--box-radius-value);
+}
+
+.product_name {
+  background-color: lightpink;
+  margin-left: 5px;
+}
