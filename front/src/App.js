@@ -19,6 +19,7 @@ import PrivateRoute from './components/PrivateRoute';
 import SearchResult from './pages/SearchResult';
 import ProductDetail from './pages/ProductDetail';
 import Shorts from './pages/Shorts';
+import ImageSearch from './components/ImageSearch';
 
 import ChatWindow from './pages/chatting/ChatWindow';
 import Chat from './pages/chatting/Chat';
@@ -105,6 +106,7 @@ export default function App() {
           <Route path="/searchResult" element={<SearchResult />}></Route>
           <Route path="/productDetail" element={<ProductDetail loggedInUserId={loggedInUserId} chatWindowRef={chatWindowRef}/>}></Route>
           <Route path="/shorts" element={<Shorts />}></Route>
+          <Route path="/imageSearch" element={<ImageSearch />}></Route>
 
           <Route path="/ChatWindow/:roomId" element={<ChatWindowWrapper token={token} />} />
           <Route path="/ChatHome" element={<ChatHome token={token} />} />

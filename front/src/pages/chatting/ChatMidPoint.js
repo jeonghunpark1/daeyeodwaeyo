@@ -26,7 +26,7 @@ const ChatMidPoint = () => {
             const existingScript = document.getElementById('googleMaps');
             if (!existingScript) {
                 const script = document.createElement('script');
-                script.src = ``;
+                script.src = `https://maps.googleapis.com/maps/api/js?key=&libraries=places`;
                 script.id = 'googleMaps';
                 document.body.appendChild(script);
                 script.onload = initializeMap;

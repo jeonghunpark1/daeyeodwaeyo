@@ -1,8 +1,9 @@
 # API 엔드포인트
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
-from PIL import Image
+from fastapi.responses import StreamingResponse
 from app.models.YOLOv8Model import predict_category  # 모델 예측 함수 임포트
+from app.utils.image_utils import remove_background # 배경 제거 함수
 from app.schemas.image_schema import CategoryPrediction
 
 router = APIRouter()
@@ -46,6 +47,16 @@ async def predict(file: UploadFile = File(...)):
     except Exception as e:
         print(f"Prediction error: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error during prediction")
+
+@router.post("/removeBg")
+async def remove_bg(file: UploadFile = File(...)):
+    try:
+        image_data = await file.read()
+        result_image = remove_background(image_data)
+        return StreamingResponse(result_image, media_type="image/png")
+    except Exception as e:
+        print(f"Error removing background: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error during background removal")
 
 # # 유사한 이미지 찾기 엔드포인트
 # @router.post("/similarity", response_model=SimilarImagesResponse)

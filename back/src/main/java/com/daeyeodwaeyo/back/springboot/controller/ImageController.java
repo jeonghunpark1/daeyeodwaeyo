@@ -1,7 +1,8 @@
 package com.daeyeodwaeyo.back.springboot.controller;
 
-import com.daeyeodwaeyo.back.springboot.service.ImageClassificationService;
+import com.daeyeodwaeyo.back.springboot.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ import java.io.IOException;
 public class ImageController {
 
   @Autowired
-  private ImageClassificationService imageClassificationService;
+  private ImageService imageService;
 
   private final String PRODUCT_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/productImage";
 
@@ -26,7 +27,7 @@ public class ImageController {
   @PostMapping("/predict")
   public ResponseEntity<String> predictCategory(@RequestParam("file") MultipartFile file) {
     try {
-      String result = imageClassificationService.predictCategory(file);
+      String result = imageService.predictCategory(file);
       return ResponseEntity.ok(result);
     } catch (HttpServerErrorException e) {
       // FastAPI에서 반환한 500 오류 처리
@@ -36,11 +37,20 @@ public class ImageController {
     }
   }
 
+  @PostMapping("/removeBg")
+  public ResponseEntity<?> removeBg(@RequestParam("file") MultipartFile file) {
+    try {
+      return imageService.removeBackground(file);
+    } catch (IOException e) {
+      return ResponseEntity.status(500).body("Error removing background");
+    }
+  }
+
   // 유사한 이미지 검색 엔드포인트
   @PostMapping("/similarity")
   public ResponseEntity<String> findSimilarImages(@RequestParam("file") MultipartFile file) {
     try {
-      String result = imageClassificationService.findSimilarImages(file, PRODUCT_IMAGE_PATH);
+      String result = imageService.findSimilarImages(file, PRODUCT_IMAGE_PATH);
       return ResponseEntity.ok(result);
     } catch (IOException e) {
       return ResponseEntity.status(500).body("Error finding similar images");

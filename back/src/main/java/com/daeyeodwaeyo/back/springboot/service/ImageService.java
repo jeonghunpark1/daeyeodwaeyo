@@ -1,6 +1,7 @@
 package com.daeyeodwaeyo.back.springboot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -8,12 +9,14 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class ImageClassificationService {
+public class ImageService {
 
   private final String FASTAPI_URL = "http://localhost:8001"; // FastAPI 서버 URL
 
@@ -40,6 +43,32 @@ public class ImageClassificationService {
       throw new IOException("Error predicting category: " + response.getStatusCode());
     }
 
+  }
+
+  public ResponseEntity<InputStreamResource> removeBackground(MultipartFile image) throws IOException {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+    // MultiValueMap에 이미지 파일 추가
+    MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+    body.add("file", new HttpEntity<>(image.getResource(), headers));
+
+    HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+    // fastAPI의 /removeBg 엔드포인트로 요청 전송
+    ResponseEntity<byte[]> response = restTemplate.exchange(FASTAPI_URL + "/removeBg", HttpMethod.POST, requestEntity, byte[].class);
+
+    if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+      InputStream imageStream = new ByteArrayInputStream(response.getBody());
+      InputStreamResource resource = new InputStreamResource(imageStream);
+
+      return ResponseEntity.ok()
+              .contentType(MediaType.IMAGE_PNG)
+              .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"bg-removed.png\"")
+              .body(resource);
+    } else {
+      throw new IOException("Error removing background: " + response.getStatusCode());
+    }
   }
 
   // 유사한 이미지 검색을 위한 메서드

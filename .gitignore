@@ -2,3 +2,5 @@
 ./resources
 
 ./fastAPI/app/models/YoloV8_custom_model.pt
+
+./.env

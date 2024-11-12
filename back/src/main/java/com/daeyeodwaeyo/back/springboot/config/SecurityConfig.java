@@ -59,6 +59,7 @@ public class SecurityConfig {
                                      "/api/products/shorts",
                                      "/api/products/mainLatestProduct",
                                      "/api/products/mainShorts",
+                                     "/api/images/removeBg",
                                      "/profileImagePath/**",
                                      "/productImagePath/**",
                                      "/productVideoPath/**",
