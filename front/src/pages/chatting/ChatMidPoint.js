@@ -10,6 +10,9 @@ const ChatMidPoint = () => {
     const [marker, setMarker] = useState(null); // 마커 상태 추가
     const queryParams = new URLSearchParams(location.search);
     const roomId = queryParams.get("roomId");
+
+    const API_KEY = process.env.REACT_APP_API_KEY;
+
     useEffect(() => {
         console.log("전달된 방 ID:", roomId);
     }, [roomId]);
@@ -26,7 +29,7 @@ const ChatMidPoint = () => {
             const existingScript = document.getElementById('googleMaps');
             if (!existingScript) {
                 const script = document.createElement('script');
-                script.src = `https://maps.googleapis.com/maps/api/js?key=&libraries=places`;
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places`;
                 script.id = 'googleMaps';
                 document.body.appendChild(script);
                 script.onload = initializeMap;

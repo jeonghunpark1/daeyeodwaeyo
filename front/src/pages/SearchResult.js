@@ -4,9 +4,11 @@ import style from "../styles/searchResult.module.css"
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
+import SearchProductBox from '../components/SearchProductBox';
+
 export default function SearchResult() {
 
-  const navigate = useNavigate();
+  
 
   const [orderBy, setorderBy] = useState("orderByLatest");
   const [productList, setProductList] = useState([]);
@@ -48,15 +50,8 @@ export default function SearchResult() {
     }
   }, [keyword])
 
-  const requestProductImageURL = (productImage) => {
-    const productImageURL = "http://localhost:8080/productImagePath/" + productImage;
-    return productImageURL;
-  };
 
-  // price에 천단위 콤마 추가
-  const priceAddComma = (price) => {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
+  
 
   // 페이지네이션 버튼 생성
   const renderPaginationButtons = () => {
@@ -91,9 +86,7 @@ export default function SearchResult() {
     }
   };
 
-  const handleProductClick = (product_id) => {
-    navigate("/productDetail", { state: {productId: product_id} })
-  }
+  
 
   useEffect(() => {
     if(keyword) {
@@ -132,28 +125,7 @@ export default function SearchResult() {
         {productList && currentItems.length > 0 ? (
           <>
             {currentItems.map((product) => (
-              <div className={style.product_box} key={product.id} onClick={() => {handleProductClick(product.id)}}>
-                <div className={style.product_id}></div>
-                <div className={style.product_image_wrap}>
-                  <img className={style.product_image} src={requestProductImageURL(product.imageUrl[0])} alt='상품 사진' />
-                </div>
-                <div className={style.product_info_wrap}>
-                  <div className={style.product_title_wrap}>
-                    {product.title}
-                  </div>
-                  <div className={style.product_category_name_wrap}>
-                    <div className={style.product_category}>
-                      {product.category}
-                    </div>
-                    <div className={style.product_name}>
-                      {product.name}
-                    </div>
-                  </div>
-                  <div className={style.product_price_wrap}>
-                    {priceAddComma(product.price)}원
-                  </div>
-                </div>
-              </div>
+              <SearchProductBox product={product} />
             ))}
           </>
         ) : (
