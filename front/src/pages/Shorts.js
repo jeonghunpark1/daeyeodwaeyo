@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import style from "../styles/shorts.module.css";
 import axios from 'axios';
-import { IoVolumeHigh, IoVolumeMute } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+
+import { IoVolumeHigh, IoVolumeMute } from "react-icons/io5";
+import { MdLightMode, MdDarkMode } from "react-icons/md";
 
 export default function Shorts() {
 
@@ -13,6 +15,7 @@ export default function Shorts() {
   const videoRefs = useRef([]);
   const [isMuted, setIsMuted] = useState(true);
   const [showIcon, setShowIcon] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(0); // 현재 보이는 비디오 인덱스
 
@@ -109,6 +112,11 @@ export default function Shorts() {
     });
   }, [isMuted]);
 
+  // 다크모드 토글 함수
+  const toggleDarkMode = () => {
+    setIsDarkMode(prevMode => !prevMode);
+  };
+
   // 동영상 URL을 반환하는 함수
   const requestProductVideoURL = (productVideo) => {
     return `http://localhost:8080/productVideoPath/${productVideo}`;
@@ -135,7 +143,14 @@ export default function Shorts() {
   }
 
   return (
-    <div className={style.shorts_page}>
+    <div className={`${style.shorts_page} ${isDarkMode ? style.darkMode : style.lightMode}`}>
+      <div className={style.page_backgroundColor_wrap} onClick={toggleDarkMode}>
+        {isDarkMode ? (
+          <MdLightMode className={style.lightModeIcon} />
+        ) : (
+          <MdDarkMode className={style.darkModeIcon} />
+        )}
+      </div>
       <div className={`${style.shorts_content} video-container`}>
         {productVideos.map((product, index) => {
           // 실제 렌더링되는 인덱스를 원래의 인덱스와 맞추기 위해 계산
