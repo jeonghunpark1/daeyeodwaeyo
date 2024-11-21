@@ -69,27 +69,27 @@ export default function Shorts() {
   
     // 컴포넌트가 언마운트될 때 옵저버 해제
     return () => observer.disconnect();
-  }, [loadedVideos]); // loadedVideos가 변경될 때마다 옵저버를 업데이트
+  }, [productVideos]); // loadedVideos가 변경될 때마다 옵저버를 업데이트
   
 
   // currentIndex 변경에 따라 로딩할 비디오 목록 설정
-  useEffect(() => {
-    let numOfLoadVideo = 2;
-    const startIndex = Math.max(0, currentIndex - numOfLoadVideo);
-    let endIndex = 0;
+  // useEffect(() => {
+  //   let numOfLoadVideo = 2;
+  //   const startIndex = Math.max(0, currentIndex - numOfLoadVideo);
+  //   let endIndex = 0;
 
-    if ((productVideos.length - 1) - (currentIndex + numOfLoadVideo) < 0) {
+  //   if ((productVideos.length - 1) - (currentIndex + numOfLoadVideo) < 0) {
       
-      endIndex = currentIndex + ((productVideos.length - 1) - (currentIndex + numOfLoadVideo) + numOfLoadVideo);
-    } else {
-      endIndex = Math.min(currentIndex + numOfLoadVideo);
-    }
+  //     endIndex = currentIndex + ((productVideos.length - 1) - (currentIndex + numOfLoadVideo) + numOfLoadVideo);
+  //   } else {
+  //     endIndex = Math.min(currentIndex + numOfLoadVideo);
+  //   }
 
-    console.log("Start Index:", startIndex, "End Index:", endIndex);
-    setLoadedVideos(productVideos.slice(startIndex, endIndex));
-    console.log("productVideos", productVideos);
-    console.log("loaded video:", loadedVideos);
-  }, [currentIndex, productVideos]);
+  //   console.log("Start Index:", startIndex, "End Index:", endIndex);
+  //   // setLoadedVideos(productVideos.slice(startIndex, endIndex));
+  //   console.log("productVideos", productVideos);
+  //   console.log("loaded video:", loadedVideos);
+  // }, [currentIndex, productVideos]);
   
   
 
@@ -122,13 +122,13 @@ export default function Shorts() {
   // };
 
   // currentIndex가 변경될 때마다 값을 콘솔에 출력하는 useEffect
-  useEffect(() => {
-    console.log("Current Index:", currentIndex);
-  }, [currentIndex]);
+  // useEffect(() => {
+  //   console.log("Current Index:", currentIndex);
+  // }, [currentIndex]);
 
-  useEffect(() => {
-    console.log("Video Refs:", videoRefs.current);
-  }, [productVideos]);
+  // useEffect(() => {
+  //   console.log("Video Refs:", videoRefs.current);
+  // }, [productVideos]);
   
   const handleProductClick = (product_id) => {
     navigate("/productDetail", { state: {productId: product_id} })
@@ -137,16 +137,16 @@ export default function Shorts() {
   return (
     <div className={style.shorts_page}>
       <div className={`${style.shorts_content} video-container`}>
-        {loadedVideos.map((product, index) => {
+        {productVideos.map((product, index) => {
           // 실제 렌더링되는 인덱스를 원래의 인덱스와 맞추기 위해 계산
-          const actualIndex = Math.max(0, currentIndex - 2) + index;
+          // const actualIndex = Math.max(0, currentIndex - 2) + index;
           return (
-            <div key={actualIndex} className={style.videoWrapper}>
+            <div key={index} className={style.videoWrapper}>
               <video
                 className={style.video}
                 ref={(el) => {
                   if (el && !videoRefs.current.includes(el)) {
-                    videoRefs.current[actualIndex] = el;
+                    videoRefs.current[index] = el;
                   }
                 }}
                 src={requestProductVideoURL(product.videoUrl)}
