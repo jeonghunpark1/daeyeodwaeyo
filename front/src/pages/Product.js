@@ -106,7 +106,7 @@ export default function Product() {
       const response = await axios.post("http://localhost:8080/api/images/predict", formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          // 'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
       });
       // alert("카테고리 예측: " + response.data.category);

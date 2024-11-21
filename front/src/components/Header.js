@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import style from "../styles/header.module.css"
 import { FaSearch } from "react-icons/fa";
+import { TbPhotoSearch } from "react-icons/tb";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import { SearchContext } from './SearchProvider';
+
 export default function Header({ getterIsLogin, headerUserInfo }) {
+  const { setSearchState } = useContext(SearchContext);
+
   const navigate = useNavigate();
 
   const [query, setQuery] = useState("");
@@ -36,6 +41,15 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
     }
   }
 
+  const handleImageSearch = () => {
+    setSearchState({
+      query: '',
+      searchImage: null,
+      similarityImageProduct: [],
+    });
+    navigate("/imageSearchResult");
+  };
+
   return (
     <div className={style.header_box}>
       <div className={style.header_top}>
@@ -52,9 +66,14 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
             <label className={style.search_input_label}>
               <input type="text" className={style.search_input} onChange={(e) => {setQuery(e.target.value)}} value={query} placeholder='검색어를 입력하세요.' onKeyDown={(e) => {if (e.key === "Enter") {handleSearch();}}}/>
             </label>
-            <label className={style.search_button_label}>
-              <button className={style.search_button} onClick={() => {handleSearch();}}>
+            <label className={`${style.search_button_label} ${style.querySearch_button_label}`}>
+              <button className={`${style.search_button} ${style.querySearch_button}`} onClick={() => {handleSearch();}}>
                 <FaSearch />
+              </button>
+            </label>
+            <label className={`${style.search_button_label} ${style.imageSearch_button_label}`}>
+              <button className={`${style.search_button} ${style.imageSearch_button}`} onClick={() => {handleImageSearch();}}>
+                <TbPhotoSearch />
               </button>
             </label>
           </div>

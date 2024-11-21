@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import { Routes, Route, BrowserRouter, useLocation, useParams } from "react-router-dom";
+import { SearchProvider } from './components/SearchProvider';
 import axios from 'axios';
 import Header from './components/Header';
 import Login from './pages/Login';
@@ -20,6 +21,7 @@ import SearchResult from './pages/SearchResult';
 import ProductDetail from './pages/ProductDetail';
 import Shorts from './pages/Shorts';
 import ImageSearch from './components/ImageSearch';
+import ImageSearchResult from './pages/ImageSearchResult';
 
 import ChatWindow from './pages/chatting/ChatWindow';
 import Chat from './pages/chatting/Chat';
@@ -80,73 +82,76 @@ export default function App() {
   return (
 
       <div className="App">
-        {(location.pathname !== '/findId' &&
-          location.pathname != '/findIdResult' &&
-          location.pathname != '/findPassword' &&
-          location.pathname != '/findPasswordResult' &&
-          location.pathname != '/changeInfo' &&
-          location.pathname !== '/ChatHome' &&
-          location.pathname !== '/ChatMidPoint' && // ChatMidPoint 경로에서는 Header를 제외
-          !/^\/ChatWindow\/[^/]+$/.test(location.pathname)) && (
-          <Header getterIsLogin={getterIsLogin} headerUserInfo={headerUserInfo} />
-        )}
-        <Routes>
-          {/* <Route path="/" element={<Index />}></Route> */}
-          <Route path="/login" element={<Login setterIsLogin={setterIsLogin} fetchUserInfo={fetchUserInfo}/>}></Route>
-          <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/main" element={<Main />}></Route>
-          <Route path="/productAdd" element={<ProductAdd />}></Route>
-          {/* <Route path="/product" element={<Product />}></Route> */}
-          {/* <Route path="/myPage" element={<MyPage />}></Route> */}
-          <Route path="/findId" element={<FindId />}></Route>
-          <Route path="/findIdResult" element={<FindIdResult />}></Route>
-          <Route path="/findPassword" element={<FindPassword />}></Route>
-          <Route path="/findPasswordResult" element={<FindPasswordResult />}></Route>
-          <Route path="/changeInfo" element={<ChangeInfo />}></Route>
-          <Route path="/searchResult" element={<SearchResult />}></Route>
-          <Route path="/productDetail" element={<ProductDetail loggedInUserId={loggedInUserId} chatWindowRef={chatWindowRef}/>}></Route>
-          <Route path="/shorts" element={<Shorts />}></Route>
-          <Route path="/imageSearch" element={<ImageSearch />}></Route>
+        <SearchProvider>
+          {(location.pathname !== '/findId' &&
+            location.pathname != '/findIdResult' &&
+            location.pathname != '/findPassword' &&
+            location.pathname != '/findPasswordResult' &&
+            location.pathname != '/changeInfo' &&
+            location.pathname !== '/ChatHome' &&
+            location.pathname !== '/ChatMidPoint' && // ChatMidPoint 경로에서는 Header를 제외
+            !/^\/ChatWindow\/[^/]+$/.test(location.pathname)) && (
+            <Header getterIsLogin={getterIsLogin} headerUserInfo={headerUserInfo} />
+          )}
+          <Routes>
+            {/* <Route path="/" element={<Index />}></Route> */}
+            <Route path="/login" element={<Login setterIsLogin={setterIsLogin} fetchUserInfo={fetchUserInfo}/>}></Route>
+            <Route path="/signup" element={<SignUp />}></Route>
+            <Route path="/main" element={<Main />}></Route>
+            <Route path="/productAdd" element={<ProductAdd />}></Route>
+            {/* <Route path="/product" element={<Product />}></Route> */}
+            {/* <Route path="/myPage" element={<MyPage />}></Route> */}
+            <Route path="/findId" element={<FindId />}></Route>
+            <Route path="/findIdResult" element={<FindIdResult />}></Route>
+            <Route path="/findPassword" element={<FindPassword />}></Route>
+            <Route path="/findPasswordResult" element={<FindPasswordResult />}></Route>
+            <Route path="/changeInfo" element={<ChangeInfo />}></Route>
+            <Route path="/searchResult" element={<SearchResult />}></Route>
+            <Route path="/productDetail" element={<ProductDetail loggedInUserId={loggedInUserId} chatWindowRef={chatWindowRef}/>}></Route>
+            <Route path="/shorts" element={<Shorts />}></Route>
+            <Route path="/imageSearch" element={<ImageSearch />}></Route>
+            <Route path="/imageSearchResult" element={<ImageSearchResult />}></Route>
 
-          <Route path="/ChatWindow/:roomId" element={<ChatWindowWrapper token={token} />} />
-          <Route path="/ChatHome" element={<ChatHome token={token} />} />
-          <Route path="/ChatMidPoint" element={<ChatMidPoint />} /> {/* ChatMidPoint 경로 추가 */}
+            <Route path="/ChatWindow/:roomId" element={<ChatWindowWrapper token={token} />} />
+            <Route path="/ChatHome" element={<ChatHome token={token} />} />
+            <Route path="/ChatMidPoint" element={<ChatMidPoint />} /> {/* ChatMidPoint 경로 추가 */}
 
-          {/* PrivateRoute를 통한 Route */}
-          <Route
-            path="myPage"
-            element={
-              <PrivateRoute isLogin={isLogin}>
-                <MyPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="product"
-            element={
-              <PrivateRoute isLogin={isLogin}>
-                <Product />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-        {(location.pathname !== '/findId' &&
-          location.pathname != '/findIdResult' &&
-          location.pathname != '/findPassword' &&
-          location.pathname != '/findPasswordResult' &&
-          location.pathname != '/changeInfo' && 
-          location.pathname != '/shorts' &&
-          location.pathname !== '/ChatMidPoint' && // ChatMidPoint 경로에서는 Footer를 제외
-          !/^\/ChatWindow\/[^/]+$/.test(location.pathname)) && (
-          <Footer />
-        )}
-        {isLogin && 
-        location.pathname !== '/ChatHome' && 
-        location.pathname !== '/ChatMidPoint' && 
-        !/^\/ChatWindow\/[^/]+$/.test(location.pathname) && 
-        location.pathname !== '/changeInfo' &&(
-            <Chat chatWindowRef={chatWindowRef}/>
-        )}
+            {/* PrivateRoute를 통한 Route */}
+            <Route
+              path="myPage"
+              element={
+                <PrivateRoute isLogin={isLogin}>
+                  <MyPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="product"
+              element={
+                <PrivateRoute isLogin={isLogin}>
+                  <Product />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+          {(location.pathname !== '/findId' &&
+            location.pathname != '/findIdResult' &&
+            location.pathname != '/findPassword' &&
+            location.pathname != '/findPasswordResult' &&
+            location.pathname != '/changeInfo' && 
+            location.pathname != '/shorts' &&
+            location.pathname !== '/ChatMidPoint' && // ChatMidPoint 경로에서는 Footer를 제외
+            !/^\/ChatWindow\/[^/]+$/.test(location.pathname)) && (
+            <Footer />
+          )}
+          {isLogin && 
+          location.pathname !== '/ChatHome' && 
+          location.pathname !== '/ChatMidPoint' && 
+          !/^\/ChatWindow\/[^/]+$/.test(location.pathname) && 
+          location.pathname !== '/changeInfo' &&(
+              <Chat chatWindowRef={chatWindowRef}/>
+          )}
+        </SearchProvider>
       </div>
 
   );

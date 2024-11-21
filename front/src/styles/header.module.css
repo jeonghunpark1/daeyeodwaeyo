@@ -115,14 +115,28 @@
 }
 
 .search_button_label:hover {
-  border: 1px solid var(--line-color);
   box-shadow: 3px 3px 10px 1px gray;
+  cursor: pointer;
 }
 
 .search_button {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.imageSearch_button_label {
+  display: none;
+}
+
+.search_box:hover .imageSearch_button_label {
+  display: block;
+}
+
+.search_box:hover .querySearch_button_label, 
+.search_box:hover .querySearch_button {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
 }
 
 /* 헤더 유저 부분 */
