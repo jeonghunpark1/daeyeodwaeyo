@@ -4,6 +4,8 @@ import style from "../../styles/changeInfo/changeProfileImage.module.css"
 import { IoMdAdd } from "react-icons/io";
 import axios from 'axios';
 
+import { API_BASE_URL } from '../../utils/constants';
+
 export default function ChangeProfileImage() {
 
   const [selectedImage, setSelectedImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
@@ -43,7 +45,7 @@ export default function ChangeProfileImage() {
 
       formData.append("profileImage", profileImage);
 
-      const response = await axios.post('http://localhost:8080/api/users/changeProfileImage', formData, 
+      const response = await axios.post(`${API_BASE_URL}/api/users/changeProfileImage`, formData, 
       {
         headers: {
           'Authorization': `Bearer ${token}`,

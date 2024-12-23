@@ -60,11 +60,20 @@ public class SecurityConfig {
                                      "/api/products/mainLatestProduct",
                                      "/api/products/mainShorts",
                                      "/api/images/removeBg",
-                                     "/profileImagePath/**",
-                                     "/productImagePath/**",
-                                     "/productVideoPath/**",
-                                     "/videoPath/**",
-                                     "/ws/**").permitAll() // 회원가입과 로그인은 인증 없이 접근 가능
+                                     "/api/images/predict",
+                                     "/api/images/similarity",
+                                     "/api/profileImagePath/**",
+                                     "/api/productImagePath/**",
+                                     "/api/productVideoPath/**",
+                                     "/api/videoPath/**",
+                                     "/api/chat/delete/**",
+                                     "/api/chat/exists/**",
+                                     "/api/chat/leaveRoom/**",
+                                     "/api/chat/application/create",
+                                     "/api/chat/application/**",
+                                     "/api/applications/**",
+                                     "/api/reviews/**",
+                                     "/api/ws/**").permitAll() // 회원가입과 로그인은 인증 없이 접근 가능
                     .requestMatchers("/api/products").authenticated() // 인증된 사용자만 접근 가능
                     .anyRequest().authenticated()) // 그 외 모든 요청은 인증 필요
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션을 사용하지 않음 (JWT 방식)
@@ -76,7 +85,7 @@ public class SecurityConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("http://localhost:3000")); // 허용할 도메인 명시
+    configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://cub-living-endlessly.ngrok-free.app")); // 허용할 도메인 명시
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
     configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
     configuration.setAllowCredentials(true);

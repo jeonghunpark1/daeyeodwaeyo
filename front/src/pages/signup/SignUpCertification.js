@@ -4,6 +4,8 @@ import axios from 'axios';
 import style from "../../styles/signup/signupCertification.module.css"
 import input_style from "../../styles/login_signup_input.module.css"
 
+import { API_BASE_URL } from '../../utils/constants';
+
 export default function SignUpCertification({ setStateValue, getStateValue, setStateValid, getStateValid }) {
 
   const email = getStateValue("emailId") + "@" + getStateValue("emailDomain");
@@ -52,13 +54,17 @@ export default function SignUpCertification({ setStateValue, getStateValue, setS
   const sendEmail = async () => {
     console.log("email", {email});
     console.log("isEmailSend: ", getStateValid("isEmailSend"));
+    const type = "signUp";
     try {
-      const response = await axios.post('http://localhost:8080/api/email/sendCode', {email}, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true // 클라이언트와 서버가 통신할 때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
-      });
+      const response = await axios.post(`${API_BASE_URL}/api/email/sendCode`, 
+        { type, email },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true // 클라이언트와 서버가 통신할 때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+        }
+      );
       if(response && response.data) {
         alert(response.data); // 성공 메시지 출력
         setStateValid("isEmailSend", true);
@@ -75,7 +81,7 @@ export default function SignUpCertification({ setStateValue, getStateValue, setS
   const checkVerificationCode = async () => {
     const code = getStateValue("certificationNumber");
     try {
-      const response = await axios.post('http://localhost:8080/api/email/checkCode', {code}, {
+      const response = await axios.post(`${API_BASE_URL}/api/email/checkCode`, {code}, {
         headers: {
           'Content-Type': 'application/json',
         },

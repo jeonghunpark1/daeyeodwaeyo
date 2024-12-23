@@ -5,6 +5,8 @@ import { TbPhotoSearch } from "react-icons/tb";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import { API_BASE_URL } from '../utils/constants';
+
 import { SearchContext } from './SearchProvider';
 
 export default function Header({ getterIsLogin, headerUserInfo }) {
@@ -28,7 +30,7 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
   const requestProfileImageURL = (profileImage) => {
     console.log("프로필 사진: ", profileImage);
     console.log("프로필 사진: ", headerUserInfo.profileImage);
-    const profileImageURL = "http://localhost:8080/profileImagePath/" + profileImage;
+    const profileImageURL = `${API_BASE_URL}/api/profileImagePath/` + profileImage;
     console.log(profileImageURL);
     return profileImageURL;
   };
@@ -95,7 +97,7 @@ export default function Header({ getterIsLogin, headerUserInfo }) {
             <>
               <div className={style.user_image_box}>
                 <div className={style.user_image}>
-                  <img src="https://placehold.co/90x90" alt='프로필 사진' />
+                  <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt='프로필 사진' />
                 </div>
               </div>
               <div className={style.user_info_box}>

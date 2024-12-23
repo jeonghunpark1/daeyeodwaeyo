@@ -6,6 +6,8 @@ import { IoIosClose } from "react-icons/io";
 import DaumPostcode from 'react-daum-postcode';
 import axios from 'axios';
 
+import { API_BASE_URL } from '../../utils/constants';
+
 export default function ChangeAddress() {
 
   const [address, setAddress] = useState("");
@@ -52,7 +54,7 @@ export default function ChangeAddress() {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.post('http://localhost:8080/api/users/changeAddress', {
+      const response = await axios.post(`${API_BASE_URL}/api/users/changeAddress`, {
         address: fullAddress
       },
       {

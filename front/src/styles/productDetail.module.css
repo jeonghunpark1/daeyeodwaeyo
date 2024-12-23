@@ -411,6 +411,7 @@
   height: 30px;
   border: 1px solid var(--line-color);
   border-radius: var(--box-radius-value);
+  letter-spacing: -.30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -459,13 +460,20 @@
   margin-top: 40px;
   text-align: start;
 }
+.reviewCount {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
 
 .productDetail_review_box {
   /* background-color: aquamarine; */
   width: 100%;
-  height: 20px;
+  height: 200px;
+  overflow-y: auto; /* 세로 스크롤 추가 */
   padding: 30px;
-  box-sizing: border-box;
+  padding: 10px; /* 내용과 경계 사이의 여백 */
   border-top: 0.5px solid var(--line-color);
   margin-top: 40px;
 }

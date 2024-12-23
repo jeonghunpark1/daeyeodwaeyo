@@ -4,6 +4,8 @@ import { Stomp } from '@stomp/stompjs';
 import axios from 'axios';
 import style from '../../styles/chatting/ChatHome.module.css';
 
+import { API_BASE_URL } from '../../utils/constants';
+
 const ChatHome = () => {
     const [chatRooms, setChatRooms] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
@@ -36,7 +38,7 @@ const ChatHome = () => {
     }, [userInfo]);
 
     const fetchUserInfo = (token) => {
-        axios.get('http://localhost:8080/api/users/headerUserInfo', {
+        axios.get(`${API_BASE_URL}/api/users/headerUserInfo`, {
             headers: { 'Authorization': `Bearer ${token}` },
         })
             .then((response) => {
@@ -52,7 +54,7 @@ const ChatHome = () => {
     };
 
     const fetchChatRooms = (token, userId) => {
-        axios.get(`http://localhost:8080/Chat/myChatRooms/${userId}`, {
+        axios.get(`${API_BASE_URL}/api/chat/myChatRooms/${userId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(response => {
@@ -71,7 +73,7 @@ const ChatHome = () => {
     };
 
     const connectWebSocket = (token) => {
-        const socket = new SockJS('http://localhost:8080/ws');
+        const socket = new SockJS(`${API_BASE_URL}/api/ws`);
         const client = Stomp.over(socket);
 
         client.connect({ Authorization: `Bearer ${token}` }, () => {
@@ -103,7 +105,7 @@ const ChatHome = () => {
         });
     };
 
-    const handleRoomClick = (roomId, profileImage, nickname) => {
+    const handleRoomClick = (roomId) => {
         setChatRooms((prevRooms) => {
             return prevRooms.map((room) => {
                 if (room.id === roomId) {
@@ -113,7 +115,7 @@ const ChatHome = () => {
             });
         });
 
-        const chatRoomUrl = `/ChatWindow/${roomId}?profileImage=${encodeURIComponent(profileImage)}&nickname=${encodeURIComponent(nickname)}`;
+        const chatRoomUrl = `/ChatWindow/${roomId}`;
 
         // 이미 열린 창이 있는지 확인하고 포커스 또는 새 창 열기
         if (openChatWindows.current[roomId] && !openChatWindows.current[roomId].closed) {
@@ -131,6 +133,7 @@ const ChatHome = () => {
         }
     };
 
+
     const formatTime = (timestamp) => {
         if (!timestamp) return '';
 
@@ -145,10 +148,6 @@ const ChatHome = () => {
         return `${isPM ? '오후' : '오전'} ${hours}:${formattedMinutes}`;
     };
 
-    const requestProfileImageURL = (profileImage) => {
-      const profileImageURL = "http://localhost:8080/profileImagePath/" + profileImage;
-      return profileImageURL;
-    };
 
     return (
         <div className={style['chat-home-container']}>
@@ -156,7 +155,7 @@ const ChatHome = () => {
                 <div className={style['chat-room-item']}>
                     <div className={style['profile-container']}>
                         <div className={style['profile-image-wrapper']}>
-                            <img src={requestProfileImageURL(userInfo.profileImage)} alt="프로필"/>
+                            <img src={`${API_BASE_URL}/api/profileImagePath/${userInfo.profileImage}`} alt="프로필"/>
                         </div>
                     </div>
                     <div className={style['info-container']}>
@@ -179,7 +178,8 @@ const ChatHome = () => {
                         >
                             <div className={style['chat-room-content']}>
                                 <div className={style['profile-image-wrapper']}>
-                                    <img src={requestProfileImageURL(room.profileImage)} alt="프로필" className={style['profile-image']} />
+                                    <img src={`${API_BASE_URL}/api/profileImagePath/${encodeURIComponent(room.profileImage)}`} alt="프로필"
+                                         className={style['profile-image']}/>
                                 </div>
                                 <div className={style['text-container']}>
                                     <div className={style['nickname']}>{room.nickname}</div>

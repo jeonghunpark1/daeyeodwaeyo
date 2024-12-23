@@ -4,6 +4,7 @@ import styles from '../styles/ProductAdd.module.css';
 import style from "../styles/myPage.module.css";
 import { useNavigate } from 'react-router-dom';
 
+import { API_BASE_URL } from '../utils/constants';
 
 const ProductAdd = () => {
 
@@ -95,7 +96,7 @@ const ProductAdd = () => {
         }
 
         try {
-            const response = await axios.post('/api/products', formData, {
+            const response = await axios.post(`${API_BASE_URL}/api/products`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${localStorage.getItem('token')}` // 토큰과 함께 전송

@@ -4,12 +4,14 @@ import { Tooltip } from "react-tooltip"
 import style from "../styles/previewProduct_mypage.module.css"
 import { useNavigate } from 'react-router-dom';
 
+import { API_BASE_URL } from '../utils/constants';
+
 export default function PreviewProduct_mypage({ product }) {
 
   const navigate = useNavigate();
 
   const requestProductImageURL = (productImage) => {
-    const productImageURL = "http://localhost:8080/productImagePath/" + productImage;
+    const productImageURL = `${API_BASE_URL}/api/productImagePath/` + productImage;
     return productImageURL;
   };
 

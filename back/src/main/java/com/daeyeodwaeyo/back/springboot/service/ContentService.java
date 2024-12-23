@@ -4,7 +4,7 @@ import com.daeyeodwaeyo.back.springboot.domain.Product;
 import com.daeyeodwaeyo.back.springboot.domain.ProductImage;
 import com.daeyeodwaeyo.back.springboot.domain.ProductVideo;
 import com.daeyeodwaeyo.back.springboot.repository.ProductImageRepository;
-import com.daeyeodwaeyo.back.springboot.repository.ProductVideoRepsitory;
+import com.daeyeodwaeyo.back.springboot.repository.ProductVideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 // 이미지, 동영상 등의 콘텐츠의 비즈니스 로직을 처리하는 클래스
 // 회원가입 또는 상품 등록을 할 때 작성 중에는 임시 폴더에 저장하고 최종적으로 마무리 되었을 땐 최종 폴더로 이동
@@ -25,16 +24,50 @@ public class ContentService {
   private ProductImageRepository productImageRepository;
 
   @Autowired
-  private ProductVideoRepsitory productVideoRepsitory;
+  private ProductVideoRepository productVideoRepository;
 
   // 프로필 이미지 경로
-  private final String PROFILE_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/profileImage/";
+  private final String PROFILE_IMAGE_PATH = "/opt/homebrew/var/www/resources/images/profileImage/";
 
   // 상품 이미지 경로
-  private final String PRODUCT_IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/productImage/";
+  private final String PRODUCT_IMAGE_PATH = "/opt/homebrew/var/www/resources/images/productImage/";
 
   // 상품 동영상 경로
-  private final String PRODUCT_VIDEO_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/videos/productVideo/";
+  private final String PRODUCT_VIDEO_PATH = "/opt/homebrew/var/www/resources/videos/productVideo/";
+
+  private String imagePath(String category, String name) {
+    String url = PRODUCT_IMAGE_PATH;
+    if (category.equals("캠핑")) {
+      url += "camping/";
+      if (name.equals("블루투스 스피커")) {
+        return url + "bluetoothSpeaker";
+      }
+      else if (name.equals("의자")) {
+        return url + "chair";
+      }
+      else if (name.equals("화로")) {
+        return url + "grill";
+      }
+      else if (name.equals("랜턴")) {
+        return url + "lantern";
+      }
+      else if (name.equals("테이블")) {
+        return url + "table";
+      }
+      else if (name.equals("아이스박스")) {
+        return url + "iceBox";
+      }
+      else if (name.equals("텐트")) {
+        return url + "tent";
+      }
+      else {
+        return PRODUCT_IMAGE_PATH;
+      }
+    }
+    else {
+      return PRODUCT_IMAGE_PATH;
+    }
+  }
 
   public String saveProfileImage(MultipartFile file) throws IOException {
     String OriginalFileName = "";
@@ -139,7 +172,7 @@ public class ContentService {
         productVideo.setId(videoId);
         productVideo.setVideoUrl(videoName);
         productVideo.setProduct(product);
-        productVideoRepsitory.save(productVideo);
+        productVideoRepository.save(productVideo);
         System.out.println("비디오 저장 완료");
       } catch (IOException e) {
         System.err.println("Failed to store video: " + videoName);

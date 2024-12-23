@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { IoVolumeHigh, IoVolumeMute } from "react-icons/io5";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
 
+import { API_BASE_URL } from '../utils/constants';
+
 export default function Shorts() {
 
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ export default function Shorts() {
 
   const fetchAndShuffleVideos = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/products/shorts");
+      const response = await axios.get(`${API_BASE_URL}/api/products/shorts`);
       console.log("API Response:", response.data); // 데이터 확인을 위한 로그
       const videoList = response.data;
       const shuffledVideos = videoList.sort(() => Math.random() - 0.5);
@@ -119,7 +121,7 @@ export default function Shorts() {
 
   // 동영상 URL을 반환하는 함수
   const requestProductVideoURL = (productVideo) => {
-    return `http://localhost:8080/productVideoPath/${productVideo}`;
+    return `${API_BASE_URL}/api/productVideoPath/${productVideo}`;
   };
 
   // // 현재 보여지는 비디오와 앞뒤로 2개의 비디오만 로딩하도록 필터링

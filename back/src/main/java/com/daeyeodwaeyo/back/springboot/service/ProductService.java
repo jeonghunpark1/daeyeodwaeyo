@@ -7,7 +7,7 @@ import com.daeyeodwaeyo.back.springboot.domain.User;
 import com.daeyeodwaeyo.back.springboot.dto.*;
 import com.daeyeodwaeyo.back.springboot.repository.ProductImageRepository;
 import com.daeyeodwaeyo.back.springboot.repository.ProductRepository;
-import com.daeyeodwaeyo.back.springboot.repository.ProductVideoRepsitory;
+import com.daeyeodwaeyo.back.springboot.repository.ProductVideoRepository;
 import com.daeyeodwaeyo.back.springboot.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +35,8 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
-  private final String IMAGE_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/images/productImage";
-  private final String VIDEO_PATH = "/Users/giho/Desktop/anyang/graduationProject/daeyeodwaeyo/resources/videos/productVideo";
+  private final String IMAGE_PATH = "C:\\Users\\p500w\\IdeaProjects\\daeyeodwaeyo 4\\daeyeodwaeyo\\resources\\images\\productImage";
+  private final String VIDEO_PATH = "C:\\Users\\p500w\\IdeaProjects\\daeyeodwaeyo 4\\daeyeodwaeyo\\resources\\videos\\productVideo";
 
   @Autowired
   private UserRepository userRepository;
@@ -48,7 +48,7 @@ public class ProductService {
   private ProductImageRepository productImageRepository;
 
   @Autowired
-  private ProductVideoRepsitory productVideoRepsitory;
+  private ProductVideoRepository productVideoRepository;
 
   @Autowired
   private ContentService contentService;
@@ -147,7 +147,7 @@ public class ProductService {
 //        productVideo.setId(videoId);
 //        productVideo.setVideoUrl(videoName);
 //        productVideo.setProduct(product);
-//        productVideoRepsitory.save(productVideo);
+//        productVideoRepository.save(productVideo);
 //        System.out.println("비디오 저장 완료");
 //      } catch (IOException e) {
 //        throw new RuntimeException("Failed to store video", e);
@@ -161,8 +161,8 @@ public class ProductService {
     // 해당 상품과 연관된 이미지 조회
     List<ProductImage> images = productImageRepository.findByProduct(product);
     List<String> imageUrls = images.stream()
-                                   .map(ProductImage::getImageUrl) // 이미지 URL만 추출
-                                   .collect(Collectors.toList());
+            .map(ProductImage::getImageUrl) // 이미지 URL만 추출
+            .collect(Collectors.toList());
 
     return new SearchProductDTO(
             product.getId(),
@@ -215,7 +215,7 @@ public class ProductService {
             .collect(Collectors.toList());
 
     // 해당 상품과 연관된 비디오 조회
-    ProductVideo video = productVideoRepsitory.findByProduct(product);
+    ProductVideo video = productVideoRepository.findByProduct(product);
     String videoUrl = video != null ? video.getVideoUrl() : null;
 
     ProductDetailDTO productDetailDTO = new ProductDetailDTO();
@@ -230,7 +230,6 @@ public class ProductService {
     productDetailDTO.setDescription(product.getDescription());
     productDetailDTO.setCreatedAt(product.getCreatedAt());
     productDetailDTO.setWriterId(product.getUser().getId()); // User 객체의 ID만 설정
-    productDetailDTO.setWriterNickName(product.getUser().getNickName());
     productDetailDTO.setImageUrls(imageUrls);
     productDetailDTO.setVideoUrl(videoUrl);
     return productDetailDTO;
@@ -243,7 +242,7 @@ public class ProductService {
 
   // shorts 페이지에서 product와 videoUrl 가져오는 메서드
   public List<ShortsDataDTO> getAllVideoInfos() {
-    List<ProductVideo> productVideos = productVideoRepsitory.findAll();
+    List<ProductVideo> productVideos = productVideoRepository.findAll();
     return productVideos.stream().map(productVideo -> {
       ShortsDataDTO shortsDataDTO = new ShortsDataDTO();
       shortsDataDTO.setId(productVideo.getProduct().getId());
@@ -274,7 +273,7 @@ public class ProductService {
 
   // 동영상을 전부 가져와서 무작위로 섞고 limit 수만큼 반환하는 메서드
   public List<ShortsDataDTO> getRandomShorts(int limit) {
-    List<ProductVideo> allVideos = productVideoRepsitory.findAll();
+    List<ProductVideo> allVideos = productVideoRepository.findAll();
     Collections.shuffle(allVideos); // 리스트를 무작위로 섞음
     return allVideos.stream()
             .limit(limit) // limit 수만큼 가져옴
@@ -301,9 +300,27 @@ public class ProductService {
                     product.getImages().isEmpty()
                             ? null // 이미지가 없을 경우 null 반환
                             : product.getImages().get(0).getImageUrl() // 첫 번째 이미지만 반환
-                    ))
+            ))
             .collect(Collectors.toList());
   }
+
+  // 빌린 상품의 정보를 가져오는 메서드
+  public List<MyProductDTO> getBorrowedProducts(List<String> productIds) {
+    // productIds로 제품 조회
+    return productRepository.findAllById(productIds)
+            .stream()
+            .map(product -> new MyProductDTO(
+                    product.getId(),
+                    product.getTitle(),
+                    product.getCategory(),
+                    product.getName(),
+                    product.getImages().isEmpty()
+                            ? null // 이미지가 없을 경우 null 반환
+                            : product.getImages().get(0).getImageUrl() // 첫 번째 이미지만 반환
+            ))
+            .collect(Collectors.toList());
+  }
+
 
   @Transactional
   public void deleteProduct(String productId) {
@@ -317,7 +334,7 @@ public class ProductService {
       imageNames.add(productimage.getImageUrl());
     }
 
-    ProductVideo productVideo = productVideoRepsitory.findByProduct(product);
+    ProductVideo productVideo = productVideoRepository.findByProduct(product);
     String videoName = productVideo.getVideoUrl();
 
     productRepository.delete(product);

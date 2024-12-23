@@ -119,4 +119,11 @@ public class ProductController {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to remove product.");
     }
   }
+
+  // 특정 Product IDs로 빌린 상품 정보 가져오기
+  @PostMapping("/borrowed")
+  public ResponseEntity<List<MyProductDTO>> getBorrowedProducts(@RequestBody List<String> productIds) {
+    List<MyProductDTO> borrowedProducts = productService.getBorrowedProducts(productIds);
+    return ResponseEntity.ok(borrowedProducts);
+  }
 }

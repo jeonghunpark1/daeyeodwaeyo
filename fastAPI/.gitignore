@@ -2,4 +2,4 @@
 .venv/
 
 # YOLOv8 모델 무시 (용량이 너무 큼)
-YoloV8_custom_model.pt
+app/models/YoloV8_custom_model_ver1.pt

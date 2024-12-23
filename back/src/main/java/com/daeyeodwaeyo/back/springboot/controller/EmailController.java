@@ -1,5 +1,6 @@
 package com.daeyeodwaeyo.back.springboot.controller;
 
+import com.daeyeodwaeyo.back.springboot.dto.VerificationRequest;
 import com.daeyeodwaeyo.back.springboot.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
@@ -20,13 +21,17 @@ public class EmailController {
 
   // 이메일로 인증 코드 전송하는 API
   @PostMapping("/sendCode")
-  public ResponseEntity<String> sendVerificationCode(@RequestBody Map<String, String> request, HttpSession session) {
-    String email = request.get("email");
+  public ResponseEntity<String> sendVerificationCode(@RequestBody VerificationRequest request, HttpSession session) {
+    System.out.println(request);
+    String email = request.getEmail();
+    String type = request.getType();
+    System.out.println("email:" + email);
+    System.out.println("type:" + type);
     try {
       // 인증 코드 생성
       String verificationCode = emailService.generateVerificationCode();
       // 이메일 전송
-      emailService.sendVerificationEmail(email, verificationCode);
+      emailService.sendVerificationEmail(email, verificationCode, type);
       // 생성된 인증 코드를 세션에 저장
       session.setAttribute("verificationCode", verificationCode);
       // 세션 유효시간 설정(3분)

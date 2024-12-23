@@ -27,7 +27,7 @@ public class EmailService {
   private SpringTemplateEngine templateEngine;
 
   // 인증 코드를 포함한 이메일을 전송하는 메서드
-  public void sendVerificationEmail(String recipient, String code) throws MessagingException {
+  public void sendVerificationEmail(String recipient, String code, String type) throws MessagingException {
 //    MimeMessage message = mailSender.createMimeMessage();
 //    MimeMessageHelper helper = new MimeMessageHelper(message, true);
 //
@@ -49,8 +49,16 @@ public class EmailService {
 
     MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
     mimeMessageHelper.setTo(recipient); // 수신자 설정
-    mimeMessageHelper.setSubject("회원가입 인증번호"); // 메일 제목
-    mimeMessageHelper.setText(setContext(code), true); // 메일 본문 내용, HTML 여부
+    if (type.equals("id")) {
+      mimeMessageHelper.setSubject("아이디 찾기 인증번호"); // 메일 제목
+    }
+    else if (type.equals("password")) {
+      mimeMessageHelper.setSubject("비밀번호 찾기 인증번호"); // 메일 제목
+    }
+    else if (type.equals("signUp")) {
+      mimeMessageHelper.setSubject("회원가입 인증번호"); // 메일 제목
+    }
+    mimeMessageHelper.setText(setContext(code, type), true); // 메일 본문 내용, HTML 여부
     javaMailSender.send(mimeMessage);
 
     System.out.println("Mail Sent successfully...");
@@ -62,10 +70,21 @@ public class EmailService {
   }
 
   // thymeleaf를 통한 html 적용
-  public String setContext(String code) {
+  public String setContext(String code, String type) {
     Context context = new Context();
     context.setVariable("code", code);
-    return templateEngine.process("sendCode", context);
+    if (type.equals("id")) {
+      return templateEngine.process("sendCode_findId", context);
+    }
+    else if (type.equals("password")) {
+      return templateEngine.process("sendCode_findPassword", context);
+    }
+    else if (type.equals("signUp")) {
+      return templateEngine.process("sendCode_signUp", context);
+    }
+    else {
+      return null;
+    }
   }
 }
 

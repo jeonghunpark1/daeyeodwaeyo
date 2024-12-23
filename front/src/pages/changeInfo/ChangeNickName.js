@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import style from "../../styles/changeInfo/changeNickName.module.css";
 import axios from 'axios';
 
+import { API_BASE_URL } from '../../utils/constants';
+
 export default function ChangeNickName() {
 
   const [nickName, setNickName] = useState("");
@@ -116,7 +118,7 @@ export default function ChangeNickName() {
   const checkNickNameDuplicate = async () => {
     const userNickName = nickName;
     try {
-      const response = await axios.get('/api/users/nickNameDuplicate', {
+      const response = await axios.get(`${API_BASE_URL}/api/users/nickNameDuplicate`, {
         params: {
           nickName: userNickName
         }
@@ -137,7 +139,7 @@ export default function ChangeNickName() {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.post('http://localhost:8080/api/users/changeNickName', {
+      const response = await axios.post(`${API_BASE_URL}/api/users/changeNickName`, {
         nickName: availableNickName
       },
       {

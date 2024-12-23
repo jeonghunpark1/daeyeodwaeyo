@@ -3,6 +3,8 @@ import style from "../../styles/signup/signupUserProfile.module.css"
 import input_style from "../../styles/login_signup_input.module.css"
 import axios from 'axios';
 
+import { API_BASE_URL } from '../../utils/constants';
+
 export default function SignUpUserProfile({ setStateValue, getStateValue, setStateValid, getStateValid }) {
 
   const [selectedImage, setSelectedImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
@@ -171,7 +173,7 @@ export default function SignUpUserProfile({ setStateValue, getStateValue, setSta
   const checkNickNameDuplicate = async () => {
     const userNickName = getStateValue("nickName");
     try {
-      const response = await axios.get('/api/users/nickNameDuplicate', {
+      const response = await axios.get(`${API_BASE_URL}/api/users/nickNameDuplicate`, {
         params: {
           nickName: userNickName
         }

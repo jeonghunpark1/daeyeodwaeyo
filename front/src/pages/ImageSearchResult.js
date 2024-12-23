@@ -8,6 +8,8 @@ import SearchProductBox from '../components/SearchProductBox';
 import Loading from '../components/Loading';
 import { SearchContext } from '../components/SearchProvider';
 
+import { API_BASE_URL } from '../utils/constants';
+
 export default function ImageSearchResult() {
   const { searchState, setSearchState } = useContext(SearchContext);
 
@@ -74,14 +76,14 @@ export default function ImageSearchResult() {
     formData.append("file", selectedImage);
 
     try {
-      const responseImage = await axios.post("http://localhost:8080/api/images/removeBg", formData, {
+      const responseImage = await axios.post(`${API_BASE_URL}/api/images/removeBg`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
         responseType: "blob", // 이미지 파일로 응답 받기
       });
         try {
-          const responseCategory = await axios.post("http://localhost:8080/api/images/predict", formData, {
+          const responseCategory = await axios.post(`${API_BASE_URL}/api/images/predict`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
               // 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -116,7 +118,7 @@ export default function ImageSearchResult() {
     formData.append("name", name);
 
     try {
-      const response = await axios.post("http://localhost:8080/api/images/similarity", formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/images/similarity`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

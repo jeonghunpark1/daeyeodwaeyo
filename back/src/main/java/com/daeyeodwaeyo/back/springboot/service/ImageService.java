@@ -18,7 +18,8 @@ import java.util.Map;
 @Service
 public class ImageService {
 
-  private final String FASTAPI_URL = "http://localhost:8001"; // FastAPI 서버 URL
+//  private final String FASTAPI_URL = "https://cub-living-endlessly.ngrok-free.app/fastapi"; // FastAPI 서버 URL
+  private final String FASTAPI_URL = "http://localhost:8001/fastapi"; // FastAPI 서버 URL
 
   @Autowired
   private RestTemplate restTemplate;
@@ -42,9 +43,9 @@ public class ImageService {
     } else {
       throw new IOException("Error predicting category: " + response.getStatusCode());
     }
-
   }
 
+  // 배경을 지우기 위한 메서드
   public ResponseEntity<InputStreamResource> removeBackground(MultipartFile image) throws IOException {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.MULTIPART_FORM_DATA);
@@ -72,18 +73,19 @@ public class ImageService {
   }
 
   // 유사한 이미지 검색을 위한 메서드
-  public String findSimilarImages(MultipartFile image, String folderPath) throws IOException {
+  public String findSimilarImages(MultipartFile image) throws IOException {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-    Map<String, Object> body = new HashMap<>();
-    body.put("file", image.getResource());
-    body.put("folder_path", folderPath);
+    // MultiValueMap에 이미지 파일 추가
+    MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+    body.add("file", new HttpEntity<>(image.getResource(), headers));
 
-    HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+    HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
     // FastAPI의 /similarity 엔드포인트로 요청 전송
     ResponseEntity<String> response = restTemplate.postForEntity(FASTAPI_URL + "/similarity", requestEntity, String.class);
     return response.getBody();
   }
+
 }

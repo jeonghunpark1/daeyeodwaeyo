@@ -3,6 +3,8 @@ import style from "../styles/changeInfo.module.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import { API_BASE_URL } from '../utils/constants';
+
 import CheckPassword from './changeInfo/CheckPassword';
 import ChangePassword from './changeInfo/ChangePassword';
 import ChangeAddress from './changeInfo/ChangeAddress';
@@ -52,7 +54,7 @@ export default function ChangeInfo() {
             <div className={style.profileImage_wrap}>
               <div className={style.userProfileImage_wrap}>
                 {userInfo ? (
-                  <img src={`http://localhost:8080/profileImagePath/${userInfo.profileImage}`} className={style.userProfileImage} alt='프로필 이미지'></img>  
+                  <img src={`${API_BASE_URL}/api/profileImagePath/${userInfo.profileImage}`} className={style.userProfileImage} alt='프로필 이미지'></img>  
                 ) : (
                   <img src="https://placehold.co/150x150" className={style.userProfileImage} alt='기본 프로필 이미지'></img>
                 )}
@@ -161,7 +163,7 @@ export default function ChangeInfo() {
 
     if (!userInfo) {
       try {
-        axios.get('http://localhost:8080/api/users/userInfo', {
+        axios.get(`${API_BASE_URL}/api/users/userInfo`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import style from "../styles/productBox.module.css"
 
+import { API_BASE_URL } from '../utils/constants';
+
 export default function ProductBox({ product }) {
 
   const navigate = useNavigate();
@@ -13,7 +15,7 @@ export default function ProductBox({ product }) {
   };
 
   const requestProductImageURL = (productImage) => {
-    const productImageURL = "http://localhost:8080/productImagePath/" + productImage;
+    const productImageURL = `${API_BASE_URL}/api/productImagePath/` + productImage;
     return productImageURL;
   };
 

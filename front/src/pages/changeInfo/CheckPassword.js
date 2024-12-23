@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import style from "../../styles/changeInfo/checkPassword.module.css";
 import axios from 'axios';
 
+import { API_BASE_URL } from '../../utils/constants';
+
 export default function CheckPassword({ setState, getState }) {
 
   const [password, setPassword] = useState("");
@@ -15,7 +17,7 @@ export default function CheckPassword({ setState, getState }) {
     try {
       const token = localStorage.getItem("token");
       
-      const response = await axios.post('http://localhost:8080/api/users/checkPassword', {
+      const response = await axios.post(`${API_BASE_URL}/api/users/checkPassword`, {
         password
       },
       {
@@ -26,7 +28,7 @@ export default function CheckPassword({ setState, getState }) {
       console.log("response: ", response.data)
       if(response && response.data === true) {
 
-          alert("비밀번호가 일치합니다. / ");
+          alert("비밀번호가 일치합니다.");
           setState("currentPage", getState("page"));
 
       } else {

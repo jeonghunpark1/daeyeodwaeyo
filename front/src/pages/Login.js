@@ -4,6 +4,8 @@ import style from "../styles/login.module.css"
 import input_style from "../styles/login_signup_input.module.css"
 import axios from 'axios';
 
+import { API_BASE_URL } from '../utils/constants';
+
 export default function Login({ setterIsLogin, fetchUserInfo }) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +26,7 @@ export default function Login({ setterIsLogin, fetchUserInfo }) {
     e.preventDefault();
 
     try{
-      const response = await axios.post('http://localhost:8080/api/users/login', {
+      const response = await axios.post(`${API_BASE_URL}/api/users/login`, {
         id,
         password
         },
@@ -55,11 +57,11 @@ export default function Login({ setterIsLogin, fetchUserInfo }) {
   };
 
   const handleFindId = () => {
-    const popup = window.open("http://localhost:3000/findId", "아이디 찾기", "width=500px, height=350px, scrollbars=no, left=500px, top=200px");
+    const popup = window.open(`${API_BASE_URL}/findId`, "아이디 찾기", "width=500px, height=350px, scrollbars=no, left=500px, top=200px");
   }
 
   const handleFindPassword = () => {
-    const popup = window.open("http://localhost:3000/findPassword", "비밀번호 찾기", "width=500px, height=415px, scrollbars=no, left=500px, top=200px");
+    const popup = window.open(`${API_BASE_URL}/findPassword`, "비밀번호 찾기", "width=500px, height=415px, scrollbars=no, left=500px, top=200px");
   }
 
   return (

@@ -3,13 +3,15 @@ import React from 'react'
 import style from "../styles/shortBox.module.css"
 import { useNavigate } from 'react-router-dom';
 
+import { API_BASE_URL } from '../utils/constants';
+
 export default function ShortBox({ short }) {
 
   const navigate = useNavigate();
 
   // 동영상 URL을 반환하는 함수
   const requestProductVideoURL = (productVideo) => {
-    return `http://localhost:8080/productVideoPath/${productVideo}`;
+    return `${API_BASE_URL}/api/productVideoPath/${productVideo}`;
   };
 
   const handleProductClick = (product_id) => {

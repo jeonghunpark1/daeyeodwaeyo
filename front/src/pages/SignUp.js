@@ -8,6 +8,8 @@ import SignUpUserInfo from './signup/SignUpUserInfo';
 import SignUpCertification from './signup/SignUpCertification';
 import SignUpUserProfile from './signup/SignUpUserProfile';
 
+import { API_BASE_URL } from '../utils/constants';
+
 export default function SignUp() {
 
   const navigate = useNavigate();
@@ -330,7 +332,7 @@ export default function SignUp() {
     // alert(JSON.stringify(userData));
 
     try {
-      const response = await axios.post('http://localhost:8080/api/users/signup', formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/users/signup`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
 

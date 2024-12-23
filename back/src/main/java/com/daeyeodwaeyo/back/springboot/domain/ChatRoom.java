@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import jakarta.persistence.Transient;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,15 +21,18 @@ public class ChatRoom {
 
     private String creatorId;
     private String joinerId;
-    // 현재 열려 있는 사용자 ID들을 저장할 Set
+    private String productId; // 상품 ID 추가
 
-    @ElementCollection
+    // 현재 열려 있는 사용자 ID들을 저장할 Set
+    @Transient
     private Set<String> openReceiverIds = new HashSet<>();
+
     public ChatRoom() {
     }
 
-    public ChatRoom(String creatorId, String joinerId) {
+    public ChatRoom(String creatorId, String joinerId, String productId) {
         this.creatorId = creatorId;
         this.joinerId = joinerId;
+        this.productId = productId; // productId 설정
     }
 }

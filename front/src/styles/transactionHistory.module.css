@@ -1,0 +1,161 @@
+@import "./globalVar.module.css";
+
+.transactionHistory_page {
+    /* 페이지 전체 레이아웃 */
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    height: 450px;
+    justify-content: start;
+    align-items: start;
+}
+
+.transactionHistory_title_wrap {
+    /* 상단 제목 영역 */
+    border-bottom: 1px solid var(--line-color);
+    width: 100%;
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.transactionHistory_title {
+    /* 제목 텍스트 */
+    margin: 0;
+}
+
+.transactionHistory_content_box {
+    /* 콘텐츠 박스 레이아웃 */
+    width: 100%;
+    height: 85%;
+    display: flex;
+    flex-direction: row;
+}
+
+.transactionHistory_nav_wrap {
+    /* 네비게이션 메뉴 영역 */
+    width: 160px;
+    height: 100%;
+    border-right: 1px solid var(--line-color);
+    padding: 20px 1% 0 1%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+.menu_wrap {
+    /* 메뉴 버튼 영역 */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+.menu {
+    background-color: white;
+    border: none;
+    border-radius: var(--box-radius-value);
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    text-align: start;
+}
+
+.menu:hover {
+    background-color: var(--hover-color);
+    cursor: pointer;
+}
+
+.transactionHistory_content_wrap {
+    /* 거래 내역 콘텐츠 전체 레이아웃 */
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.transactionHistory_title_wrap h3 {
+    margin: 0;
+}
+
+.transactionHistory_content {
+    /* 거래 내역 콘텐츠 */
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    border: 1px solid var(--line-color);
+    border-radius: var(--box-radius-value);
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.placeholder {
+    /* 거래 내역이 비어있을 때 플레이스홀더 스타일 */
+    color: var(--text-light-color);
+    text-align: center;
+    font-size: 14px;
+    padding: 20px 0;
+}
+
+/* 거래 목록 항목 스타일 */
+.transactionItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--line-color);
+}
+
+.transactionItem:last-child {
+    border-bottom: none;
+}
+
+.transactionDetails {
+    /* 거래 상세 정보 */
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+}
+
+.transactionDate {
+    font-size: 12px;
+    color: var(--text-light-color);
+}
+
+.transactionAmount {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-dark-color);
+}
+
+.transactionStatus {
+    font-size: 14px;
+    color: var(--status-color);
+}
+.review_button_wrap {
+    margin-top: 10px;
+}
+
+.review_button {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.review_button:hover {
+    background-color: #0056b3;
+}

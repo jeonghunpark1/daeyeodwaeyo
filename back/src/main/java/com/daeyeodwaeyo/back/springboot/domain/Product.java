@@ -22,7 +22,7 @@ import java.util.List;
 public class Product {
     @Id
     @Column(name = "id", nullable = false, length = 255)
-    private String id; // UUID로 자동 생성
+    private String id; // UUID로 자동 생성e
 
     @Column(name = "title", nullable = false, length = 255)
     private String title;

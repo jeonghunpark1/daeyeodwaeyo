@@ -3,6 +3,8 @@ import style from "../styles/findPassword.module.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import { API_BASE_URL } from '../utils/constants';
+
 export default function FindPassword() {
 
   const [name, setName] = useState("");
@@ -59,15 +61,19 @@ export default function FindPassword() {
   // 입력한 이메일로 인증 코드를 정송하는 함수
   const sendEmail = async () => {
     const email = emailId + "@" + emailDomain;
+    const type = "password";
     console.log("email", {email});
     console.log("isEmailSend: ", isEmailSend);
     try {
-      const response = await axios.post('http://localhost:8080/api/email/sendCode', {email}, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true // 클라이언트와 서버가 통신할 때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
-      });
+      const response = await axios.post(`${API_BASE_URL}/api/email/sendCode`, 
+        { type, email },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true // 클라이언트와 서버가 통신할 때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+        }
+      );
       console.log("response 전체1: ", response);
       if(response && response.data) {
         console.log("response 전체2: ", response);
@@ -87,7 +93,7 @@ export default function FindPassword() {
   const checkVerificationCode = async () => {
     const code = certificationNumber;
     try {
-      const response = await axios.post('http://localhost:8080/api/email/checkCode', {code}, {
+      const response = await axios.post(`${API_BASE_URL}/api/email/checkCode`, {code}, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -111,7 +117,7 @@ export default function FindPassword() {
   const findPassword = async () => {
     const fullEmail = `${emailId}@${emailDomain}`;
     try {
-      const response = await axios.post('http://localhost:8080/api/users/findPassword', {
+      const response = await axios.post(`${API_BASE_URL}/api/users/findPassword`, {
         name,
         id,
         email: fullEmail

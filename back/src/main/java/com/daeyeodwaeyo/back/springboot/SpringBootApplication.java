@@ -10,8 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 @org.springframework.boot.autoconfigure.SpringBootApplication
 public class SpringBootApplication {
 
-  @Autowired
-  private ContentService contentService;
+//  @Autowired
+//  private ContentService contentService;
 
   public static void main(String[] args) {
     SpringApplication.run(SpringBootApplication.class, args);

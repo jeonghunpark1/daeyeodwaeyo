@@ -6,10 +6,18 @@ import electronic from '../assets/icon/electronic_icon.png'
 import tool from '../assets/icon/tool_icon.png'
 
 import style from '../styles/categoryIcon.module.css'
+import { useNavigate } from 'react-router-dom'
 
 export default function CategoryIcon({ type }) {
+  const navigate = useNavigate();
 
-
+  const handleSearch = async (query) => {
+    if (query) {
+      navigate("/searchResult", { state: {query: query} });
+    } else {
+      alert("검색어를 입력하세요.");
+    }
+  }
 
   const icon = (type) => {
     if (type === "캠핑") {
@@ -31,7 +39,7 @@ export default function CategoryIcon({ type }) {
   
   return (
     <>
-      <div className={style.icon_wrap} data-tooltip-content={type} data-tooltip-id="icon">
+      <div className={style.icon_wrap} data-tooltip-content={type} data-tooltip-id="icon" onClick={()=>handleSearch(type)}>
         {icon(type)}
       </div>
       <Tooltip

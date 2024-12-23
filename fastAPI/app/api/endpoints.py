@@ -1,4 +1,8 @@
 # API 엔드포인트
+import shutil
+import os
+from fastapi.responses import JSONResponse
+from app.utils.similarity import find_similar_images
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from fastapi.responses import StreamingResponse
@@ -37,7 +41,7 @@ CATEGORY_MAPPING = {
 router = APIRouter()
 
 # 카테고리 예측 엔드포인트
-@router.post("/predict")
+@router.post("/fastapi/predict")
 async def predict(file: UploadFile = File(...)):
     try:
         category = predict_category(file)
@@ -48,7 +52,7 @@ async def predict(file: UploadFile = File(...)):
         print(f"Prediction error: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error during prediction")
 
-@router.post("/removeBg")
+@router.post("/fastapi/removeBg")
 async def remove_bg(file: UploadFile = File(...)):
     try:
         image_data = await file.read()
@@ -58,11 +62,22 @@ async def remove_bg(file: UploadFile = File(...)):
         print(f"Error removing background: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error during background removal")
 
-# # 유사한 이미지 찾기 엔드포인트
-# @router.post("/similarity", response_model=SimilarImagesResponse)
-# async def find_similar_images(file: UploadFile = File(...), folder_path: str = ""):
-#     input_image = Image.open(file.file)
-#     similar_images = find_most_similar_images(input_image, folder_path)
-#
-#     response = [SimilarImage(filename=name, similarity=score) for name, score in similar_images]
-#     return {"similar_images": response}
+# 유사 이미지 검색 요청
+@router.post("/fastapi/similarity")
+async def similarity_search(file: UploadFile = File(...)):
+    try:
+        # 요청 받은 이미지 파일 임시 저장
+        temp_path = f"temp_{file.filename}"
+        with open(temp_path, "wb") as buffer:
+            buffer.write(await file.read())
+
+        # 폴더 내 유사한 이미지 찾기
+        folder_path = "/opt/homebrew/var/www/resources/images/productImage"  # 비교할 이미지 폴더 경로
+        similar_images = find_similar_images(temp_path, folder_path)
+
+        # 임시 파일 삭제
+        os.remove(temp_path)
+
+        return JSONResponse(content={"similar_images": similar_images})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

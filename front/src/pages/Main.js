@@ -9,6 +9,8 @@ import style from "../styles/main.module.css"
 import CategoryIcon from '../components/CategoryIcon'
 import { IoMdAdd } from "react-icons/io";
 
+import { API_BASE_URL } from '../utils/constants';
+
 export default function Main() {
 
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ export default function Main() {
 
   const fetchLatestProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/products/mainLatestProduct");
+      const response = await axios.get(`${API_BASE_URL}/api/products/mainLatestProduct`);
       setLatestProduct(response.data);
       console.log(response.data);
     } catch (error) {
@@ -33,7 +35,7 @@ export default function Main() {
   
   const fetchShortsList = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/products/mainShorts");
+      const response = await axios.get(`${API_BASE_URL}/api/products/mainShorts`);
       setShortsList(response.data);
       console.log(response.data);
     } catch (error) {

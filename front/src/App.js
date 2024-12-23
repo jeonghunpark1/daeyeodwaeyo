@@ -22,11 +22,14 @@ import ProductDetail from './pages/ProductDetail';
 import Shorts from './pages/Shorts';
 import ImageSearch from './components/ImageSearch';
 import ImageSearchResult from './pages/ImageSearchResult';
+import Transaction from './pages/Transaction';
 
 import ChatWindow from './pages/chatting/ChatWindow';
 import Chat from './pages/chatting/Chat';
 import ChatHome from './pages/chatting/ChatHome';
 import ChatMidPoint from './pages/chatting/ChatMidPoint'; // 추가한 컴포넌트
+
+import { API_BASE_URL } from './utils/constants';
 
 export default function App() {
 
@@ -62,7 +65,7 @@ export default function App() {
   }, []);
 
   const fetchUserInfo = (token) => {
-    axios.get('http://localhost:8080/api/users/headerUserInfo', {
+    axios.get(`${API_BASE_URL}/api/users/headerUserInfo`, {
       headers: {
         'Authorization': `Bearer ${token}`, // Bearer 토큰 형태로 전송
       },
@@ -89,15 +92,17 @@ export default function App() {
             location.pathname != '/findPasswordResult' &&
             location.pathname != '/changeInfo' &&
             location.pathname !== '/ChatHome' &&
+            location.pathname !== '/transaction' &&
             location.pathname !== '/ChatMidPoint' && // ChatMidPoint 경로에서는 Header를 제외
             !/^\/ChatWindow\/[^/]+$/.test(location.pathname)) && (
             <Header getterIsLogin={getterIsLogin} headerUserInfo={headerUserInfo} />
           )}
           <Routes>
             {/* <Route path="/" element={<Index />}></Route> */}
+            <Route path="/" element={<Main />}></Route>
+            <Route path="/main" element={<Main />}></Route>
             <Route path="/login" element={<Login setterIsLogin={setterIsLogin} fetchUserInfo={fetchUserInfo}/>}></Route>
             <Route path="/signup" element={<SignUp />}></Route>
-            <Route path="/main" element={<Main />}></Route>
             <Route path="/productAdd" element={<ProductAdd />}></Route>
             {/* <Route path="/product" element={<Product />}></Route> */}
             {/* <Route path="/myPage" element={<MyPage />}></Route> */}
@@ -111,6 +116,7 @@ export default function App() {
             <Route path="/shorts" element={<Shorts />}></Route>
             <Route path="/imageSearch" element={<ImageSearch />}></Route>
             <Route path="/imageSearchResult" element={<ImageSearchResult />}></Route>
+            <Route path="/transaction" element={<Transaction />}></Route>
 
             <Route path="/ChatWindow/:roomId" element={<ChatWindowWrapper token={token} />} />
             <Route path="/ChatHome" element={<ChatHome token={token} />} />
@@ -135,18 +141,20 @@ export default function App() {
             />
           </Routes>
           {(location.pathname !== '/findId' &&
-            location.pathname != '/findIdResult' &&
-            location.pathname != '/findPassword' &&
-            location.pathname != '/findPasswordResult' &&
-            location.pathname != '/changeInfo' && 
-            location.pathname != '/shorts' &&
+            location.pathname !== '/findIdResult' &&
+            location.pathname !== '/findPassword' &&
+            location.pathname !== '/findPasswordResult' &&
+            location.pathname !== '/changeInfo' && 
+            location.pathname !== '/shorts' &&
+            location.pathname !== '/transaction' &&
             location.pathname !== '/ChatMidPoint' && // ChatMidPoint 경로에서는 Footer를 제외
             !/^\/ChatWindow\/[^/]+$/.test(location.pathname)) && (
             <Footer />
           )}
           {isLogin && 
           location.pathname !== '/ChatHome' && 
-          location.pathname !== '/ChatMidPoint' && 
+          location.pathname !== '/ChatMidPoint' &&
+          location.pathname !== '/transaction' &&
           !/^\/ChatWindow\/[^/]+$/.test(location.pathname) && 
           location.pathname !== '/changeInfo' &&(
               <Chat chatWindowRef={chatWindowRef}/>

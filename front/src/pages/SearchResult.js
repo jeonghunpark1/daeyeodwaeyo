@@ -6,6 +6,8 @@ import axios from 'axios';
 
 import SearchProductBox from '../components/SearchProductBox';
 
+import { API_BASE_URL } from '../utils/constants';
+
 export default function SearchResult() {
 
   
@@ -76,7 +78,7 @@ export default function SearchResult() {
       query = keyword;
     }
     try {
-      const response = await axios.get("http://localhost:8080/api/products/searchByQuery", {
+      const response = await axios.get(`${API_BASE_URL}/api/products/searchByQuery`, {
         params: { query, type }
       });
       // alert(type);
@@ -104,8 +106,8 @@ export default function SearchResult() {
 
         <div className={style.searchResult_nav_wrap}>
           <div className={`${style.orderByLatest_result} ${style.searchResult_nav} ${orderBy === "orderByLatest" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLatest"); }}>최신순</div>
-          <div className={`${style.orderByHits_result} ${style.searchResult_nav} ${orderBy === "orderByLook" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLook"); }}>조회순</div>
-          <div className={`${style.orderByLike_result} ${style.searchResult_nav} ${orderBy === "orderByReview" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByReview"); }}>후기순</div>
+          {/* <div className={`${style.orderByHits_result} ${style.searchResult_nav} ${orderBy === "orderByLook" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLook"); }}>조회순</div>
+          <div className={`${style.orderByLike_result} ${style.searchResult_nav} ${orderBy === "orderByReview" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByReview"); }}>후기순</div> */}
           <div className={`${style.orderByHighPrice_result} ${style.searchResult_nav} ${orderBy === "orderByHighPrice" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByHighPrice"); }}>높은가격순</div>
           <div className={`${style.orderByLowPrice_result} ${style.searchResult_nav} ${orderBy === "orderByLowPrice" ? style.selected_nav : style.unselected_nav}`} onClick={() => {setorderBy("orderByLowPrice"); }}>낮은가격순</div>
         </div>

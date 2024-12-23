@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import style from "../../styles/changeInfo/changePassword.module.css";
 import axios from 'axios';
 
+import { API_BASE_URL } from '../../utils/constants';
+
 export default function ChangePassword() {
 
   const [password, setPassword] = useState("");
@@ -93,7 +95,7 @@ export default function ChangePassword() {
     try {
       const token = localStorage.getItem("token");
       
-      const response = await axios.post('http://localhost:8080/api/users/changePassword', {
+      const response = await axios.post(`${API_BASE_URL}/api/users/changePassword`, {
         password
       },
       {

@@ -8,6 +8,8 @@ import axios from 'axios';
 import { IoIosClose } from "react-icons/io";
 import PriceGraph from '../components/priceGraph';
 
+import { API_BASE_URL } from '../utils/constants';
+
 export default function Product() {
 
   const navigate = useNavigate();
@@ -103,7 +105,7 @@ export default function Product() {
     formData.append("file", imageFile);
 
     try {
-      const response = await axios.post("http://localhost:8080/api/images/predict", formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/images/predict`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           // 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -137,7 +139,7 @@ export default function Product() {
   const pricesByName = async (productName) => {
     
     try {
-      const response = await axios.get("http://localhost:8080/api/products/prices", {
+      const response = await axios.get(`${API_BASE_URL}/api/products/prices`, {
         params: { name: productName },
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}` // 토큰과 함께 전송
@@ -191,7 +193,7 @@ export default function Product() {
     }
 
     try {
-        const response = await axios.post('/api/products', formData, {
+        const response = await axios.post(`${API_BASE_URL}/api/products`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${localStorage.getItem('token')}` // 토큰과 함께 전송

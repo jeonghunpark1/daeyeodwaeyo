@@ -4,6 +4,7 @@ import axios from 'axios';
 import style from "../../styles/signup/signupUserInfo.module.css"
 import input_style from "../../styles/login_signup_input.module.css"
 
+import { API_BASE_URL } from '../../utils/constants';
 
 import { IoIosClose } from "react-icons/io";
 import DaumPostcode from 'react-daum-postcode';
@@ -182,7 +183,7 @@ export default function SignUpUserInfo({ setStateValue, getStateValue, setStateV
   const checkIdDuplicate = async () => {
     const userId = getStateValue("id");
     try {
-      const response = await axios.get('/api/users/idDuplicate', {
+      const response = await axios.get(`${API_BASE_URL}/api/users/idDuplicate`, {
         params: {
           id: userId
         }

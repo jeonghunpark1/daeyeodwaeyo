@@ -1,23 +1,23 @@
 /* Chat.module.css */
 .chatButton {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background-color: #0078FF; /* 메신저 스타일의 파란색 */
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    cursor: pointer;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* 다른 요소 위에 표시 */
-    transition: background-color 0.3s;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #0078FF; /* 메신저 스타일의 파란색 */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* 다른 요소 위에 표시 */
+  transition: background-color 0.3s;
 }
 
 .chatButton:hover {
-    background-color: #005BBB; /* 호버 시 색상 변경 */
+  background-color: #005BBB; /* 호버 시 색상 변경 */
 }

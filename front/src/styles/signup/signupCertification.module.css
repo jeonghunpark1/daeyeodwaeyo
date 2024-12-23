@@ -85,12 +85,12 @@
 }
 
 .sendEmail_button {
-  width: 90%;
+  width: 95%;
   height: 70%;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 22px;
-  letter-spacing: -.2px;
+  letter-spacing: -.30px;
   background-color: white;
   border: 1px solid var(--line-color);
   border-radius: var(--box-radius-value);
