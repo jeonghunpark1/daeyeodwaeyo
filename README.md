@@ -19,8 +19,8 @@
     <td align="center">🌳<a href="https://github.com/soohoon0821"><b>박정훈</b></td>
   </tr>
    <tr>
-    <td align="center"><b>바보<br>멍청이<br>해삼</b></td>
-    <td align="center"><b>멋쟁이</b></td>
+    <td align="center"><b></b></td>
+    <td align="center"><b></b></td>
   </tr>
   </table>
             
@@ -37,7 +37,6 @@
 
 <br>
 
-## 프로젝트 설계
 
 
 | **회원가입** | **상품 등록** | **쇼츠영상** |
