@@ -133,33 +133,15 @@ FastAPI 서버를 활용하여 처리
 | **채팅 및 중간거리** | **리뷰와 내정보** | **이미지로 검색** |
 | <img src="https://github.com/user-attachments/assets/1fcdf8f0-ccaa-49d9-940f-f136eefcb73c" width="450" height="300" /> | <img src="https://github.com/user-attachments/assets/36ee009b-ffe9-48d6-acc4-bd9657b6755f" width="450" height="300" /> | <img src="https://github.com/user-attachments/assets/cd5c4ff0-9b91-459e-b095-4b8ec19959c0" width="450" height="300" /> |
 
-
+<br><br>
 인공지능
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<br><br>
 
 # 🛠 결론 🏗
 
 ## 트러블 슈팅
 <br><br>
-##프로젝트 하면서 느낀점 아쉬운점
+## 프로젝트 하면서 느낀점 아쉬운점
 <br><br>
 
 ## 결론
