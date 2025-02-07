@@ -25,6 +25,51 @@
   </table>
             
 # 🛠 프로젝트 설계 🏗  
+## 기술 스택
+
+### ✔ Frond-end
+<div>
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"/>
+<img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=black"/>
+<img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=Sass&logoColor=white"/>
+</div>
+
+### ✔ Back-end
+<div>
+<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white"/>
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/>
+<img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=white"/>
+</div>
+
+### ✔ Dev tools
+<div>
+<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white">
+<img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=for-the-badge&logo=IntelliJ IDEA&logoColor=white"/>
+<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white"/>
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>
+</div>
+
+<br>
+
+이유 있어야될듯..?
+<br>
+
+## 🏗 시스템 아키텍처 🏛  
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/846cd11c-26dd-42a6-a8ce-005444b83872" width="70%" height="400" />
+</div>
+
+<br>
+
+## 🏗 시스템 구조도 🏛  
+<img src="https://github.com/user-attachments/assets/d9815f6f-73da-4d81-92c7-9c3fa3df45c2" width="100%" height="400" />
+
+## 🛠 **ERD** 🗂  
+<div align="center">
+ <img src="https://github.com/user-attachments/assets/2481aa28-1eba-4ad1-9da9-a6bf8f0f5d0c" width="30%" height="300" />
+</div>
+
+수정해야될듯?아닌가
 
 
 ## 주요 기능
@@ -36,8 +81,6 @@
 6. 이미지로 검색ㅎ
 
 <br>
-
-
 
 | **회원가입** | **상품 등록** | **쇼츠영상** |
 | :---: | :---: | :---: |
