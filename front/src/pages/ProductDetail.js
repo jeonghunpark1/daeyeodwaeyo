@@ -75,7 +75,6 @@ export default function ProductDetail( {loggedInUserId, chatWindowRef} ) {
 
   const requestProductVideoURL = (productVideo) => {
     const productVideoURL = `${API_BASE_URL}/api/productVideoPath/` + productVideo;
-    console.log("동영상 URL: ", productVideoURL);
     return productVideoURL;
   };
 
@@ -232,6 +231,10 @@ export default function ProductDetail( {loggedInUserId, chatWindowRef} ) {
     // 비동기 함수 호출
     fetchProductDetail();
   }, [productId]); // productId가 변경될 때마다 useEffect가 다시 실행됨
+
+  const updateProduct = async (productId) => {
+    navigate("/modifyProduct", { state: { productId } });
+  }
 
   const deleteProduct = async (productId) => {
     try {
@@ -410,6 +413,7 @@ export default function ProductDetail( {loggedInUserId, chatWindowRef} ) {
                       <ul className={style.lowLevelMenu_box}>
                         <li className={style.lowLevelMenu_wrap}>
                           <button className={`${style.updatePost} ${style.lowLevelMenu}`} onClick={() => {
+                            updateProduct(productId);
                           }}>게시물 수정
                           </button>
                         </li>

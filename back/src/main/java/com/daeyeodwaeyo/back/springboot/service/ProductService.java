@@ -326,25 +326,39 @@ public class ProductService {
   public void deleteProduct(String productId) {
     Product product = productRepository.findById(productId)
             .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
-    System.out.println("product: " + product);
 
     List<String> imageNames = new ArrayList<>();
-    List<ProductImage> productImage = productImageRepository.findByProduct(product);
-    for (ProductImage productimage : productImage) {
-      imageNames.add(productimage.getImageUrl());
+    List<ProductImage> productImage;
+    String videoName = null;
+
+    try {
+      productImage = productImageRepository.findByProduct(product);
+
+      for (ProductImage productimage : productImage) {
+        imageNames.add(productimage.getImageUrl());
+      }
+    } catch (Exception e) {
+      System.out.println("등록된 사진이 없습니다.");
     }
 
-    ProductVideo productVideo = productVideoRepository.findByProduct(product);
-    String videoName = productVideo.getVideoUrl();
+    try {
+      ProductVideo productVideo = productVideoRepository.findByProduct(product);
+      videoName = productVideo.getVideoUrl();
+    } catch (Exception e) {
+      System.out.println("등록된 동영상이 없습니다.");
+    }
 
     productRepository.delete(product);
     // 트랜잭션이 성공적으로 완료되기 전의 작업
+    String finalVideoName = videoName;
     TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
       @Override
       public void afterCommit() {
         // 트랜잭션 커밋 후에 실행할 작업
         contentService.deleteProductImage(imageNames);
-        contentService.deleteProductVideo(videoName);
+        if (finalVideoName != null) {
+          contentService.deleteProductVideo(finalVideoName);
+        }
         System.out.println("Product removed successfully: " + productId);
       }
 

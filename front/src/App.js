@@ -23,6 +23,7 @@ import Shorts from './pages/Shorts';
 import ImageSearch from './components/ImageSearch';
 import ImageSearchResult from './pages/ImageSearchResult';
 import Transaction from './pages/Transaction';
+import ModifyProduct from './pages/ModifyProduct';
 
 import ChatWindow from './pages/chatting/ChatWindow';
 import Chat from './pages/chatting/Chat';
@@ -117,6 +118,7 @@ export default function App() {
             <Route path="/imageSearch" element={<ImageSearch />}></Route>
             <Route path="/imageSearchResult" element={<ImageSearchResult />}></Route>
             <Route path="/transaction" element={<Transaction />}></Route>
+            <Route path="/modifyProduct" element={<ModifyProduct />}></Route>
 
             <Route path="/ChatWindow/:roomId" element={<ChatWindowWrapper token={token} />} />
             <Route path="/ChatHome" element={<ChatHome token={token} />} />
