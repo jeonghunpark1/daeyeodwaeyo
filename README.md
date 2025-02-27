@@ -23,40 +23,60 @@
     <td align="center"><b></b></td>
   </tr>
   </table>
+
+<br>
             
 # 🛠 프로젝트 설계 🏗  
 ## 기술 스택
 
 ### ✔ Frond-end
 <div>
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"/>
-<img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=black"/>
-<img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=Sass&logoColor=white"/>
+ <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white"/>
+ <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+ <img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+ <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white"/>
+ <img src="https://img.shields.io/badge/nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"/>
 </div>
 
 ### ✔ Back-end
 <div>
-<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white"/>
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/>
-<img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=white"/>
+ <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white"/>
+ <img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white"/>
+ <img src="https://img.shields.io/badge/JAVA-FF7800?style=for-the-badge&logo=JAVA&logoColor=white"/>
+ <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+</div>
+
+### ✔ DB
+<div>
+ <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/>
+</div>
+
+### ✔ AI Model
+<div>
+ <img src="https://img.shields.io/badge/YOLOv8-111F68?style=for-the-badge&logo=yolo&logoColor=white"/>
+ <img src="https://img.shields.io/badge/ResNet50-000000?style=for-the-badge&logo=ResNet50&logoColor=white">
 </div>
 
 ### ✔ Dev tools
 <div>
-<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white">
-<img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=for-the-badge&logo=IntelliJ IDEA&logoColor=white"/>
-<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white"/>
-<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>
+ <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white">
+ <img src="https://img.shields.io/badge/intellij idea-000000?style=for-the-badge&logo=intellij idea&logoColor=white"/>
+ <img src="https://img.shields.io/badge/pycharm-000000?style=for-the-badge&logo=pycharm&logoColor=white"/>
+ <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white"/>
+ <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>
+</div>
+
+### ✔ Communication
+<div>
+ <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white"/>
+ <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
 </div>
 
 <br>
 
-이유 있어야될듯..?
-<br>
-
 ## 🏗 시스템 아키텍처 🏛  
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/846cd11c-26dd-42a6-a8ce-005444b83872" width="70%" height="400" />
+ <img src="https://github.com/user-attachments/assets/d2b7796f-74ef-4f45-835e-b9ce22fda07f"/>
 </div>
 
 <br>
@@ -64,16 +84,16 @@
 ## 🏗 시스템 구조도 🏛  
 <img src="https://github.com/user-attachments/assets/d9815f6f-73da-4d81-92c7-9c3fa3df45c2" width="100%" height="400" />
 
-## 🛠 **ERD** 🗂  
-<div align="center">
- <img src="https://github.com/user-attachments/assets/2481aa28-1eba-4ad1-9da9-a6bf8f0f5d0c" width="30%" height="300" />
-</div>
-
-수정해야될듯?아닌가
-
-# 🛠 프로젝트 내용 및 기능 🏗  
 <br>
 
+## 🛠 **ERD** 🗂  
+<div align="center">
+ <img src="https://github.com/user-attachments/assets/2481aa28-1eba-4ad1-9da9-a6bf8f0f5d0c"/>
+</div>
+
+<br>
+
+# 🛠 프로젝트 내용 및 기능 🏗  
 ## 주요 내용  
 
 ### 1. 로그인 및 회원가입
@@ -116,6 +136,7 @@ FastAPI 서버를 활용하여 처리
 내 정보 변경 (비밀번호, 주소, 닉네임, 프로필 사진 변경 가능)
 거래 내역 조회 및 리뷰 작성-별점 평가
 
+<br>
 
 ## 주요 기능 영상
 1. 회원가입
