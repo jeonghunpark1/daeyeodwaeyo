@@ -87,9 +87,7 @@
 <br>
 
 ## 🛠 **ERD** 🗂  
-<div align="center">
- <img src="https://github.com/user-attachments/assets/2481aa28-1eba-4ad1-9da9-a6bf8f0f5d0c"/>
-</div>
+<img width="939" alt="DD_ERD2" src="https://github.com/user-attachments/assets/3bde49ca-e33e-49f7-bae8-a87db320f89f" />
 
 <br>
 
